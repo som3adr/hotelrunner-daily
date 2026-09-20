@@ -1,0 +1,20 @@
+{
+  "blocks": [
+    {
+      "label": "Surf camp whole-house block",
+      "room": "whole house",
+      "start": "2026-09-14",
+      "end": "2026-09-18",
+      "guests": 12,
+      "note": "Use this when the whole property is reserved for a group."
+    },
+    {
+      "label": "The Bay blocked for surf camp",
+      "room": "6500",
+      "start": "2026-09-14",
+      "end": "2026-09-16",
+      "guests": 2,
+      "note": "Room number or bed number can be written as 6500 or #6500."
+    }
+  ]
+}

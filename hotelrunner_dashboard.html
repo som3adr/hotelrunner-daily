@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HotelRunner Daily Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="border-b border-white/10 bg-slate-950/80 px-5 py-5 backdrop-blur">
+    <div class="mx-auto max-w-7xl">
+      <p class="text-sm uppercase tracking-wide text-emerald-300">Read-only HotelRunner operations</p>
+      <h1 class="mt-1 text-3xl font-bold text-white">Daily In-House Dashboard</h1>
+      <p class="mt-2 text-sm text-slate-400">Generated 2026-09-20 16:03. Cache-backed with recent HotelRunner updates.</p>
+      <section class="mt-4 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-100 p-4">
+        <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wide">READY</p>
+            <h2 class="mt-1 text-xl font-bold">Ready to review</h2>
+            <p class="mt-1 text-sm opacity-90">HotelRunner data was read and merged into the local cache. Review attention items, then copy the team message.</p>
+          </div>
+          <ul class="grid gap-1 text-sm opacity-90 md:text-right"><li>130 cached reservations loaded</li><li>84 HotelRunner updates read</li><li>0 new, 67 changed, 0 canceled/removed</li><li>6 page(s) read</li></ul>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <div class="mx-auto grid max-w-7xl gap-5 px-5 py-5 lg:grid-cols-[230px_1fr]">
+    <nav class="h-fit rounded-2xl border border-white/10 bg-slate-900/70 p-3 lg:sticky lg:top-5">
+      <p class="mb-3 px-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Days</p>
+      <div class="grid gap-2">
+            <button class="day-tab rounded-xl border border-emerald-300/50 bg-emerald-400/10 text-emerald-100 p-3 text-left transition hover:border-emerald-300/40" data-target="day-0">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Sunday</span>
+              <span class="mt-1 block text-base font-bold">20 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>7 in / 6 out</span><strong class="text-slate-100">32</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-1">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Monday</span>
+              <span class="mt-1 block text-base font-bold">21 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>4 in / 9 out</span><strong class="text-slate-100">26</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-2">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Tuesday</span>
+              <span class="mt-1 block text-base font-bold">22 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>2 in / 1 out</span><strong class="text-slate-100">28</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-3">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Wednesday</span>
+              <span class="mt-1 block text-base font-bold">23 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>3 in / 4 out</span><strong class="text-slate-100">23</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-4">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Thursday</span>
+              <span class="mt-1 block text-base font-bold">24 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>1 in / 3 out</span><strong class="text-slate-100">19</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-5">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Friday</span>
+              <span class="mt-1 block text-base font-bold">25 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>0 in / 3 out</span><strong class="text-slate-100">16</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-6">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Saturday</span>
+              <span class="mt-1 block text-base font-bold">26 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>1 in / 2 out</span><strong class="text-slate-100">15</strong></span>
+            </button>
+            
+            <button class="day-tab rounded-xl border border-white/10 bg-slate-950/60 text-slate-300 p-3 text-left transition hover:border-emerald-300/40" data-target="day-7">
+              <span class="block text-xs uppercase tracking-wide text-slate-500">Sunday</span>
+              <span class="mt-1 block text-base font-bold">27 Sep</span>
+              <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>1 in / 4 out</span><strong class="text-slate-100">11</strong></span>
+            </button>
+            </div>
+    </nav>
+
+    <main>
+      
+            <section id="day-0" class="day-panel block">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Sunday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">20 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 1</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 1</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">32</p>
+                  <p class="text-xs text-emerald-100/70">32 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">7</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">6</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">21</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">All Inclusive: 8</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 22</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 2</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 20 September
+
+Olas
+Marie Pelletier x2 -&gt; balcony
+Lara  Cervi x1 -&gt; dorm
+Lara  Cervi x1 -&gt; dorm
+Lara  Cervi x1 -&gt; dorm
+
+Tide
+fatima zahra  CHIKI x3 -&gt; slab
+Chiara Scolari x2 -&gt; cathedral
+
+-----
+
+CHECK-INS 20 September
+
+Olas
+Mohamed Raiz x1 -&gt; dorm
+Feike  Berg x1 -&gt; dorm
+Ahmed Kasoum x1 -&gt; dorm
+Joel Nichter x2 -&gt; balcony
+youness bendriss x1 -&gt; dorm
+
+Tide
+ETIENNE DUMAS x3 -&gt; cathedral
+Lakatos Annamária x2 -&gt; slab (single + large double requested)
+
+-----
+
+SUMMARY
+In-house: 32 guest(s)
+Meals: All Inclusive: 8, Bed And Breakfast: 22, Room Only: 2
+
+AUDIT / ATTENTION:
+- The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)
+- Rosa Schiering appears 2 times: Double room #110, Double room #112
+- Lakatos Annamária | Tidehunter Surf House -The Slab #6700: single + large double requested
+
+NOTES:
+- Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit
+- Marlene Schorn | Mixed dorm #05: This is a partial replacement for the cancelled Smart Flex reservation 5874192455. More information can be found at
+- Paul Bürger | Mixed dormitory - Room only #07: Gender: Mixed Guest Count:1 Arrival Time:0 paid:43.20 - due:244.80 - OTAcommission:43.20 - OTAdue:0.00 - paymenttype:Deposit
+- Lakatos Annamária | Tidehunter Surf House -The Slab #6700: BED PREFERENCE:Triple Room with Private External Bathroom: 1 single, 1 large double</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ahmed Kasoum - Mixed dorm #06 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Joel Nichter - Twin room #113 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lakatos Annamária - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">youness bendriss - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Marie Pelletier - Twin room #113 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">fatima zahra  CHIKI - Tidehunter Surf House -The Slab #6700 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chiara Scolari - Tidehunter Surf House -The Cathedral #6600 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lara  Cervi - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lara  Cervi - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lara  Cervi - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Nataliia  Ambrosiichuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika  Fedorchuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory - Room only #10 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Marlene Schorn - Mixed dorm #05 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Etienne Aleveque - Mixed dorm #02 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Patrycja Danielak - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Rosa Schiering - Double room #110 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Rosa Schiering - Double room #112 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Paul Bürger - Mixed dormitory - Room only #07 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lara  Cervi - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Oussama  Chawki - Mixed dormitory #11 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ahmed Kasoum - Mixed dorm #06 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Joel Nichter - Twin room #113 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lakatos Annamária - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">youness bendriss - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chambre avec salle de bain privative: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 6 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">The Reef: 6 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Twin room: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-1" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Monday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">21 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 2</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 0</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">26</p>
+                  <p class="text-xs text-emerald-100/70">26 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">4</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">9</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">16</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">All Inclusive: 12</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 11</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 21 September
+
+Olas
+Marlene Schorn x1 -&gt; dorm
+Rosa Schiering x2 -&gt; RDC1
+Rosa Schiering x2 -&gt; RDC2
+Paul Bürger x1 -&gt; dorm (room only, to pay 244.80 dhs)
+Lara  Cervi x1 -&gt; dorm
+Ahmed Kasoum x1 -&gt; dorm
+Joel Nichter x2 -&gt; balcony
+youness bendriss x1 -&gt; dorm
+
+Tide
+Lakatos Annamária x2 -&gt; slab (single + large double requested)
+
+-----
+
+CHECK-INS 21 September
+
+Olas
+Niels van den Berg x2 -&gt; RDC2 (room only, Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130)
+Clement  Arnoux x2 -&gt; RDC1 (all meals)
+Clement  Arnoux x2 -&gt; RDC2 (all meals)
+Emre Sazpinar x1 -&gt; dorm
+
+-----
+
+SUMMARY
+In-house: 26 guest(s)
+Meals: All Inclusive: 12, Bed And Breakfast: 11, Room Only: 3
+
+AUDIT / ATTENTION:
+- The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)
+- Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)
+- Clement  Arnoux appears 2 times: Double room #110, Double room #112
+
+NOTES:
+- Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #110 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #112 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Marlene Schorn - Mixed dorm #05 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Rosa Schiering - Double room #110 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Rosa Schiering - Double room #112 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Paul Bürger - Mixed dormitory - Room only #07 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lara  Cervi - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ahmed Kasoum - Mixed dorm #06 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Joel Nichter - Twin room #113 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lakatos Annamária - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">youness bendriss - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Nataliia  Ambrosiichuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika  Fedorchuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory - Room only #10 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Etienne Aleveque - Mixed dorm #02 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Patrycja Danielak - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Oussama  Chawki - Mixed dormitory #11 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #110 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #112 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chambre avec salle de bain privative: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">The Reef: 6 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-2" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Tuesday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">22 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 2</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 0</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">28</p>
+                  <p class="text-xs text-emerald-100/70">28 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">2</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">1</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">17</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">All Inclusive: 12</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 12</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 4</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 22 September
+
+Olas
+Oussama  Chawki x1 -&gt; dorm
+
+-----
+
+CHECK-INS 22 September
+
+Olas
+Vivien Linda Pochopien x1 -&gt; dorm (room only, Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65)
+
+Tide
+Sterre  de Labije x2 -&gt; slab
+
+-----
+
+SUMMARY
+In-house: 28 guest(s)
+Meals: All Inclusive: 12, Bed And Breakfast: 12, Room Only: 4
+
+AUDIT / ATTENTION:
+- The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)
+- Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)
+- Clement  Arnoux appears 2 times: Double room #110, Double room #112
+
+NOTES:
+- Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Oussama  Chawki - Mixed dormitory #11 - 1 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Nataliia  Ambrosiichuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika  Fedorchuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory - Room only #10 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Etienne Aleveque - Mixed dorm #02 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Patrycja Danielak - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #110 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #112 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chambre avec salle de bain privative: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">The Reef: 6 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-3" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Wednesday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">23 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 1</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 1</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">23</p>
+                  <p class="text-xs text-emerald-100/70">23 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">3</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">4</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">16</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">All Inclusive: 6</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 14</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 23 September
+
+Olas
+Ruby Smith x1 -&gt; dorm (room only, to pay 612.00 dhs)
+
+Tide
+Nataliia  Ambrosiichuk x3 -&gt; reef (all meals)
+Veronika  Fedorchuk x3 -&gt; reef (all meals)
+Patrycja Danielak x2 -&gt; bay
+
+-----
+
+CHECK-INS 23 September
+
+Olas
+Veronika Stanzel x1 -&gt; dorm
+Ruby Smith x1 -&gt; dorm
+
+Tide
+Antje Enid Hoffmann x2 -&gt; bay (separate beds)
+
+-----
+
+SUMMARY
+In-house: 23 guest(s)
+Meals: All Inclusive: 6, Bed And Breakfast: 14, Room Only: 3
+
+AUDIT / ATTENTION:
+- Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)
+- Clement  Arnoux appears 2 times: Double room #110, Double room #112
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds
+
+NOTES:
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory #10 - 1 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Nataliia  Ambrosiichuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika  Fedorchuk - The Reef #6800 - 3 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory - Room only #10 - 1 guest(s) - Room Only</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Patrycja Danielak - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Etienne Aleveque - Mixed dorm #02 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #110 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #112 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory #10 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chambre avec salle de bain privative: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-4" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Thursday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">24 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 1</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">19</p>
+                  <p class="text-xs text-emerald-100/70">19 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">1</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">3</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">14</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">All Inclusive: 1</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 15</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 24 September
+
+Olas
+Etienne Aleveque x1 -&gt; dorm (all meals)
+Clement  Arnoux x2 -&gt; RDC1 (all meals)
+Clement  Arnoux x2 -&gt; RDC2 (all meals)
+
+-----
+
+CHECK-INS 24 September
+
+Olas
+khalil  meryem x1 -&gt; RDC1
+
+-----
+
+SUMMARY
+In-house: 19 guest(s)
+Meals: All Inclusive: 1, Bed And Breakfast: 15, Room Only: 3
+
+AUDIT / ATTENTION:
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds
+
+NOTES:
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">khalil  meryem - Double room #110 - 1 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Etienne Aleveque - Mixed dorm #02 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #110 - 2 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux - Double room #112 - 2 guest(s) - All Inclusive</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory #10 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">khalil  meryem - Double room #110 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Chambre avec salle de bain privative: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 4 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-5" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Friday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">25 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 1</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">16</p>
+                  <p class="text-xs text-emerald-100/70">16 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">0</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">3</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">11</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 13</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 25 September
+
+Olas
+eylul Tunc x1 -&gt; RDC3 (all meals)
+Emre Sazpinar x1 -&gt; dorm
+Ruby Smith x1 -&gt; dorm
+
+-----
+
+CHECK-INS 25 September
+
+No check-ins
+
+-----
+
+SUMMARY
+In-house: 16 guest(s)
+Meals: Bed And Breakfast: 13, Room Only: 3
+
+AUDIT / ATTENTION:
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds
+
+NOTES:
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?
+- Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><p class="text-sm text-slate-500">None</p></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">eylul Tunc - Chambre avec salle de bain privative #101 - 1 guest(s) - All Inclusive</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Emre Sazpinar - Mixed dormitory #08 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Ruby Smith - Mixed dormitory #10 - 1 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">khalil  meryem - Double room #110 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House - The Bay: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-6" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Saturday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">26 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 0</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">15</p>
+                  <p class="text-xs text-emerald-100/70">15 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">1</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">2</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">10</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 12</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 26 September
+
+Olas
+Garcia Dani x1 -&gt; dorm
+
+Tide
+Antje Enid Hoffmann x2 -&gt; bay (separate beds)
+
+-----
+
+CHECK-INS 26 September
+
+Olas
+Laurence Doin x2 -&gt; balcony
+
+-----
+
+SUMMARY
+In-house: 15 guest(s)
+Meals: Bed And Breakfast: 12, Room Only: 3
+
+NOTES:
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Laurence Doin - Twin room #113 - 2 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Garcia Dani - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann - Tidehunter Surf House - The Bay #6500 - 2 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">khalil  meryem - Double room #110 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Laurence Doin - Twin room #113 - 2 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Slab: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Twin room: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+            <section id="day-7" class="day-panel hidden">
+              <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-wide text-emerald-300">Sunday</p>
+                  <h2 class="mt-1 text-3xl font-bold text-white">27 September 2026</h2>
+                </div>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Conflicts: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Bed requests: 0</span></div>
+              </div>
+
+              <div class="grid gap-3 md:grid-cols-4">
+                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+                  <p class="text-sm text-emerald-200">In-house</p>
+                  <p class="mt-1 text-3xl font-bold text-white">11</p>
+                  <p class="text-xs text-emerald-100/70">11 adults, 0 children</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">1</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">4</p></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">7</p></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
+                <div class="flex flex-wrap gap-2"><span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Bed And Breakfast: 8</span> <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Room Only: 3</span></div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+                <div class="mb-3 flex items-center justify-between gap-3">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
+                  <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
+                </div>
+                <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">CHECK-OUTS 27 September
+
+Olas
+Mohamed Raiz x1 -&gt; dorm
+Feike  Berg x1 -&gt; dorm
+Veronika Stanzel x1 -&gt; dorm
+
+Tide
+Sterre  de Labije x2 -&gt; slab
+
+-----
+
+CHECK-INS 27 September
+
+Olas
+Bubacarr Ndow x1 -&gt; dorm
+
+-----
+
+SUMMARY
+In-house: 11 guest(s)
+Meals: Bed And Breakfast: 8, Room Only: 3
+
+NOTES:
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</textarea>
+              </div>
+
+              <div class="mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Bubacarr Ndow - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div></div></div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mohamed Raiz - Mixed dorm #03 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Feike  Berg - Mixed dorm #04 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sterre  de Labije - Tidehunter Surf House -The Slab #6700 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Veronika Stanzel - Mixed dormitory #09 - 1 guest(s) - Bed And Breakfast</div></div></div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">In-house guests and beds</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Alysha  volunteer - Mixed dormitory #12 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">ETIENNE DUMAS - Tidehunter Surf House -The Cathedral #6600 - 3 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Niels van den Berg - Double room - Room only - Online - Exclusive Offer -10%! #112 - 2 guest(s) - Room Only - extras: Surfboards Rental x14 140, Half Board formula x16 240, Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Vivien Linda Pochopien - Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 - 1 guest(s) - Room Only - extras: Half Board formula x8 120, Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">khalil  meryem - Double room #110 - 1 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Laurence Doin - Twin room #113 - 2 guest(s) - Bed And Breakfast</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Bubacarr Ndow - Mixed dorm #01 - 1 guest(s) - Bed And Breakfast</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Room / bed disposition</summary><div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%!: 2 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dorm: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mixed dormitory - Room only - Online - Exclusive Offer -10%!: 1 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tidehunter Surf House -The Cathedral: 3 guest(s)</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Twin room: 2 guest(s)</div></div></details>
+                <details class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><summary class="cursor-pointer text-sm font-semibold text-slate-100">Manual blocks</summary><div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div></details>
+              </div>
+            </section>
+            
+
+      <section class="mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-white">Audit Results</h2>
+            <p class="text-sm text-slate-400">Collapsed by default so the workspace stays clean until you need to review issues.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20">Rooms: 6</span>
+            <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20">Blocks: 0</span>
+            <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-slate-800 text-slate-200 ring-1 ring-white/10">Beds: 4</span>
+            <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20">Extras: 33</span>
+          </div>
+        </div>
+        <div class="grid gap-3">
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Room conflicts <span class="text-slate-500">(6)</span></summary>
+          <div class="mt-3 grid gap-2"><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)</div><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)</div><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)</div><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)</div><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)</div><div class="rounded-lg border border-rose-400/20 bg-rose-500/5 text-rose-100 px-3 py-2 text-sm">Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)</div></div>
+        </details>
+        
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Block conflicts <span class="text-slate-500">(0)</span></summary>
+          <div class="mt-3 grid gap-2"><p class="text-sm text-slate-500">None</p></div>
+        </details>
+        
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Duplicates / multi-bed reservations <span class="text-slate-500">(4)</span></summary>
+          <div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Rosa Schiering appears 2 times: Double room #110, Double room #112</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux appears 2 times: Double room #110, Double room #112</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux appears 2 times: Double room #110, Double room #112</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Clement  Arnoux appears 2 times: Double room #110, Double room #112</div></div>
+        </details>
+        
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Bed requests <span class="text-slate-500">(4)</span></summary>
+          <div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Lakatos Annamária | Tidehunter Surf House -The Slab #6700: single + large double requested</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds</div></div>
+        </details>
+        
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Extras / additional fees <span class="text-slate-500">(33)</span></summary>
+          <div class="mt-3 grid gap-2"><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Mon 21 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Mon 21 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Mon 21 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Tue 22 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Tue 22 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Tue 22 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Tue 22 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Tue 22 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Wed 23 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Wed 23 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Wed 23 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Wed 23 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Wed 23 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Thu 24 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Thu 24 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Thu 24 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Thu 24 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Thu 24 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Fri 25 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Fri 25 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Fri 25 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Fri 25 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Fri 25 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sat 26 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sat 26 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sat 26 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sat 26 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sat 26 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sun 27 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sun 27 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sun 27 Sep: Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sun 27 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120</div><div class="rounded-lg border border-emerald-400/20 bg-emerald-500/5 text-emerald-100 px-3 py-2 text-sm">Sun 27 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65</div></div>
+        </details>
+        
+          
+        <details class="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+          <summary class="cursor-pointer text-sm font-semibold text-slate-100">Notes <span class="text-slate-500">(15)</span></summary>
+          <div class="mt-3 grid gap-2"><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sun 20 Sep: Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sun 20 Sep: Marlene Schorn | Mixed dorm #05: This is a partial replacement for the cancelled Smart Flex reservation 5874192455. More information can be found at</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sun 20 Sep: Paul Bürger | Mixed dormitory - Room only #07: Gender: Mixed Guest Count:1 Arrival Time:0 paid:43.20 - due:244.80 - OTAcommission:43.20 - OTAdue:0.00 - paymenttype:Deposit</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sun 20 Sep: Lakatos Annamária | Tidehunter Surf House -The Slab #6700: BED PREFERENCE:Triple Room with Private External Bathroom: 1 single, 1 large double</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Mon 21 Sep: Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tue 22 Sep: Ruby Smith | Mixed dormitory - Room only #10: Gender: Mixed Guest Count:1 Arrival Time:0 paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Tue 22 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Wed 23 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Wed 23 Sep: Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Thu 24 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Thu 24 Sep: Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Fri 25 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Fri 25 Sep: Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: vate Bathroom: 2 singles</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sat 26 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div><div class="rounded-lg border border-white/10 bg-slate-900/60 text-slate-200 px-3 py-2 text-sm">Sun 27 Sep: Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?</div></div>
+        </details>
+        
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.day-tab').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.day-tab').forEach((item) => {
+          item.classList.remove('border-emerald-300/50', 'bg-emerald-400/10', 'text-emerald-100');
+          item.classList.add('border-white/10', 'bg-slate-950/60', 'text-slate-300');
+        });
+        document.querySelectorAll('.day-panel').forEach((item) => {
+          item.classList.add('hidden');
+          item.classList.remove('block');
+        });
+        button.classList.add('border-emerald-300/50', 'bg-emerald-400/10', 'text-emerald-100');
+        button.classList.remove('border-white/10', 'bg-slate-950/60', 'text-slate-300');
+        const panel = document.getElementById(button.dataset.target);
+        panel.classList.remove('hidden');
+        panel.classList.add('block');
+      });
+    });
+
+    document.querySelectorAll('.copy-team-message').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const textarea = button.closest('section').querySelector('.team-message');
+        textarea.select();
+        try {
+          await navigator.clipboard.writeText(textarea.value);
+        } catch (error) {
+          document.execCommand('copy');
+        }
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => button.textContent = original, 1400);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+{
+  "generated_at": "2026-09-20T16:50:22",
+  "mode": "recent_updates",
+  "max_pages": 15,
+  "lookback_days": 14,
+  "stats": {
+    "loaded": 130,
+    "updates": 85,
+    "added": 1,
+    "updated": 67,
+    "removed": 0,
+    "skipped": 0
+  },
+  "fetch_meta": {
+    "pages_read": 6,
+    "last_page_count": 10,
+    "max_pages": 15,
+    "max_pages_hit": false,
+    "stopped_reason": "api_total_pages",
+    "records_returned": 85
+  },
+  "first_fetched_reservations": [
+    {
+      "reservation_id": 38053692,
+      "guest": "Brunno Victor Freitas Cunha",
+      "state": "canceled",
+      "checkin": "2026-09-14",
+      "checkout": "2026-09-18",
+      "updated_at": "2026-09-14T11:45:14.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 38442443,
+      "guest": "Marie Waehlen",
+      "state": "canceled",
+      "checkin": "2026-10-16",
+      "checkout": "2026-10-31",
+      "updated_at": "2026-09-15T21:28:55.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39283785,
+      "guest": "Núria Guanyabens",
+      "state": "canceled",
+      "checkin": "2026-12-05",
+      "checkout": "2026-12-08",
+      "updated_at": "2026-09-18T09:36:45.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39296656,
+      "guest": "Núria Guanyabens",
+      "state": "canceled",
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-05",
+      "updated_at": "2026-09-18T09:37:09.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39663397,
+      "guest": "Alexia Jourry",
+      "state": "canceled",
+      "checkin": "2026-09-21",
+      "checkout": "2026-09-23",
+      "updated_at": "2026-09-16T20:26:48.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39663437,
+      "guest": "Laurene Lefebure",
+      "state": "canceled",
+      "checkin": "2026-09-21",
+      "checkout": "2026-09-23",
+      "updated_at": "2026-09-16T20:25:56.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39699574,
+      "guest": "Celine Hegmans",
+      "state": "canceled",
+      "checkin": "2026-09-23",
+      "checkout": "2026-09-29",
+      "updated_at": "2026-09-18T11:14:42.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39713664,
+      "guest": "Alexandra Agay",
+      "state": "canceled",
+      "checkin": "2026-10-11",
+      "checkout": "2026-10-18",
+      "updated_at": "2026-09-10T20:45:21.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39839552,
+      "guest": "Khadija Rachidi",
+      "state": "canceled",
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-15",
+      "updated_at": "2026-09-07T12:15:37.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 39870448,
+      "guest": "Vysokaiova Katarína",
+      "state": "canceled",
+      "checkin": "2026-11-07",
+      "checkout": "2026-11-14",
+      "updated_at": "2026-09-16T21:31:23.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40124508,
+      "guest": "Silvia Del Greco",
+      "state": "confirmed",
+      "checkin": "2026-11-26",
+      "checkout": "2026-11-27",
+      "updated_at": "2026-09-18T13:41:20.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40278109,
+      "guest": "Klara Kammerer",
+      "state": "canceled",
+      "checkin": "2026-09-18",
+      "checkout": "2026-09-19",
+      "updated_at": "2026-09-15T08:13:54.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40743803,
+      "guest": "Jana Hertel",
+      "state": "canceled",
+      "checkin": "2026-09-30",
+      "checkout": "2026-10-01",
+      "updated_at": "2026-09-13T22:13:33.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40866978,
+      "guest": "Goltseva Elena",
+      "state": "confirmed",
+      "checkin": "2026-11-16",
+      "checkout": "2026-11-23",
+      "updated_at": "2026-09-09T12:08:21.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40875399,
+      "guest": "Abi  Leci",
+      "state": "reserved",
+      "checkin": "2026-09-10",
+      "checkout": "2026-09-12",
+      "updated_at": "2026-09-12T17:38:37.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40890881,
+      "guest": "Lucas Gonzalez Barturen",
+      "state": "canceled",
+      "checkin": "2026-09-20",
+      "checkout": "2026-09-22",
+      "updated_at": "2026-09-15T11:13:07.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40895837,
+      "guest": "Trøstheim Skontorp Hedda",
+      "state": "confirmed",
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-27",
+      "updated_at": "2026-09-17T13:27:34.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40925863,
+      "guest": "Bubacarr Ndow",
+      "state": "confirmed",
+      "checkin": "2026-09-27",
+      "checkout": "2026-09-30",
+      "updated_at": "2026-09-06T13:28:12.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40942322,
+      "guest": "Josselin Salmon",
+      "state": "canceled",
+      "checkin": "2026-09-19",
+      "checkout": "2026-09-21",
+      "updated_at": "2026-09-12T16:39:27.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40950125,
+      "guest": "Sam Oliver Holyoak",
+      "state": "confirmed",
+      "checkin": "2026-12-19",
+      "checkout": "2026-12-24",
+      "updated_at": "2026-09-09T13:49:46.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40971256,
+      "guest": "Peter  Berghaus",
+      "state": "confirmed",
+      "checkin": "2026-10-20",
+      "checkout": "2026-10-31",
+      "updated_at": "2026-09-08T20:03:53.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40971418,
+      "guest": "Pablo Hernandez Soto",
+      "state": "reserved",
+      "checkin": "2026-10-24",
+      "checkout": "2026-11-01",
+      "updated_at": "2026-09-08T20:02:23.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40971792,
+      "guest": "Stefania Amidei",
+      "state": "reserved",
+      "checkin": "2026-10-05",
+      "checkout": "2026-10-09",
+      "updated_at": "2026-09-08T20:24:47.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40971856,
+      "guest": "Annmarie Byrne",
+      "state": "confirmed",
+      "checkin": "2026-10-11",
+      "checkout": "2026-10-18",
+      "updated_at": "2026-09-09T11:38:26.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40972593,
+      "guest": "Alessia Tabarrini",
+      "state": "confirmed",
+      "checkin": "2026-11-03",
+      "checkout": "2026-11-05",
+      "updated_at": "2026-09-08T21:11:43.000+01:00",
+      "created_at": null
+    }
+  ]
+}

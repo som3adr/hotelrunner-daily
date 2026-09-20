@@ -1,0 +1,149 @@
+{
+  "run_status": {
+    "safe_to_send": true,
+    "title": "Ready to review",
+    "message": "HotelRunner data was read and merged into the local cache. Review attention items, then copy the team message.",
+    "details": [
+      "130 cached reservations loaded",
+      "85 HotelRunner updates read",
+      "1 new, 67 changed, 0 canceled/removed",
+      "6 page(s) read"
+    ]
+  },
+  "fetched_reservations": 131,
+  "reservation_states": {
+    "confirmed": 104,
+    "reserved": 27
+  },
+  "active_room_or_bed_lines": 139,
+  "channels": {
+    "Booking.com": 80,
+    "HostelWorld": 2,
+    "Online": 26,
+    "Surf Camp": 28,
+    "Volunteer": 3
+  },
+  "report_days": [
+    {
+      "date": "2026-09-20",
+      "in_house_guests": 32,
+      "arrivals": 7,
+      "departures": 6,
+      "room_conflicts": [
+        "The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)"
+      ],
+      "block_conflicts": [],
+      "possible_duplicates": [
+        "Rosa Schiering appears 2 times: Double room #110, Double room #112"
+      ],
+      "bed_requests": [
+        "Lakatos Annamária | Tidehunter Surf House -The Slab #6700: single + large double requested"
+      ],
+      "extras": []
+    },
+    {
+      "date": "2026-09-21",
+      "in_house_guests": 26,
+      "arrivals": 4,
+      "departures": 9,
+      "room_conflicts": [
+        "The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)",
+        "Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)"
+      ],
+      "block_conflicts": [],
+      "possible_duplicates": [
+        "Clement  Arnoux appears 2 times: Double room #110, Double room #112"
+      ],
+      "bed_requests": [],
+      "extras": [
+        "Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140",
+        "Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240",
+        "Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130"
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "in_house_guests": 29,
+      "arrivals": 3,
+      "departures": 1,
+      "room_conflicts": [
+        "The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)",
+        "Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)"
+      ],
+      "block_conflicts": [],
+      "possible_duplicates": [
+        "Clement  Arnoux appears 2 times: Double room #110, Double room #112"
+      ],
+      "bed_requests": [],
+      "extras": [
+        "Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120",
+        "Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65"
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "in_house_guests": 24,
+      "arrivals": 3,
+      "departures": 4,
+      "room_conflicts": [
+        "Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)"
+      ],
+      "block_conflicts": [],
+      "possible_duplicates": [
+        "Clement  Arnoux appears 2 times: Double room #110, Double room #112"
+      ],
+      "bed_requests": [
+        "Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds"
+      ],
+      "extras": []
+    },
+    {
+      "date": "2026-09-24",
+      "in_house_guests": 19,
+      "arrivals": 1,
+      "departures": 4,
+      "room_conflicts": [],
+      "block_conflicts": [],
+      "possible_duplicates": [],
+      "bed_requests": [
+        "Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds"
+      ],
+      "extras": []
+    },
+    {
+      "date": "2026-09-25",
+      "in_house_guests": 16,
+      "arrivals": 0,
+      "departures": 3,
+      "room_conflicts": [],
+      "block_conflicts": [],
+      "possible_duplicates": [],
+      "bed_requests": [
+        "Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500: separate beds"
+      ],
+      "extras": []
+    },
+    {
+      "date": "2026-09-26",
+      "in_house_guests": 15,
+      "arrivals": 1,
+      "departures": 2,
+      "room_conflicts": [],
+      "block_conflicts": [],
+      "possible_duplicates": [],
+      "bed_requests": [],
+      "extras": []
+    },
+    {
+      "date": "2026-09-27",
+      "in_house_guests": 11,
+      "arrivals": 1,
+      "departures": 4,
+      "room_conflicts": [],
+      "block_conflicts": [],
+      "possible_duplicates": [],
+      "bed_requests": [],
+      "extras": []
+    }
+  ]
+}

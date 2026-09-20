@@ -1,0 +1,73 @@
+{
+  "search": "Klara",
+  "matches": 1,
+  "reservations": [
+    {
+      "reservation_id": 40278109,
+      "hr_number": "R635640675",
+      "provider_number": "5175996381",
+      "channel_display": "Booking.com",
+      "source_display": null,
+      "state": "confirmed",
+      "guest": "Klara Kammerer",
+      "firstname": "Klara",
+      "lastname": "Kammerer",
+      "total_guests": 2,
+      "total_rooms": 1,
+      "checkin_date": "2026-09-18",
+      "checkout_date": "2026-09-19",
+      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\nWe are so looking forward to the sta...",
+      "system_message": null,
+      "rooms": [
+        {
+          "id": 36092222,
+          "state": "confirmed",
+          "code": "1137855:HR:1137850",
+          "number": "101",
+          "voucher_number": "5175996381.6435881157",
+          "availability_group": "HR:1137850",
+          "rate_code": "1137855:HR:1137850",
+          "rate_plan_code": "1137855:HR:1137850",
+          "inv_code": "HR:1137850",
+          "non_refundable": false,
+          "price": 34.02,
+          "total": 34.02,
+          "nights": 1,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 2,
+          "total_adult": 2,
+          "child_ages": [],
+          "name": "Double or Twin Room with Private Bathroom - Room Only Non remboursable - 2 Oc...",
+          "name_presentation": "Chambre avec salle de bain privative  - Bed & Breakfast - Non refundable",
+          "checkin_date": "2026-09-18",
+          "checkout_date": "2026-09-19",
+          "extra_info": "Room Extra Info:This twin/double room features a private bathroom, a tiled fl...",
+          "daily_prices": [
+            {
+              "date": "2026-09-18",
+              "price": 34.02,
+              "original_price": 34.02,
+              "discount": 0.0,
+              "rate_code": "1137855:HR:1137850",
+              "version": "v2"
+            }
+          ],
+          "extras": [],
+          "updated_at": "2026-08-04T20:48:06.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0
+        }
+      ],
+      "meta_data_conversions": [],
+      "integration_echo_details": null,
+      "channel_profile_data_conversions": null,
+      "clean_notes": [
+        "We are so looking forward to the stay! We would appreciate a double bed, as i have chosen above. If that's not the case, or not available anymore please let us know. We don't want to have two single beds, Thank you!! Klara"
+      ],
+      "detected_bed_request": "separate beds, large double bed"
+    }
+  ]
+}

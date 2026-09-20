@@ -1,0 +1,275 @@
+{
+  "timestamp": "2026-09-20T23:17:09.290403",
+  "reservations": {
+    "39461196": {
+      "state": "reserved",
+      "guest": "Alysha  volunteer",
+      "room": "Mixed dormitory",
+      "arrival": "2026-07-16",
+      "departure": "2026-09-30",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "40213102": {
+      "state": "confirmed",
+      "guest": "Nataliia  Ambrosiichuk",
+      "room": "The Reef",
+      "arrival": "2026-09-15",
+      "departure": "2026-09-23",
+      "adults": "3",
+      "meal_plan": "All inclusive"
+    },
+    "40383897": {
+      "state": "confirmed",
+      "guest": "Veronika  Fedorchuk",
+      "room": "The Reef",
+      "arrival": "2026-09-15",
+      "departure": "2026-09-23",
+      "adults": "3",
+      "meal_plan": "All inclusive"
+    },
+    "40998968": {
+      "state": "confirmed",
+      "guest": "Marie Pelletier",
+      "room": "Twin room  - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-18",
+      "departure": "2026-09-20",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41000335": {
+      "state": "confirmed",
+      "guest": "eylul Tunc",
+      "room": "Chambre avec salle de bain privative ",
+      "arrival": "2026-09-18",
+      "departure": "2026-09-25",
+      "adults": "1",
+      "meal_plan": "All inclusive"
+    },
+    "41048276": {
+      "state": "reserved",
+      "guest": "fatima zahra  CHIKI",
+      "room": "Tidehunter Surf House -The Slab ",
+      "arrival": "2026-09-18",
+      "departure": "2026-09-20",
+      "adults": "3",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41063313": {
+      "state": "confirmed",
+      "guest": "Ruby Smith",
+      "room": "Mixed dormitory - Room only - Non refundable ",
+      "arrival": "2026-09-18",
+      "departure": "2026-09-23",
+      "adults": "1",
+      "meal_plan": "Room Only"
+    },
+    "41138316": {
+      "state": "confirmed",
+      "guest": "Marlene Schorn",
+      "room": "Mixed dorm - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-18",
+      "departure": "2026-09-21",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "39624138": {
+      "state": "confirmed",
+      "guest": "Garcia Dani",
+      "room": "Mixed dorm - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-26",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "40462409": {
+      "state": "confirmed",
+      "guest": "Etienne Aleveque",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-24",
+      "adults": "1",
+      "meal_plan": "All inclusive"
+    },
+    "40668641": {
+      "state": "reserved",
+      "guest": "Patrycja Danielak",
+      "room": "Tidehunter Surf House - The Bay ",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-23",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41047397": {
+      "state": "confirmed",
+      "guest": "Rosa Schiering",
+      "room": "Double room  - Bed & Breakfast - Non refundable ",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-21",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41132876": {
+      "state": "confirmed",
+      "guest": "Chiara Scolari",
+      "room": "Tidehunter Surf House -The Cathedral  - BB Non refundable ",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-20",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41149750": {
+      "state": "confirmed",
+      "guest": "Paul Bürger",
+      "room": "Mixed dormitory - Room only - Non refundable ",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-21",
+      "adults": "1",
+      "meal_plan": "Room Only"
+    },
+    "41151351": {
+      "state": "reserved",
+      "guest": "Lara  Cervi",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-21",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41151358": {
+      "state": "reserved",
+      "guest": "Lara  Cervi",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-20",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41151366": {
+      "state": "reserved",
+      "guest": "Lara  Cervi",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-20",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41151374": {
+      "state": "reserved",
+      "guest": "Lara  Cervi",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-20",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41154275": {
+      "state": "reserved",
+      "guest": "Oussama  Chawki",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-19",
+      "departure": "2026-09-22",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "39679673": {
+      "state": "confirmed",
+      "guest": "ETIENNE DUMAS",
+      "room": "Tidehunter Surf House -The Cathedral  - BB Non refundable ",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-28",
+      "adults": "3",
+      "meal_plan": "Bed and breakfast"
+    },
+    "40563496": {
+      "state": "reserved",
+      "guest": "Mohamed Raiz",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-27",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41119728": {
+      "state": "confirmed",
+      "guest": "Feike  Berg",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-27",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41143235": {
+      "state": "confirmed",
+      "guest": "Ahmed Kasoum",
+      "room": "Mixed dorm - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-21",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41158477": {
+      "state": "confirmed",
+      "guest": "Joel Nichter",
+      "room": "Twin room  - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-21",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41164397": {
+      "state": "confirmed",
+      "guest": "Lakatos Annamária",
+      "room": "Tidehunter Surf House -The Slab  - BB Non refundable ",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-21",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41164573": {
+      "state": "reserved",
+      "guest": "youness bendriss",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-20",
+      "departure": "2026-09-21",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "39496933": {
+      "state": "reserved",
+      "guest": "Niels van den Berg",
+      "room": "Double room  - Room only - Online  - Exclusive Offer -10%!",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-29",
+      "adults": "2",
+      "meal_plan": "Room Only"
+    },
+    "40524342": {
+      "state": "confirmed",
+      "guest": "Clement  Arnoux",
+      "room": "Double room ",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-24",
+      "adults": "2",
+      "meal_plan": "All inclusive"
+    },
+    "40524352": {
+      "state": "confirmed",
+      "guest": "Clement  Arnoux",
+      "room": "Double room ",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-24",
+      "adults": "2",
+      "meal_plan": "All inclusive"
+    },
+    "40985302": {
+      "state": "confirmed",
+      "guest": "Emre Sazpinar",
+      "room": "Mixed dormitory - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-25",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    }
+  }
+}
