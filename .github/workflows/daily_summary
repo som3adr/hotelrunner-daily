@@ -1,0 +1,84 @@
+name: HotelRunner Daily Summary
+
+on:
+  # ── 7:00 AM Morocco time every day (UTC+1 = 06:00 UTC) ──────────────────────
+  # Full daily briefing at 07:00, change checks every hour 08:00 → 00:00 Morocco
+  # Silent between 00:01 and 06:59 Morocco (01:00–05:59 UTC) — no notifications while sleeping
+  schedule:
+    - cron: "0 6-23 * * *"  # Every hour from 07:00 to 00:00 Morocco (06:00–23:00 UTC)
+  # Trigger manually from the GitHub website anytime
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode"
+        required: false
+        default: "check"
+        type: choice
+        options:
+          - check
+          - full
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # ── Restore the reservation cache (persisted between runs) ────────────────
+      - name: Restore reservation cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            reservations_cache.json
+            hotelrunner_snapshot.json
+          key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: hotelrunner-cache-${{ runner.os }}-
+
+      # ── Fetch latest reservations from HotelRunner ────────────────────────────
+      - name: Fetch reservations
+        env:
+          HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
+          HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
+        run: python hotelrunner_daily_summary.py --max-pages 15 --page-delay 1 --no-dashboard
+
+      # ── Determine which mode to run ───────────────────────────────────────────
+      # At 06:00 UTC (= 07:00 Morocco) → full daily briefing
+      # All other hours → change-check (silent unless something changed)
+      - name: Decide mode
+        id: mode
+        run: |
+          HOUR=$(date -u +%H)
+          INPUT_MODE="${{ github.event.inputs.mode }}"
+          if [ "$INPUT_MODE" = "full" ]; then
+            echo "mode=full" >> $GITHUB_OUTPUT
+          elif [ "$HOUR" = "06" ]; then
+            echo "mode=full" >> $GITHUB_OUTPUT
+          else
+            echo "mode=check" >> $GITHUB_OUTPUT
+          fi
+
+      # ── Send Telegram message ─────────────────────────────────────────────────
+      - name: Send Telegram
+        env:
+          HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
+          HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python telegram_send.py --mode ${{ steps.mode.outputs.mode }}
+
+      # ── Save updated cache and snapshot for next run ──────────────────────────
+      - name: Save cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            reservations_cache.json
+            hotelrunner_snapshot.json
+          key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
