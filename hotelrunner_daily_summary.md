@@ -4,16 +4,16 @@ Period: 2026-09-21 to 2026-09-28
 
 Status: Ready to review
 HotelRunner data was read and merged into the local cache. Review attention items, then copy the team message.
-- 131 cached reservations loaded
-- 92 HotelRunner updates read
-- 7 new, 66 changed, 1 canceled/removed
+- 141 cached reservations loaded
+- 98 HotelRunner updates read
+- 0 new, 77 changed, 0 canceled/removed
 - 7 page(s) read
 
 ## Monday 21 September 2026
 
 In-house guests: 30 total (30 adults, 0 children)
 Occupied bed/room lines: 20
-Arrivals: 8 | Departures: 9
+Arrivals: 9 | Departures: 10
 
 ### Check-ins
 - Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112 | 2 adults, 0 children | Room Only | Online
@@ -23,7 +23,8 @@ Arrivals: 8 | Departures: 9
 - Massa Bastien | Mixed dorm #06 | 1 adults, 0 children | Bed And Breakfast | Booking.com
 - Ahmed Kasoum | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Online
 - Paul Bürger | Mixed dormitory #07 | 1 adults, 0 children | Bed And Breakfast | Online
-- Marlene Schorn | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Online
+- Marlene Schorn | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
+- Lara  Cervi | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Online
 
 ### Check-outs
 - Marlene Schorn | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Booking.com
@@ -31,6 +32,7 @@ Arrivals: 8 | Departures: 9
 - Rosa Schiering | Double room #112 | 2 adults, 0 children | Bed And Breakfast | Booking.com
 - Paul Bürger | Mixed dormitory - Room only #07 | 1 adults, 0 children | Room Only | HostelWorld
 - Lara  Cervi | Mixed dormitory #08 | 1 adults, 0 children | Bed And Breakfast | Online
+- Oussama  Chawki | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
 - Ahmed Kasoum | Mixed dorm #06 | 1 adults, 0 children | Bed And Breakfast | Booking.com
 - Joel Nichter | Twin room #113 | 2 adults, 0 children | Bed And Breakfast | Booking.com
 - Lakatos Annamária | Tidehunter Surf House -The Slab #6700 | 2 adults, 0 children | Bed And Breakfast | Booking.com
@@ -67,24 +69,21 @@ Arrivals: 8 | Departures: 9
 
 ## Tuesday 22 September 2026
 
-In-house guests: 30 total (30 adults, 0 children)
-Occupied bed/room lines: 19
-Arrivals: 3 | Departures: 4
+In-house guests: 31 total (31 adults, 0 children)
+Occupied bed/room lines: 20
+Arrivals: 2 | Departures: 2
 
 ### Check-ins
 - Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 | 1 adults, 0 children | Room Only | Online
 - Sterre  de Labije | Tidehunter Surf House -The Slab #6700 | 2 adults, 0 children | Bed And Breakfast | Online
-- Marlene Schorn | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
 
 ### Check-outs
-- Oussama  Chawki | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
 - Ahmed Kasoum | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Online
 - Paul Bürger | Mixed dormitory #07 | 1 adults, 0 children | Bed And Breakfast | Online
-- Marlene Schorn | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Online
 
 ### Meal Plans
 - All Inclusive: 12
-- Bed And Breakfast: 14
+- Bed And Breakfast: 15
 - Room Only: 4
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -112,8 +111,8 @@ Arrivals: 3 | Departures: 4
 
 ## Wednesday 23 September 2026
 
-In-house guests: 25 total (25 adults, 0 children)
-Occupied bed/room lines: 18
+In-house guests: 26 total (26 adults, 0 children)
+Occupied bed/room lines: 19
 Arrivals: 3 | Departures: 4
 
 ### Check-ins
@@ -129,7 +128,7 @@ Arrivals: 3 | Departures: 4
 
 ### Meal Plans
 - All Inclusive: 6
-- Bed And Breakfast: 16
+- Bed And Breakfast: 17
 - Room Only: 3
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -155,8 +154,8 @@ Arrivals: 3 | Departures: 4
 
 ## Thursday 24 September 2026
 
-In-house guests: 22 total (22 adults, 0 children)
-Occupied bed/room lines: 16
+In-house guests: 23 total (23 adults, 0 children)
+Occupied bed/room lines: 17
 Arrivals: 2 | Departures: 4
 
 ### Check-ins
@@ -171,7 +170,7 @@ Arrivals: 2 | Departures: 4
 
 ### Meal Plans
 - All Inclusive: 1
-- Bed And Breakfast: 18
+- Bed And Breakfast: 19
 - Room Only: 3
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -197,8 +196,8 @@ Arrivals: 2 | Departures: 4
 
 ## Friday 25 September 2026
 
-In-house guests: 16 total (16 adults, 0 children)
-Occupied bed/room lines: 11
+In-house guests: 17 total (17 adults, 0 children)
+Occupied bed/room lines: 12
 Arrivals: 0 | Departures: 5
 
 ### Check-ins
@@ -212,7 +211,7 @@ Arrivals: 0 | Departures: 5
 - Anna-Lena Baldauf | Twin room #113 | 2 adults, 0 children | Bed And Breakfast | Booking.com
 
 ### Meal Plans
-- Bed And Breakfast: 13
+- Bed And Breakfast: 14
 - Room Only: 3
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -238,8 +237,8 @@ Arrivals: 0 | Departures: 5
 
 ## Saturday 26 September 2026
 
-In-house guests: 15 total (15 adults, 0 children)
-Occupied bed/room lines: 10
+In-house guests: 16 total (16 adults, 0 children)
+Occupied bed/room lines: 11
 Arrivals: 1 | Departures: 2
 
 ### Check-ins
@@ -250,7 +249,7 @@ Arrivals: 1 | Departures: 2
 - Antje Enid Hoffmann | Tidehunter Surf House - The Bay #6500 | 2 adults, 0 children | Bed And Breakfast | Booking.com
 
 ### Meal Plans
-- Bed And Breakfast: 12
+- Bed And Breakfast: 13
 - Room Only: 3
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -276,8 +275,8 @@ Arrivals: 1 | Departures: 2
 
 ## Sunday 27 September 2026
 
-In-house guests: 11 total (11 adults, 0 children)
-Occupied bed/room lines: 7
+In-house guests: 12 total (12 adults, 0 children)
+Occupied bed/room lines: 8
 Arrivals: 1 | Departures: 4
 
 ### Check-ins
@@ -290,7 +289,7 @@ Arrivals: 1 | Departures: 4
 - Veronika Stanzel | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Booking.com
 
 ### Meal Plans
-- Bed And Breakfast: 8
+- Bed And Breakfast: 9
 - Room Only: 3
 
 ### Possible Duplicates / Multi-Bed Reservations
@@ -318,7 +317,7 @@ Arrivals: 1 | Departures: 4
 
 In-house guests: 13 total (13 adults, 0 children)
 Occupied bed/room lines: 9
-Arrivals: 3 | Departures: 1
+Arrivals: 3 | Departures: 2
 
 ### Check-ins
 - Lisa Van den Acker | Chambre avec salle de bain privative #101 | 2 adults, 0 children | Bed And Breakfast | Booking.com
@@ -327,6 +326,7 @@ Arrivals: 3 | Departures: 1
 
 ### Check-outs
 - ETIENNE DUMAS | Tidehunter Surf House -The Cathedral #6600 | 3 adults, 0 children | Bed And Breakfast | Booking.com
+- Lara  Cervi | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Online
 
 ### Meal Plans
 - Bed And Breakfast: 10

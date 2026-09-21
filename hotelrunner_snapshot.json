@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-20T23:17:09.290403",
+  "timestamp": "2026-09-21T15:23:07.659382",
   "reservations": {
     "39461196": {
       "state": "reserved",
@@ -28,15 +28,6 @@
       "adults": "3",
       "meal_plan": "All inclusive"
     },
-    "40998968": {
-      "state": "confirmed",
-      "guest": "Marie Pelletier",
-      "room": "Twin room  - Bed & Breakfast - Non refundable",
-      "arrival": "2026-09-18",
-      "departure": "2026-09-20",
-      "adults": "2",
-      "meal_plan": "Bed and breakfast"
-    },
     "41000335": {
       "state": "confirmed",
       "guest": "eylul Tunc",
@@ -45,15 +36,6 @@
       "departure": "2026-09-25",
       "adults": "1",
       "meal_plan": "All inclusive"
-    },
-    "41048276": {
-      "state": "reserved",
-      "guest": "fatima zahra  CHIKI",
-      "room": "Tidehunter Surf House -The Slab ",
-      "arrival": "2026-09-18",
-      "departure": "2026-09-20",
-      "adults": "3",
-      "meal_plan": "Bed and breakfast"
     },
     "41063313": {
       "state": "confirmed",
@@ -109,15 +91,6 @@
       "adults": "2",
       "meal_plan": "Bed and breakfast"
     },
-    "41132876": {
-      "state": "confirmed",
-      "guest": "Chiara Scolari",
-      "room": "Tidehunter Surf House -The Cathedral  - BB Non refundable ",
-      "arrival": "2026-09-19",
-      "departure": "2026-09-20",
-      "adults": "2",
-      "meal_plan": "Bed and breakfast"
-    },
     "41149750": {
       "state": "confirmed",
       "guest": "Paul Bürger",
@@ -136,39 +109,12 @@
       "adults": "1",
       "meal_plan": "Bed and breakfast"
     },
-    "41151358": {
-      "state": "reserved",
-      "guest": "Lara  Cervi",
-      "room": "Mixed dormitory",
-      "arrival": "2026-09-19",
-      "departure": "2026-09-20",
-      "adults": "1",
-      "meal_plan": "Bed and breakfast"
-    },
-    "41151366": {
-      "state": "reserved",
-      "guest": "Lara  Cervi",
-      "room": "Mixed dorm",
-      "arrival": "2026-09-19",
-      "departure": "2026-09-20",
-      "adults": "1",
-      "meal_plan": "Bed and breakfast"
-    },
-    "41151374": {
-      "state": "reserved",
-      "guest": "Lara  Cervi",
-      "room": "Mixed dorm",
-      "arrival": "2026-09-19",
-      "departure": "2026-09-20",
-      "adults": "1",
-      "meal_plan": "Bed and breakfast"
-    },
     "41154275": {
       "state": "reserved",
       "guest": "Oussama  Chawki",
       "room": "Mixed dormitory",
       "arrival": "2026-09-19",
-      "departure": "2026-09-22",
+      "departure": "2026-09-21",
       "adults": "1",
       "meal_plan": "Bed and breakfast"
     },
@@ -270,6 +216,81 @@
       "departure": "2026-09-25",
       "adults": "1",
       "meal_plan": "Bed and breakfast"
+    },
+    "41171587": {
+      "state": "confirmed",
+      "guest": "Massa Bastien",
+      "room": "Mixed dorm - Bed & Breakfast - Non refundable",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-24",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41171772": {
+      "state": "reserved",
+      "guest": "Ahmed Kasoum",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-22",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41171859": {
+      "state": "reserved",
+      "guest": "Paul Bürger",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-22",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41172801": {
+      "state": "reserved",
+      "guest": "Marlene Schorn",
+      "room": "Mixed dormitory",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-25",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "41176958": {
+      "state": "confirmed",
+      "guest": "Lara  Cervi",
+      "room": "Mixed dorm",
+      "arrival": "2026-09-21",
+      "departure": "2026-09-28",
+      "adults": "1",
+      "meal_plan": "Bed and breakfast"
+    },
+    "40336796": {
+      "state": "confirmed",
+      "guest": "Vivien Linda Pochopien",
+      "room": "Mixed dormitory - Room only - Online  - Exclusive Offer -10%",
+      "arrival": "2026-09-22",
+      "departure": "2026-09-30",
+      "adults": "1",
+      "meal_plan": "Room Only"
+    },
+    "41164635": {
+      "state": "confirmed",
+      "guest": "Sterre  de Labije",
+      "room": "Tidehunter Surf House -The Slab ",
+      "arrival": "2026-09-22",
+      "departure": "2026-09-27",
+      "adults": "2",
+      "meal_plan": "Bed and breakfast"
     }
-  }
+  },
+  "notified_cancellations": [
+    "41168145",
+    "41177340",
+    "41172793",
+    "39663397",
+    "40890881",
+    "41119229",
+    "41067603",
+    "40942322",
+    "41171765",
+    "39663437"
+  ]
 }

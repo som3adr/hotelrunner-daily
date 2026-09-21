@@ -714,7 +714,10 @@ def load_update_and_save_cache(
     )
     merged, stats = merge_reservation_cache(cached, updates)
     save_reservation_cache(cache_path, merged)
+    latest_updates_path = cache_path.parent / "hotelrunner_latest_updates.json"
+    latest_updates_path.write_text(json.dumps(updates, indent=2, ensure_ascii=False), encoding="utf-8")
     return merged, stats, updates
+
 
 
 def safe_preview(value: Any) -> Any:

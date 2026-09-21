@@ -4,31 +4,31 @@
     "title": "Ready to review",
     "message": "HotelRunner data was read and merged into the local cache. Review attention items, then copy the team message.",
     "details": [
-      "131 cached reservations loaded",
-      "92 HotelRunner updates read",
-      "7 new, 66 changed, 1 canceled/removed",
+      "141 cached reservations loaded",
+      "98 HotelRunner updates read",
+      "0 new, 77 changed, 0 canceled/removed",
       "7 page(s) read"
     ]
   },
-  "fetched_reservations": 137,
+  "fetched_reservations": 141,
   "reservation_states": {
-    "confirmed": 106,
+    "confirmed": 110,
     "reserved": 31
   },
-  "active_room_or_bed_lines": 145,
+  "active_room_or_bed_lines": 149,
   "channels": {
-    "Booking.com": 82,
+    "Booking.com": 84,
     "HostelWorld": 2,
     "Online": 30,
-    "Surf Camp": 28,
+    "Surf Camp": 30,
     "Volunteer": 3
   },
   "report_days": [
     {
       "date": "2026-09-21",
       "in_house_guests": 30,
-      "arrivals": 8,
-      "departures": 9,
+      "arrivals": 9,
+      "departures": 10,
       "room_conflicts": [
         "The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)",
         "Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)"
@@ -46,9 +46,9 @@
     },
     {
       "date": "2026-09-22",
-      "in_house_guests": 30,
-      "arrivals": 3,
-      "departures": 4,
+      "in_house_guests": 31,
+      "arrivals": 2,
+      "departures": 2,
       "room_conflicts": [
         "The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)",
         "Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)"
@@ -65,7 +65,7 @@
     },
     {
       "date": "2026-09-23",
-      "in_house_guests": 25,
+      "in_house_guests": 26,
       "arrivals": 3,
       "departures": 4,
       "room_conflicts": [
@@ -82,7 +82,7 @@
     },
     {
       "date": "2026-09-24",
-      "in_house_guests": 22,
+      "in_house_guests": 23,
       "arrivals": 2,
       "departures": 4,
       "room_conflicts": [],
@@ -95,7 +95,7 @@
     },
     {
       "date": "2026-09-25",
-      "in_house_guests": 16,
+      "in_house_guests": 17,
       "arrivals": 0,
       "departures": 5,
       "room_conflicts": [],
@@ -108,7 +108,7 @@
     },
     {
       "date": "2026-09-26",
-      "in_house_guests": 15,
+      "in_house_guests": 16,
       "arrivals": 1,
       "departures": 2,
       "room_conflicts": [],
@@ -119,7 +119,7 @@
     },
     {
       "date": "2026-09-27",
-      "in_house_guests": 11,
+      "in_house_guests": 12,
       "arrivals": 1,
       "departures": 4,
       "room_conflicts": [],
@@ -132,7 +132,7 @@
       "date": "2026-09-28",
       "in_house_guests": 13,
       "arrivals": 3,
-      "departures": 1,
+      "departures": 2,
       "room_conflicts": [],
       "block_conflicts": [],
       "possible_duplicates": [],

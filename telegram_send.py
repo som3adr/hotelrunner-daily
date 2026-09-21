@@ -193,13 +193,14 @@ def save_snapshot(snapshot: dict, path: Path) -> None:
     path.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def build_change_alert(old: dict, new: dict) -> str | None:
+def build_change_alert(old: dict, new: dict, latest_updates_path: Path | None = None) -> str | None:
     """
-    Diff two snapshots and return a Telegram message describing what changed,
-    or None if nothing meaningful changed.
+    Diff two snapshots and check latest HotelRunner updates for cancellations.
+    Returns a Telegram message describing what changed, or None if nothing changed.
     """
     old_res = old.get("reservations", {})
     new_res = new.get("reservations", {})
+    notified_cancellations = set(old.get("notified_cancellations", []))
 
     added_ids    = set(new_res) - set(old_res)
     removed_ids  = set(old_res) - set(new_res)
@@ -207,7 +208,48 @@ def build_change_alert(old: dict, new: dict) -> str | None:
 
     lines: list[str] = []
 
-    # New reservations
+    active_guest_names = {
+        str(r.get("guest") or "").strip().casefold()
+        for r in new_res.values()
+    }
+    today_str = dt.date.today().isoformat()
+
+    # 1. Direct cancellations from latest HotelRunner API updates
+    if latest_updates_path and latest_updates_path.exists():
+        try:
+            latest_updates = json.loads(latest_updates_path.read_text(encoding="utf-8"))
+            for u in latest_updates:
+                st = str(u.get("state") or "").lower()
+                if st in ("canceled", "cancelled"):
+                    # Only consider reservations affecting today or tomorrow
+                    if not _is_relevant_today_or_tomorrow(u):
+                        continue
+
+                    # Only alert if the cancellation event actually happened TODAY
+                    canc_ts = str(u.get("canceled_at") or u.get("updated_at") or "")
+                    if not canc_ts.startswith(today_str):
+                        continue
+
+                    guest = str(u.get("guest") or u.get("firstname") or "Guest").strip()
+
+                    # Ignore if guest is still active in house (e.g. stay extension)
+                    if guest.casefold() in active_guest_names:
+                        continue
+
+                    rid = str(u.get("reservation_id") or u.get("id") or "")
+                    if rid and rid not in notified_cancellations:
+                        rooms = u.get("rooms") or []
+                        first_room = rooms[0] if rooms else {}
+                        room_name = first_room.get("name_presentation") or first_room.get("name") or "Room"
+                        cin = str(u.get("checkin_date") or "")[:10]
+                        cout = str(u.get("checkout_date") or "")[:10]
+                        lines.append(f"❌ CANCELLED: {guest} · {room_name[:60]} · {cin} → {cout}")
+                        notified_cancellations.add(rid)
+        except Exception:
+            pass
+
+
+    # 2. New reservations
     for rid in sorted(added_ids):
         r = new_res[rid]
         lines.append(
@@ -215,15 +257,18 @@ def build_change_alert(old: dict, new: dict) -> str | None:
             f"{r['arrival']} → {r['departure']} · {r['meal_plan']}"
         )
 
-    # Cancelled / removed
+    # 3. Cancelled / removed from snapshot
     for rid in sorted(removed_ids):
+        if rid in notified_cancellations:
+            continue
         r = old_res[rid]
         if r.get("state", "").lower() in ("cancelled", "canceled", "no_show", ""):
             lines.append(f"❌ REMOVED: {r['guest']} · {r['room']} · {r['arrival']}")
         else:
             lines.append(f"🗑️ GONE: {r['guest']} · {r['room']} · {r['arrival']}")
+        notified_cancellations.add(rid)
 
-    # Modified
+    # 4. Modified
     IMPORTANT_FIELDS = {"state", "guest", "room", "arrival", "departure", "adults", "meal_plan"}
     for rid in sorted(common_ids):
         o, n = old_res[rid], new_res[rid]
@@ -235,12 +280,16 @@ def build_change_alert(old: dict, new: dict) -> str | None:
         if diffs:
             lines.append(f"✏️ CHANGED: {n['guest']} · {n['room']} · " + ", ".join(diffs))
 
+    # Keep track of notified cancellations
+    new["notified_cancellations"] = list(notified_cancellations)
+
     if not lines:
         return None  # nothing changed → stay silent
 
     now_str = dt.datetime.now().strftime("%d %b · %H:%M")
     header = f"🔔 HOTELRUNNER UPDATE · {now_str}\n"
     return header + "\n".join(lines)
+
 
 
 # ── chat ID discovery ─────────────────────────────────────────────────────────
@@ -337,12 +386,12 @@ def main() -> None:
         old_snapshot = load_snapshot(snapshot_path)
         new_snapshot = build_snapshot(cache_path)
 
-        alert = build_change_alert(old_snapshot, new_snapshot)
-
-        # Always save the new snapshot so the next run compares fresh
-        save_snapshot(new_snapshot, snapshot_path)
+        latest_updates_path = cache_path.parent / "hotelrunner_latest_updates.json"
+        alert = build_change_alert(old_snapshot, new_snapshot, latest_updates_path)
 
         if alert is None:
+            # Still save snapshot so quiet state is kept
+            save_snapshot(new_snapshot, snapshot_path)
             print("[check] No changes detected. Silent.")
             return
 
@@ -350,6 +399,9 @@ def main() -> None:
             utf8_print("\n-- CHANGE ALERT (would be sent) --\n")
             utf8_print(alert)
             return
+
+        # Save snapshot after sending so next run compares fresh
+        save_snapshot(new_snapshot, snapshot_path)
 
         print("[check] Changes detected — sending alert ...")
         send_text(token, chat_id, alert, "Change alert")

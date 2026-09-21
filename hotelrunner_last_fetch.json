@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-09-21T09:50:45",
+  "generated_at": "2026-09-21T15:09:04",
   "mode": "recent_updates",
   "max_pages": 15,
   "lookback_days": 14,
   "stats": {
-    "loaded": 131,
-    "updates": 92,
-    "added": 7,
-    "updated": 66,
-    "removed": 1,
+    "loaded": 141,
+    "updates": 98,
+    "added": 0,
+    "updated": 77,
+    "removed": 0,
     "skipped": 0
   },
   "fetch_meta": {
     "pages_read": 7,
-    "last_page_count": 2,
+    "last_page_count": 8,
     "max_pages": 15,
     "max_pages_hit": false,
     "stopped_reason": "api_total_pages",
-    "records_returned": 92
+    "records_returned": 98
   },
   "first_fetched_reservations": [
     {
