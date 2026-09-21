@@ -1162,14 +1162,68 @@ def grouped_team_lines(lines: list[StayLine]) -> list[str]:
     return output
 
 
+def _normalize_name_key(name: str) -> str:
+    return re.sub(r"\s+", " ", name).strip().casefold()
+
+
+def detect_extensions(departures: list[StayLine], arrivals: list[StayLine]) -> tuple[list[StayLine], list[StayLine], list[str]]:
+    """
+    If a guest appears in departures AND arrivals on the same day, they extended their stay.
+    Removes them from departures and arrivals and generates clean extension notes.
+    """
+    dep_by_name: dict[str, list[StayLine]] = {}
+    for line in departures:
+        dep_by_name.setdefault(_normalize_name_key(line.guest_name), []).append(line)
+
+    matched_dep_idx: set[int] = set()
+    matched_arr_idx: set[int] = set()
+    extension_notes: list[str] = []
+
+    for a_idx, arr_line in enumerate(arrivals):
+        key = _normalize_name_key(arr_line.guest_name)
+        if key in dep_by_name and dep_by_name[key]:
+            dep_line = dep_by_name[key].pop(0)
+            # Find index of dep_line in departures
+            for d_idx, d in enumerate(departures):
+                if d is dep_line and d_idx not in matched_dep_idx:
+                    matched_dep_idx.add(d_idx)
+                    break
+            matched_arr_idx.add(a_idx)
+
+            nights = (arr_line.departure - arr_line.arrival).days
+            nights_str = "one night" if nights == 1 else f"{nights} nights"
+
+            old_room = team_room_label(dep_line)
+            new_room = team_room_label(arr_line)
+
+            if old_room == new_room:
+                note = f"{arr_line.guest_name} x{arr_line.guests} -> {new_room} extended {nights_str}"
+            else:
+                note = f"{arr_line.guest_name} x{arr_line.guests} -> moved from {old_room} to {new_room} (extended {nights_str})"
+
+            extension_notes.append(note)
+
+    clean_deps = [line for idx, line in enumerate(departures) if idx not in matched_dep_idx]
+    clean_arrs = [line for idx, line in enumerate(arrivals) if idx not in matched_arr_idx]
+    return clean_deps, clean_arrs, extension_notes
+
+
 def build_whatsapp_block(summary: DaySummary) -> str:
     """Check-outs and check-ins only — the part you copy to WhatsApp."""
     date_str = summary.date.strftime("%d %B")
+    clean_deps, clean_arrs, extensions = detect_extensions(summary.departures, summary.arrivals)
+
     lines = [f"🏁 CHECK-OUTS · {date_str}"]
-    lines.extend(grouped_team_lines(summary.departures) or ["", "No check-outs"])
+    lines.extend(grouped_team_lines(clean_deps) or ["", "No check-outs"])
+
+    if extensions:
+        lines.extend(["", "note:"])
+        lines.extend(extensions)
+
     lines.extend(["", "————", "", f"🏨 CHECK-INS · {date_str}"])
-    lines.extend(grouped_team_lines(summary.arrivals) or ["", "No check-ins"])
+    lines.extend(grouped_team_lines(clean_arrs) or ["", "No check-ins"])
     return "\n".join(lines)
+
 
 
 def build_manager_block(summary: DaySummary) -> str:
