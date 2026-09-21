@@ -1,0 +1,162 @@
+{
+  "_comment": "Olas Surf Camp — Operations Manager Configuration. Edit values here to adjust business rules.",
+
+  "camp": {
+    "name": "Olas Surf Camp",
+    "timezone": "Africa/Casablanca",
+    "location": {
+      "name": "Imsouane, Morocco",
+      "latitude": 30.85,
+      "longitude": -9.79
+    }
+  },
+
+  "houses": {
+    "Olas": {
+      "emoji": "🏠",
+      "source": "hotelrunner",
+      "total_capacity": 30,
+      "rooms": {
+        "RDC1":     { "bed_number": "110", "capacity": 2, "type": "double" },
+        "RDC2":     { "bed_number": "112", "capacity": 2, "type": "double" },
+        "RDC3":     { "bed_number": "101", "capacity": 2, "type": "double" },
+        "balcony":  { "bed_number": "113", "capacity": 2, "type": "twin" },
+        "dorm 03":  { "bed_number": "03",  "capacity": 6, "type": "dorm" },
+        "dorm 04":  { "bed_number": "04",  "capacity": 6, "type": "dorm" },
+        "dorm 05":  { "bed_number": "05",  "capacity": 6, "type": "dorm" },
+        "dorm 06":  { "bed_number": "06",  "capacity": 6, "type": "dorm" },
+        "dorm 07":  { "bed_number": "07",  "capacity": 6, "type": "dorm" },
+        "dorm 08":  { "bed_number": "08",  "capacity": 6, "type": "dorm" },
+        "dorm 09":  { "bed_number": "09",  "capacity": 6, "type": "dorm" }
+      }
+    },
+    "Tide": {
+      "emoji": "🌊",
+      "source": "hotelrunner",
+      "total_capacity": 16,
+      "rooms": {
+        "bay":       { "bed_number": "6500", "capacity": 4, "type": "villa" },
+        "slab":      { "bed_number": "6700", "capacity": 4, "type": "villa" },
+        "cathedral": { "bed_number": "6600", "capacity": 4, "type": "villa" },
+        "reef":      { "bed_number": "6800", "capacity": 6, "type": "villa" }
+      }
+    },
+    "Sunrise": {
+      "emoji": "🌅",
+      "source": "google_sheet",
+      "total_capacity": 18,
+      "rooms": {
+        "Sunrise 1": { "capacity": 3, "type": "double+single", "beds": ["double", "single"] },
+        "Sunrise 2": { "capacity": 5, "type": "dorm",          "beds": ["single","single","single","single","single"] },
+        "Sunrise 3": { "capacity": 4, "type": "quad",          "beds": ["single","single","single","single"] },
+        "Sunrise 4": { "capacity": 3, "type": "double+single", "beds": ["double", "single"] },
+        "Sunrise 5": { "capacity": 3, "type": "triple",        "beds": ["single","single","single"] }
+      }
+    }
+  },
+
+  "meals": {
+    "breakfast_time": "08:30",
+    "lunch_time": "14:30",
+    "dinner_time": "19:30",
+    "plans": {
+      "room only":           { "breakfast": false, "lunch": false, "dinner": false },
+      "bed and breakfast":   { "breakfast": true,  "lunch": false, "dinner": false },
+      "breakfast":           { "breakfast": true,  "lunch": false, "dinner": false },
+      "half board":          { "breakfast": true,  "lunch": false, "dinner": true  },
+      "half board formula":  { "breakfast": true,  "lunch": false, "dinner": true  },
+      "full board":          { "breakfast": true,  "lunch": true,  "dinner": true  },
+      "all inclusive":       { "breakfast": true,  "lunch": true,  "dinner": true  }
+    },
+    "meal_extra_keywords": {
+      "lunch":   ["lunch", "dejeuner", "déjeuner", "midi"],
+      "dinner":  ["dinner", "diner", "dîner", "souper", "half board", "demi pension"],
+      "breakfast": ["breakfast", "petit dejeuner", "petit déjeuner"]
+    }
+  },
+
+  "surf": {
+    "default_duration_minutes": 120,
+    "return_buffer_minutes": 30,
+    "preferred_time": "morning",
+    "morning_preferred_reason": "Guests finish early, can rest, free surf available later",
+    "spots": {
+      "Bay": {
+        "preferred_tide": ["low_to_mid", "mid_to_low"],
+        "description": "Best at low-to-mid or mid-to-low tide"
+      },
+      "Cathedral": {
+        "preferred_tide": ["high_to_mid", "mid_to_high"],
+        "description": "Best at high-to-mid or mid-to-high tide"
+      }
+    },
+    "google_sheet_tab": "Surf Schedule",
+    "schedule_columns": {
+      "date": "Date",
+      "time": "Time",
+      "level": "Level",
+      "spot": "Spot",
+      "guests": "Guests",
+      "notes": "Notes"
+    }
+  },
+
+  "conditions": {
+    "provider": "open-meteo",
+    "marine_api": "https://marine-api.open-meteo.com/v1/marine",
+    "weather_api": "https://api.open-meteo.com/v1/forecast",
+    "tides_provider": "worldtides",
+    "tides_api": "https://www.worldtides.info/api/v3"
+  },
+
+  "transfers": {
+    "airports": {
+      "Agadir": { "code": "AGA", "keywords": ["agadir", "essa", "essaouira", "aga"] },
+      "Marrakech": { "code": "RAK", "keywords": ["marrakech", "marrakesh", "rak"] },
+      "Casablanca": { "code": "CMN", "keywords": ["casablanca", "cmn"] }
+    },
+    "extra_keywords": ["airport transfer", "transfer", "taxi", "pickup", "drop-off", "dropoff"]
+  },
+
+  "extras": {
+    "surf_equipment": ["surfboard", "surfboards rental", "board rental", "wetsuit", "leash", "fins"],
+    "surf_lesson":    ["surf lesson", "surf lessons", "cours de surf", "coaching", "surfaddict"],
+    "meal_extras":    ["half board formula", "lunch", "dinner", "breakfast", "meal"],
+    "transfer":       ["airport transfer", "transfer", "taxi", "shuttle"],
+    "tax":            ["city tax", "tourist tax", "taxe de sejour", "vat", "tva"],
+    "unknown_threshold_eur": 0
+  },
+
+  "conflicts": {
+    "warning_days_before": 7,
+    "urgent_days_before": 3,
+    "same_day_checkout_checkin_ok": true,
+    "group_booking_same_guest_threshold": 2
+  },
+
+  "alerts": {
+    "state_file": "alert_state.json",
+    "quiet_hours_start": 1,
+    "quiet_hours_end": 7
+  },
+
+  "google_sheets": {
+    "spreadsheet_id": "143CJl8Sdf8OLFjPlE8DiyLekPuvI1itKtXfk9TAUEyc",
+    "sunrise_tab": "Sheet1",
+    "sunrise_columns": {
+      "guest_name":           "Guest Name",
+      "checkin":              "Check-in",
+      "checkout":             "Check-out",
+      "nb_nights":            "Nb Nights",
+      "room":                 "Room",
+      "estimated_arrival":    "Estimated Arrival",
+      "estimated_departure":  "Estimated Departure",
+      "surf_package":         "Surf package",
+      "surf_level":           "Surfing Level",
+      "surf_goals":           "Surf Goals",
+      "diet":                 "Diet",
+      "allergies":            "Allergies",
+      "notes":                "Medical Conditions / Notes"
+    }
+  }
+}

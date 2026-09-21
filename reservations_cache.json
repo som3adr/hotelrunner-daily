@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-20T16:50:22",
-  "reservation_count": 131,
+  "updated_at": "2026-09-21T09:50:45",
+  "reservation_count": 137,
   "reservations": [
     {
       "reservation_id": 39461196,
@@ -1580,7 +1580,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "393b4bb7e990952494697d079382adcc"
+      "message_uid": "fee6bf0ffa96f1e0566e32d734d3b8ee"
     },
     {
       "reservation_id": 41048189,
@@ -1744,7 +1744,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "8f2741567e7b8c6d1fb4cafdc2e3f513"
+      "message_uid": "f82bc795775be9b34bf49d1cb344bd72"
     },
     {
       "reservation_id": 41023678,
@@ -1914,7 +1914,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "36d3881ff79a6f70f64936a9f687fe6d"
+      "message_uid": "406827e2aba177d306492f666d5c70bb"
     },
     {
       "reservation_id": 38125279,
@@ -2448,7 +2448,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "5afa46fad7f4a904013088367e192ff4"
+      "message_uid": "be468fb25b06604efe57e94feff02135"
     },
     {
       "reservation_id": 41023268,
@@ -2625,7 +2625,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "425b2a14191da86de489c40ec72b649d"
+      "message_uid": "1b87f7d387f17d0871c98dbd7fb35a80"
     },
     {
       "reservation_id": 41023286,
@@ -2802,7 +2802,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "152b4e6907af170de806b4908dcd9fed"
+      "message_uid": "b94986df3b3e74cbdc23ec9f7cfef64e"
     },
     {
       "reservation_id": 41024031,
@@ -2979,7 +2979,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "800123beff040f6933abc434cff65e49"
+      "message_uid": "be2cc5fa02324c5ad5b6282968758f89"
     },
     {
       "reservation_id": 41059583,
@@ -3141,7 +3141,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "bf6a1f6c94162312dfb13601f41971a2"
+      "message_uid": "9cfcb70385e6559ce091a40f9cd3162f"
     },
     {
       "reservation_id": 40213102,
@@ -3723,7 +3723,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "d176b506686a47f098cc9d1feb3cc9f8"
+      "message_uid": "727bce6801f5487f8c1bca60ca787447"
     },
     {
       "reservation_id": 40503198,
@@ -4055,7 +4055,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "d427807bb6d9842f30f8d1f94e1f580b"
+      "message_uid": "111b1d4953953876e58524da72798cfe"
     },
     {
       "reservation_id": 41000335,
@@ -4257,7 +4257,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "69287b6700eef563e5bfc618388ad1a2"
+      "message_uid": "9670569bb7041ec2ce85dd38a0b35536"
     },
     {
       "reservation_id": 41048276,
@@ -4428,7 +4428,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "a756f1c47b8e8255d301b1c4a4026be5"
+      "message_uid": "d4753b584b78b48ac42cab71e18421a7"
     },
     {
       "reservation_id": 41063313,
@@ -4616,7 +4616,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "61809e482f7881203a835f8a57e22d0b"
+      "message_uid": "60ca4bbed64b38eb5f36728cc27d1b32"
     },
     {
       "reservation_id": 41125279,
@@ -4778,7 +4778,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "996e7ffb682c315150f7f8322d4a0daa"
+      "message_uid": "da651f1781b0c2d3fb827e0fe2074484"
     },
     {
       "reservation_id": 41137372,
@@ -5004,7 +5004,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "b0eb62e47d4a8c92f32e73f7978b377b"
+      "message_uid": "d6932b9ab30b72c907c66e5e78c6a0c7"
     },
     {
       "reservation_id": 41138316,
@@ -5182,7 +5182,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "71148975272dad1e1e7b7e53e522d2b5"
+      "message_uid": "2828955f9584048d83195e7cfb70ced5"
     },
     {
       "reservation_id": 41139953,
@@ -5338,7 +5338,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "5d62003942045f5f0018bd4f9610a843"
+      "message_uid": "f088010481910069ee30381645052f51"
     },
     {
       "reservation_id": 39624138,
@@ -6159,7 +6159,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "ba7ee2fe6978c3d2ff77fa15b3b5f8c6"
+      "message_uid": "fbc6c7209b1587c1272abba636e35ae5"
     },
     {
       "reservation_id": 41132876,
@@ -6321,7 +6321,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "0e5323763ecd0347097a3235c9926283"
+      "message_uid": "f29a2c9f1d73f201e849be5091804a65"
     },
     {
       "reservation_id": 41149750,
@@ -6485,7 +6485,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "59ee7c9aca3c409b271dd58782d5aab7"
+      "message_uid": "90bf3df8b9b8f659bc36f92f7b2b1265"
     },
     {
       "reservation_id": 41151351,
@@ -6649,7 +6649,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "c7995f471e197ae3ab80bcce5a8b2595"
+      "message_uid": "f293ce3c2c80c88d9343394f1d2ecc16"
     },
     {
       "reservation_id": 41151358,
@@ -6805,7 +6805,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "34d35ee64632788c59e781c3d590f0f3"
+      "message_uid": "b09d22f5aa4bc47d2f8cea018aea01ad"
     },
     {
       "reservation_id": 41151366,
@@ -6961,7 +6961,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "4216bad1564bfb02fd8e8abf3560de83"
+      "message_uid": "f2c2ec73880869ea1edf9aaaa1e570c1"
     },
     {
       "reservation_id": 41151374,
@@ -7117,7 +7117,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "eb1cb7e9a54310a6731cc00177a19edd"
+      "message_uid": "181aab698740080f1825de6dae14541e"
     },
     {
       "reservation_id": 41154275,
@@ -7289,7 +7289,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "8111cd20ecf4a92de1104d46f42b6a27"
+      "message_uid": "73c569fc7b9f1646d5892a5b862c40bd"
     },
     {
       "reservation_id": 39679673,
@@ -7789,13 +7789,11 @@
       "extra_adjustments_details": [],
       "adjustment_details": [],
       "price_adjustments_details": [],
-      "next_states": [
-        "cancel"
-      ],
+      "next_states": [],
       "system_message": null,
       "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R241010776",
       "deposit_tax_inclusive": true,
-      "requires_response": true,
+      "requires_response": false,
       "cancelation_policy": [],
       "rooms": [
         {
@@ -7923,7 +7921,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "d11bc9513b248b8ca5ea290c38b53ace"
+      "message_uid": "921813ca6451fffcb661b0928d68dffe"
     },
     {
       "reservation_id": 41143235,
@@ -8085,7 +8083,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "25b8e139ad15c0b85e554ac40b0cea08"
+      "message_uid": "2bc390aba7f0354cb62b5486a08c7030"
     },
     {
       "reservation_id": 41158477,
@@ -8247,7 +8245,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "bf88ca53bbca0c164002d14fda4afb66"
+      "message_uid": "cdda92bb7ef95c69243af42c5b41e4fc"
     },
     {
       "reservation_id": 41164397,
@@ -8409,7 +8407,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "1a400aa4ad420322048fa00859aba310"
+      "message_uid": "778475e8887ec92ec28e37156fe6aa82"
     },
     {
       "reservation_id": 41164573,
@@ -8480,7 +8478,6 @@
       "adjustment_details": [],
       "price_adjustments_details": [],
       "next_states": [
-        "cancel",
         "confirm"
       ],
       "system_message": null,
@@ -8566,7 +8563,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "94e92b6c9241c3432219b98dc5661d16"
+      "message_uid": "4a3228d3a7451486667e65ced4a9b18e"
     },
     {
       "reservation_id": 39496933,
@@ -9356,7 +9353,656 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "32f9caab7ac44d19b0b5d15a20b4a849"
+      "message_uid": "5a9d48012dd8dbb7940df23ad14f931b"
+    },
+    {
+      "reservation_id": 41171587,
+      "hr_number": "R991875722",
+      "provider_number": "6657797331",
+      "pms_number": null,
+      "channel": "bookingcom",
+      "channel_display": "Booking.com",
+      "source_display": null,
+      "state": "confirmed",
+      "modified": false,
+      "total_guests": 1,
+      "total_rooms": 1,
+      "guest": "Massa Bastien",
+      "firstname": "Massa",
+      "lastname": "Bastien",
+      "country": "FR",
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T20:57:16.000+01:00",
+      "updated_at": "2026-09-20T21:15:00.000+01:00",
+      "canceled_at": null,
+      "sub_total": 43.74,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "43.74",
+      "total": 43.74,
+      "currency": "EUR",
+      "checkin_date": "2026-09-21",
+      "checkout_date": "2026-09-24",
+      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\nThis is a replacement booking. The original Smart Flex reservation 5874192455 is now fully replaced. If the guest pays upon arrival, we recommend validating the provided card as soon as possible.\nMore information can be found at https://admin.booking.com/hotel/hoteladmin/extranet_ng/manage/booking.html?hotel_id=11149696res_id=6657797331\n\nBOOKING NOTE : Payment charge is EUR 0.8748\nFlag: booker_is_genius\n\nPayment (amount:43.74 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 6.62 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:1",
+      "payment": "BankTransfer",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": ".",
+        "state": "",
+        "country": "France (FR)",
+        "country_code": "FR",
+        "phone": "33616602116",
+        "email": "mbasti.126287@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "postal_code": "-"
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": ".",
+        "state": "",
+        "country": "France",
+        "country_code": "FR",
+        "phone": "33616602116",
+        "email": "mbasti.126287@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Massa",
+        "lastname": "Bastien"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R991875722",
+      "deposit_tax_inclusive": true,
+      "requires_response": false,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37085805,
+          "state": "confirmed",
+          "code": "1020344:HR:1016932",
+          "number": "06",
+          "voucher_number": "6657797331.6532151765-1",
+          "availability_group": "HR:1016932",
+          "rate_code": "1020344:HR:1016932",
+          "rate_plan_code": "1020344:HR:1016932",
+          "inv_code": "HR:1016932",
+          "non_refundable": false,
+          "price": 43.74,
+          "total": 43.74,
+          "nights": 3,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 1,
+          "total_adult": 1,
+          "child_ages": [],
+          "name": "Bunk Bed in Mixed Dormitory Room - Room Only Non remboursable - 1 Occupancy",
+          "name_presentation": "Mixed dorm - Bed & Breakfast - Non refundable",
+          "checkin_date": "2026-09-21",
+          "checkout_date": "2026-09-24",
+          "extra_info": "Room Extra Info:This triple room features a shared bathroom, executive lounge access and a quiet street view. The unit offers 3 beds.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 1.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-21 genius rate:yes\nPrice Info:2026-09-22 genius rate:yes\nPrice Info:2026-09-23 genius rate:yes\n\nGuest Names:Massa Bastien\n\nMax Children:0\nBooking.com Payout Amount is 43.74 EUR",
+          "daily_prices": [
+            {
+              "date": "2026-09-21",
+              "price": 14.58,
+              "original_price": 14.58,
+              "discount": 0.0,
+              "rate_code": "1020344:HR:1016932",
+              "version": "v2"
+            },
+            {
+              "date": "2026-09-22",
+              "price": 14.58,
+              "original_price": 14.58,
+              "discount": 0.0,
+              "rate_code": "1020344:HR:1016932",
+              "version": "v2"
+            },
+            {
+              "date": "2026-09-23",
+              "price": 14.58,
+              "original_price": 14.58,
+              "discount": 0.0,
+              "rate_code": "1020344:HR:1016932",
+              "version": "v2"
+            }
+          ],
+          "extras": [],
+          "updated_at": "2026-09-20T21:15:00.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 43.74,
+          "room_sub_total": 43.74,
+          "comments": [
+            {
+              "body": "Room Extra Info:This triple room features a shared bathroom, executive lounge access and a quiet street view. The unit offers 3 beds.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 1.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-21 genius rate:yes\nPrice Info:2026-09-22 genius rate:yes\nPrice Info:2026-09-23 genius rate:yes\n\nGuest Names:Massa Bastien\n\nMax Children:0\nBooking.com Payout Amount is 43.74 EUR",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            },
+            {
+              "body": "** THIS RESERVATION HAS BEEN PRE-PAID **\nThis is a replacement booking. The original Smart Flex reservation 5874192455 is now fully replaced. If the guest pays upon arrival, we recommend validating the provided card as soon as possible.\nMore information can be found at https://admin.booking.com/hotel/hoteladmin/extranet_ng/manage/booking.html?hotel_id=11149696res_id=6657797331\n\nBOOKING NOTE : Payment charge is EUR 0.8748\nFlag: booker_is_genius\n\nPayment (amount:43.74 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 6.62 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:1",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            }
+          ]
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39284263,
+          "amount": "43.74",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "14767d791141e3318007fab4ff985ee3"
+    },
+    {
+      "reservation_id": 41171772,
+      "hr_number": "R485109210",
+      "provider_number": null,
+      "pms_number": null,
+      "channel": "online",
+      "channel_display": "Online",
+      "source_display": null,
+      "state": "reserved",
+      "modified": false,
+      "total_guests": 1,
+      "total_rooms": 1,
+      "guest": "Ahmed Kasoum",
+      "firstname": "Ahmed",
+      "lastname": "Kasoum",
+      "country": null,
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T21:14:09.000+01:00",
+      "updated_at": "2026-09-20T21:14:15.000+01:00",
+      "canceled_at": null,
+      "sub_total": 13.5,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "14.5",
+      "total": 14.5,
+      "currency": "EUR",
+      "checkin_date": "2026-09-21",
+      "checkout_date": "2026-09-22",
+      "note": "",
+      "payment": "cash",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": null,
+        "state": "",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
+        "street": "-",
+        "street_2": "",
+        "postal_code": null
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": null,
+        "state": "",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Ahmed",
+        "lastname": "Kasoum"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [
+        "cancel",
+        "confirm"
+      ],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R485109210",
+      "deposit_tax_inclusive": true,
+      "requires_response": true,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37086001,
+          "state": "reserved",
+          "code": "HR:1016935",
+          "number": "09",
+          "voucher_number": "R485109210",
+          "availability_group": "HR:1016935",
+          "rate_code": "HR:1016935",
+          "rate_plan_code": "HR:1016935",
+          "inv_code": "HR:1016935",
+          "non_refundable": false,
+          "price": 13.5,
+          "total": 14.5,
+          "nights": 1,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 1,
+          "total_adult": 1,
+          "child_ages": [],
+          "name": "Mixed dormitory",
+          "name_presentation": "Mixed dormitory",
+          "checkin_date": "2026-09-21",
+          "checkout_date": "2026-09-22",
+          "extra_info": "",
+          "daily_prices": [
+            {
+              "date": "2026-09-21",
+              "price": 13.5,
+              "original_price": 13.5,
+              "discount": 0.0,
+              "rate_code": "HR:1016935",
+              "version": "v2"
+            }
+          ],
+          "extras": [
+            {
+              "name": "City tax",
+              "price": "1.0"
+            }
+          ],
+          "updated_at": "2026-09-20T21:14:15.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 13.5,
+          "room_sub_total": 14.5,
+          "comments": []
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39284504,
+          "amount": "14.5",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "69d64a422c5d71b4a2c97cef0861d0c1"
+    },
+    {
+      "reservation_id": 41171859,
+      "hr_number": "R428414271",
+      "provider_number": null,
+      "pms_number": null,
+      "channel": "online",
+      "channel_display": "Online",
+      "source_display": null,
+      "state": "reserved",
+      "modified": false,
+      "total_guests": 1,
+      "total_rooms": 1,
+      "guest": "Paul Bürger",
+      "firstname": "Paul",
+      "lastname": "Bürger",
+      "country": "DE",
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T21:21:49.000+01:00",
+      "updated_at": "2026-09-20T21:21:49.000+01:00",
+      "canceled_at": null,
+      "sub_total": 13.5,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "14.0",
+      "total": 14.0,
+      "currency": "EUR",
+      "checkin_date": "2026-09-21",
+      "checkout_date": "2026-09-22",
+      "note": "",
+      "payment": "cash",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": "Germany",
+        "state": "",
+        "country": "Germany (DE)",
+        "country_code": "DE",
+        "phone": "000000",
+        "email": "paulbrg20@gmail.com",
+        "street": "Germany",
+        "street_2": "",
+        "postal_code": "-"
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": null,
+        "state": "",
+        "country": "Germany",
+        "country_code": "DE",
+        "phone": "000000",
+        "email": "paulbrg20@gmail.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Paul",
+        "lastname": "Bürger"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [
+        "cancel",
+        "confirm"
+      ],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R428414271",
+      "deposit_tax_inclusive": true,
+      "requires_response": true,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37086099,
+          "state": "reserved",
+          "code": "HR:1016935",
+          "number": "07",
+          "voucher_number": "R428414271",
+          "availability_group": "HR:1016935",
+          "rate_code": "HR:1016935",
+          "rate_plan_code": "HR:1016935",
+          "inv_code": "HR:1016935",
+          "non_refundable": false,
+          "price": 13.5,
+          "total": 14.0,
+          "nights": 1,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 1,
+          "total_adult": 1,
+          "child_ages": [],
+          "name": "Mixed dormitory",
+          "name_presentation": "Mixed dormitory",
+          "checkin_date": "2026-09-21",
+          "checkout_date": "2026-09-22",
+          "extra_info": "",
+          "daily_prices": [
+            {
+              "date": "2026-09-21",
+              "price": 13.5,
+              "original_price": 13.5,
+              "discount": 0.0,
+              "rate_code": "HR:1016935",
+              "version": "v2"
+            }
+          ],
+          "extras": [
+            {
+              "name": "City tax",
+              "price": "0.5"
+            }
+          ],
+          "updated_at": "2026-09-20T21:21:48.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 13.5,
+          "room_sub_total": 14.0,
+          "comments": []
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39284605,
+          "amount": "14.0",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "e22769f9ec8fe15a3d181ca86ed2365b"
+    },
+    {
+      "reservation_id": 41172793,
+      "hr_number": "R438225903",
+      "provider_number": null,
+      "pms_number": null,
+      "channel": "online",
+      "channel_display": "Online",
+      "source_display": null,
+      "state": "reserved",
+      "modified": false,
+      "total_guests": 1,
+      "total_rooms": 1,
+      "guest": "Marlene Schorn",
+      "firstname": "Marlene",
+      "lastname": "Schorn",
+      "country": null,
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T23:07:38.000+01:00",
+      "updated_at": "2026-09-20T23:07:38.000+01:00",
+      "canceled_at": null,
+      "sub_total": 13.5,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "14.0",
+      "total": 14.0,
+      "currency": "EUR",
+      "checkin_date": "2026-09-21",
+      "checkout_date": "2026-09-22",
+      "note": "",
+      "payment": "cash",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": null,
+        "state": "",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
+        "street": "-",
+        "street_2": "",
+        "postal_code": null
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": null,
+        "state": "",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Marlene",
+        "lastname": "Schorn"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [
+        "cancel",
+        "confirm"
+      ],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R438225903",
+      "deposit_tax_inclusive": true,
+      "requires_response": true,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37087176,
+          "state": "reserved",
+          "code": "HR:1016932",
+          "number": "05",
+          "voucher_number": "R438225903",
+          "availability_group": "HR:1016932",
+          "rate_code": "HR:1016932",
+          "rate_plan_code": "HR:1016932",
+          "inv_code": "HR:1016932",
+          "non_refundable": false,
+          "price": 13.5,
+          "total": 14.0,
+          "nights": 1,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 1,
+          "total_adult": 1,
+          "child_ages": [],
+          "name": "Mixed dorm",
+          "name_presentation": "Mixed dorm",
+          "checkin_date": "2026-09-21",
+          "checkout_date": "2026-09-22",
+          "extra_info": "",
+          "daily_prices": [
+            {
+              "date": "2026-09-21",
+              "price": 13.5,
+              "original_price": 13.5,
+              "discount": 0.0,
+              "rate_code": "HR:1016932",
+              "version": "v2"
+            }
+          ],
+          "extras": [
+            {
+              "name": "City tax",
+              "price": "0.5"
+            }
+          ],
+          "updated_at": "2026-09-20T23:07:38.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 13.5,
+          "room_sub_total": 14.0,
+          "comments": []
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39285749,
+          "amount": "14.0",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "fae736c5d0f17a9ddbe8d5c3851ca259"
     },
     {
       "reservation_id": 40336796,
@@ -9789,127 +10435,143 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "4136cd54cdf8afa7138e70016dcc7d09"
+      "message_uid": "0fcf35739f72d1ba7edee265a1498b2e"
     },
     {
-      "reservation_id": 41168145,
-      "hr_number": "R107032121",
-      "provider_number": "5908726120",
+      "reservation_id": 41172801,
+      "hr_number": "R126649642",
+      "provider_number": null,
       "pms_number": null,
-      "channel": "bookingcom",
-      "channel_display": "Booking.com",
+      "channel": "online",
+      "channel_display": "Online",
       "source_display": null,
-      "state": "confirmed",
+      "state": "reserved",
       "modified": false,
       "total_guests": 1,
       "total_rooms": 1,
-      "guest": "Jonas Fechtig",
-      "firstname": "Jonas",
-      "lastname": "Fechtig",
-      "country": "DE",
+      "guest": "Marlene Schorn",
+      "firstname": "Marlene",
+      "lastname": "Schorn",
+      "country": null,
       "guest_national_id": "",
       "guest_is_citizen": null,
       "cancel_reason": null,
-      "completed_at": "2026-09-20T16:25:41.000+01:00",
-      "updated_at": "2026-09-20T16:27:34.000+01:00",
+      "completed_at": "2026-09-20T23:08:22.000+01:00",
+      "updated_at": "2026-09-20T23:08:22.000+01:00",
       "canceled_at": null,
-      "sub_total": 29.16,
+      "sub_total": 40.5,
       "extras_total": 0.0,
       "adjustments_total": -0.0,
-      "tax_total": 0.5,
-      "item_total": "29.16",
-      "total": 29.16,
+      "tax_total": 1.5,
+      "item_total": "42.0",
+      "total": 42.0,
       "currency": "EUR",
       "checkin_date": "2026-09-22",
-      "checkout_date": "2026-09-24",
-      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\n\nBOOKING NOTE : Payment charge is EUR 0.5832\nFlag: booker_is_genius\n\nPayment (amount:29.16 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 4.19 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:1",
-      "payment": "BankTransfer",
+      "checkout_date": "2026-09-25",
+      "note": "",
+      "payment": "cash",
       "payment_details": null,
       "paid_amount": 0.0,
       "pms_version_generated": true,
       "loyalty_order": false,
       "loyalty_app_name": null,
       "address": {
-        "city": ".",
+        "city": null,
         "state": "",
-        "country": "Germany (DE)",
-        "country_code": "DE",
-        "phone": "491623182806",
-        "email": "jfecht.836078@guest.booking.com",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
         "street": "-",
         "street_2": "",
-        "postal_code": "-"
+        "postal_code": null
       },
       "billing_address": {
         "bill_type": null,
-        "city": ".",
+        "city": null,
         "state": "",
-        "country": "Germany",
-        "country_code": "DE",
-        "phone": "491623182806",
-        "email": "jfecht.836078@guest.booking.com",
+        "country": "Morocco",
+        "country_code": "MA",
+        "phone": "000000000",
+        "email": "rez@hotelrunner.com",
         "street": "-",
         "street_2": "",
         "tax_office": "",
         "tax_id": "",
         "company": "",
-        "firstname": "Jonas",
-        "lastname": "Fechtig"
+        "firstname": "Marlene",
+        "lastname": "Schorn"
       },
       "extra_adjustments_details": [],
       "adjustment_details": [],
       "price_adjustments_details": [],
-      "next_states": [],
+      "next_states": [
+        "cancel",
+        "confirm"
+      ],
       "system_message": null,
-      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R107032121",
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R126649642",
       "deposit_tax_inclusive": true,
-      "requires_response": false,
+      "requires_response": true,
       "cancelation_policy": [],
       "rooms": [
         {
-          "id": 37081794,
-          "state": "confirmed",
-          "code": "1020344:HR:1016932",
-          "number": null,
-          "voucher_number": "5908726120.6531623127-1",
-          "availability_group": "HR:1016932",
-          "rate_code": "1020344:HR:1016932",
-          "rate_plan_code": "1020344:HR:1016932",
-          "inv_code": "HR:1016932",
+          "id": 37087186,
+          "state": "reserved",
+          "code": "HR:1016935",
+          "number": "11",
+          "voucher_number": "R126649642",
+          "availability_group": "HR:1016935",
+          "rate_code": "HR:1016935",
+          "rate_plan_code": "HR:1016935",
+          "inv_code": "HR:1016935",
           "non_refundable": false,
-          "price": 29.16,
-          "total": 29.16,
-          "nights": 2,
+          "price": 40.5,
+          "total": 42.0,
+          "nights": 3,
           "meal_plan": "bed-breakfast",
           "meal_plan_presentation": "Bed and breakfast",
           "total_guest": 1,
           "total_adult": 1,
           "child_ages": [],
-          "name": "Bunk Bed in Mixed Dormitory Room - Room Only Non remboursable - 1 Occupancy",
-          "name_presentation": "Mixed dorm - Bed & Breakfast - Non refundable",
+          "name": "Mixed dormitory",
+          "name_presentation": "Mixed dormitory",
           "checkin_date": "2026-09-22",
-          "checkout_date": "2026-09-24",
-          "extra_info": "Room Extra Info:This triple room features a shared bathroom, executive lounge access and a quiet street view. The unit offers 3 beds.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 1.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-22 genius rate:yes\nPrice Info:2026-09-23 genius rate:yes\n\nGuest Names:Jonas Fechtig\n\nMax Children:0\nBooking.com Payout Amount is 29.16 EUR",
+          "checkout_date": "2026-09-25",
+          "extra_info": "",
           "daily_prices": [
             {
               "date": "2026-09-22",
-              "price": 14.58,
-              "original_price": 14.58,
+              "price": 13.5,
+              "original_price": 13.5,
               "discount": 0.0,
-              "rate_code": "1020344:HR:1016932",
+              "rate_code": "HR:1016935",
               "version": "v2"
             },
             {
               "date": "2026-09-23",
-              "price": 14.58,
-              "original_price": 14.58,
+              "price": 13.5,
+              "original_price": 13.5,
               "discount": 0.0,
-              "rate_code": "1020344:HR:1016932",
+              "rate_code": "HR:1016935",
+              "version": "v2"
+            },
+            {
+              "date": "2026-09-24",
+              "price": 13.5,
+              "original_price": 13.5,
+              "discount": 0.0,
+              "rate_code": "HR:1016935",
               "version": "v2"
             }
           ],
-          "extras": [],
-          "updated_at": "2026-09-20T16:28:33.000+01:00",
+          "extras": [
+            {
+              "name": "City tax",
+              "price": "1.5"
+            }
+          ],
+          "updated_at": "2026-09-20T23:08:22.000+01:00",
           "canceled_at": null,
           "meta": {},
           "extras_total": 0.0,
@@ -9921,29 +10583,16 @@
           "cancelation_penalty_total": 0.0,
           "cancelation_penalty_tax_type": "inclusive",
           "promotions_total": 0.0,
-          "room_base_price": 29.16,
-          "room_sub_total": 29.16,
-          "comments": [
-            {
-              "body": "Room Extra Info:This triple room features a shared bathroom, executive lounge access and a quiet street view. The unit offers 3 beds.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 1.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-22 genius rate:yes\nPrice Info:2026-09-23 genius rate:yes\n\nGuest Names:Jonas Fechtig\n\nMax Children:0\nBooking.com Payout Amount is 29.16 EUR",
-              "channel_note": true,
-              "housekeeping": null,
-              "guest_visible": false
-            },
-            {
-              "body": "** THIS RESERVATION HAS BEEN PRE-PAID **\n\nBOOKING NOTE : Payment charge is EUR 0.5832\nFlag: booker_is_genius\n\nPayment (amount:29.16 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 4.19 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:1",
-              "channel_note": true,
-              "housekeeping": null,
-              "guest_visible": false
-            }
-          ]
+          "room_base_price": 40.5,
+          "room_sub_total": 42.0,
+          "comments": []
         }
       ],
       "payments": [
         {
           "state": "checkout",
-          "id": 39280324,
-          "amount": "29.16",
+          "id": 39285758,
+          "amount": "42.0",
           "currency": "EUR",
           "exchanged_amount": "0.0",
           "exchange_currency": "EUR",
@@ -9959,7 +10608,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "e53ff7d637a12ec143e8e17eb265e657"
+      "message_uid": "64cbac600d431efa2a8398430bd54526"
     },
     {
       "reservation_id": 37902403,
@@ -10323,7 +10972,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "f99797094e47840118df2403f99985da"
+      "message_uid": "448d60b7509468c48c5d3c4c368adb17"
     },
     {
       "reservation_id": 41151917,
@@ -10488,7 +11137,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "3bc386d9c65bd337bf591b26781b9405"
+      "message_uid": "45de01ba2e0291579418dfa0164f77f6"
     },
     {
       "reservation_id": 40915386,
@@ -10711,6 +11360,168 @@
       "message_uid": "4c203bb55d8f1ed4aa0c1274816cda03"
     },
     {
+      "reservation_id": 41169986,
+      "hr_number": "R940413831",
+      "provider_number": "6806734222",
+      "pms_number": null,
+      "channel": "bookingcom",
+      "channel_display": "Booking.com",
+      "source_display": null,
+      "state": "confirmed",
+      "modified": false,
+      "total_guests": 2,
+      "total_rooms": 1,
+      "guest": "Anna-Lena Baldauf",
+      "firstname": "Anna-Lena",
+      "lastname": "Baldauf",
+      "country": "DE",
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T18:49:20.000+01:00",
+      "updated_at": "2026-09-20T18:51:02.000+01:00",
+      "canceled_at": null,
+      "sub_total": 29.16,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "29.16",
+      "total": 29.16,
+      "currency": "EUR",
+      "checkin_date": "2026-09-24",
+      "checkout_date": "2026-09-25",
+      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\nReservation has a cancellation grace period. Do not charge if cancelled before 2026-09-20 20:49:20\nBOOKING NOTE : Payment charge is EUR 0.5832\nBED PREFERENCE:Double Room with Balcony: 1 large double\nFlag: booker_is_genius\n\nPayment (amount:29.16 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 4.19 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
+      "payment": "BankTransfer",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": ".",
+        "state": "",
+        "country": "Germany (DE)",
+        "country_code": "DE",
+        "phone": "491605908606",
+        "email": "abalda.879271@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "postal_code": "-"
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": ".",
+        "state": "",
+        "country": "Germany",
+        "country_code": "DE",
+        "phone": "491605908606",
+        "email": "abalda.879271@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Anna-Lena",
+        "lastname": "Baldauf"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R940413831",
+      "deposit_tax_inclusive": true,
+      "requires_response": false,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37083890,
+          "state": "confirmed",
+          "code": "1020343:HR:1016930",
+          "number": "113",
+          "voucher_number": "6806734222.6531905195",
+          "availability_group": "HR:1016930",
+          "rate_code": "1020343:HR:1016930",
+          "rate_plan_code": "1020343:HR:1016930",
+          "inv_code": "HR:1016930",
+          "non_refundable": false,
+          "price": 29.16,
+          "total": 29.16,
+          "nights": 1,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 2,
+          "total_adult": 2,
+          "child_ages": [],
+          "name": "Double Room with Balcony - Room Only Non remboursable - 2 Occupancy",
+          "name_presentation": "Twin room  - Bed & Breakfast - Non refundable",
+          "checkin_date": "2026-09-24",
+          "checkout_date": "2026-09-25",
+          "extra_info": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-24 genius rate:yes\n\nGuest Names:Anna-Lena Baldauf\n\nMax Children:0\nBooking.com Payout Amount is 29.16 EUR",
+          "daily_prices": [
+            {
+              "date": "2026-09-24",
+              "price": 29.16,
+              "original_price": 29.16,
+              "discount": 0.0,
+              "rate_code": "1020343:HR:1016930",
+              "version": "v2"
+            }
+          ],
+          "extras": [],
+          "updated_at": "2026-09-20T18:51:26.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 29.16,
+          "room_sub_total": 29.16,
+          "comments": [
+            {
+              "body": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-09-24 genius rate:yes\n\nGuest Names:Anna-Lena Baldauf\n\nMax Children:0\nBooking.com Payout Amount is 29.16 EUR",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            },
+            {
+              "body": "** THIS RESERVATION HAS BEEN PRE-PAID **\nReservation has a cancellation grace period. Do not charge if cancelled before 2026-09-20 20:49:20\nBOOKING NOTE : Payment charge is EUR 0.5832\nBED PREFERENCE:Double Room with Balcony: 1 large double\nFlag: booker_is_genius\n\nPayment (amount:29.16 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 4.19 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            }
+          ]
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39282415,
+          "amount": "29.16",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "0f6fe68bdb5be5425f92ddbb5c7593c9"
+    },
+    {
       "reservation_id": 41162394,
       "hr_number": "R651384533",
       "provider_number": "5904120870",
@@ -10886,7 +11697,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "0cd7e175b9efb5786cf5a4e28039be3a"
+      "message_uid": "d0c7a8a830665f6fca3197c1be8a35ed"
     },
     {
       "reservation_id": 40925863,
@@ -11582,7 +12393,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "60b3e995ec8f67e47f7761a37c7bfe6e"
+      "message_uid": "4edb5109f347dd91ae056df3c0f1f777"
     },
     {
       "reservation_id": 41051504,
@@ -11744,7 +12555,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "a15ea8c8460e2361afe38a3362b8c2b3"
+      "message_uid": "9028198a77aacc87e151c2dbb7e59b83"
     },
     {
       "reservation_id": 41161794,
@@ -11917,7 +12728,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "eb1c38265bd368df508eb1871c886d75"
+      "message_uid": "443f988877f2102fd06c0fcb546ead73"
     },
     {
       "reservation_id": 39338779,
@@ -14833,7 +15644,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "87c6f7fdab8e2ac7d38f6c24b274df0a"
+      "message_uid": "81c6ac18800b85e66388e5136a0205c4"
     },
     {
       "reservation_id": 40103013,
@@ -16125,7 +16936,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "54d8bf2c84ee1a6c6adedd60a9097e63"
+      "message_uid": "d3891c157c51ba4e453e92849f6c257a"
     },
     {
       "reservation_id": 41163271,
@@ -16320,7 +17131,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "dff6b6a3356f538fc8b55a69f817b8df"
+      "message_uid": "25d641c734ebc2e1c9eabbad76e55d9f"
     },
     {
       "reservation_id": 39579315,
@@ -17259,7 +18070,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "3325681b0dc64a66bc5a0488675dbeac"
+      "message_uid": "62f75e3055e3200c91f63ea7d5ecf697"
     },
     {
       "reservation_id": 41094386,
@@ -17429,7 +18240,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "970960397e871d2503f99e15361737a7"
+      "message_uid": "03b9368a5f586ce327de78ed21741c46"
     },
     {
       "reservation_id": 38956146,
@@ -18034,7 +18845,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "c19540f6f16baae7db3c95ffcbd1f91a"
+      "message_uid": "5da945490443174569d464386142e867"
     },
     {
       "reservation_id": 38528025,
@@ -19023,7 +19834,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "4d6667f36553279efafd710995b8f484"
+      "message_uid": "ccd119232b757faca2598b43a7c497c9"
     },
     {
       "reservation_id": 41092377,
@@ -19193,7 +20004,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "7206ba48947cadfab9ca81b72acb7ab5"
+      "message_uid": "0078395f4c123d99288c23e423cba113"
     },
     {
       "reservation_id": 40895837,
@@ -19379,7 +20190,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "c2484e2509eb4790c723dd8f7646cbcc"
+      "message_uid": "305b759b9ae34430bedc01377981ebd3"
     },
     {
       "reservation_id": 40971418,
@@ -19599,7 +20410,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "056e05b0c0abd1c68174d14aa79c2fb5"
+      "message_uid": "ee2100bf2462e368ad4ebf767e18ac27"
     },
     {
       "reservation_id": 39829279,
@@ -19997,7 +20808,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "e00724b1f96f5a8a6809758a252a2f49"
+      "message_uid": "691a820915dfb4734d31e251b5533355"
     },
     {
       "reservation_id": 38464798,
@@ -21752,7 +22563,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "89c6ad45e74883f4295b0a4ebe42828f"
+      "message_uid": "8e684cbe06a6710e5e3f4ff8ccec7ca8"
     },
     {
       "reservation_id": 41110714,
@@ -21922,7 +22733,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "63e80fe54c7d8c1c43f03b69bdf767b0"
+      "message_uid": "c5d5ba61b3b97edf26fc4f9dec721cd1"
     },
     {
       "reservation_id": 40273354,
@@ -22652,7 +23463,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "6cc248b02845ba98447604fc32a5599c"
+      "message_uid": "922bd8690224a09d174bd9ae580fe619"
     },
     {
       "reservation_id": 41134949,
@@ -22856,7 +23667,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "05e9a9aaef489d8493d1b95aa7d3b9f3"
+      "message_uid": "b54e1d899665ad290ffa6744c02ce3cb"
     },
     {
       "reservation_id": 41134981,
@@ -23060,7 +23871,185 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "e435cdb8bd36ef0c683ee3de086e7cbb"
+      "message_uid": "9e760123a20aad3764fe7a964474a030"
+    },
+    {
+      "reservation_id": 41172416,
+      "hr_number": "R422232494",
+      "provider_number": "5197962555",
+      "pms_number": null,
+      "channel": "bookingcom",
+      "channel_display": "Booking.com",
+      "source_display": null,
+      "state": "confirmed",
+      "modified": false,
+      "total_guests": 2,
+      "total_rooms": 1,
+      "guest": "Constanca Paiva e Sousa",
+      "firstname": "Constanca Paiva e",
+      "lastname": "Sousa",
+      "country": "PT",
+      "guest_national_id": "",
+      "guest_is_citizen": null,
+      "cancel_reason": null,
+      "completed_at": "2026-09-20T22:14:56.000+01:00",
+      "updated_at": "2026-09-20T22:16:45.000+01:00",
+      "canceled_at": null,
+      "sub_total": 87.48,
+      "extras_total": 0.0,
+      "adjustments_total": -0.0,
+      "tax_total": 0.5,
+      "item_total": "87.48",
+      "total": 87.48,
+      "currency": "EUR",
+      "checkin_date": "2026-11-03",
+      "checkout_date": "2026-11-06",
+      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\nReservation has a cancellation grace period. Do not charge if cancelled before 2026-09-21 00:14:56\n\nBOOKING NOTE : Payment charge is EUR 1.7496\nFlag: booker_is_genius\n\nPayment (amount:87.48 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 13.91 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
+      "payment": "BankTransfer",
+      "payment_details": null,
+      "paid_amount": 0.0,
+      "pms_version_generated": true,
+      "loyalty_order": false,
+      "loyalty_app_name": null,
+      "address": {
+        "city": "-",
+        "state": "",
+        "country": "Portugal (PT)",
+        "country_code": "PT",
+        "phone": "351915019725",
+        "email": "csousa.458358@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "postal_code": "-"
+      },
+      "billing_address": {
+        "bill_type": null,
+        "city": "-",
+        "state": "",
+        "country": "Portugal",
+        "country_code": "PT",
+        "phone": "351915019725",
+        "email": "csousa.458358@guest.booking.com",
+        "street": "-",
+        "street_2": "",
+        "tax_office": "",
+        "tax_id": "",
+        "company": "",
+        "firstname": "Constanca Paiva e",
+        "lastname": "Sousa"
+      },
+      "extra_adjustments_details": [],
+      "adjustment_details": [],
+      "price_adjustments_details": [],
+      "next_states": [],
+      "system_message": null,
+      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R422232494",
+      "deposit_tax_inclusive": true,
+      "requires_response": false,
+      "cancelation_policy": [],
+      "rooms": [
+        {
+          "id": 37086735,
+          "state": "confirmed",
+          "code": "1020343:HR:1016930",
+          "number": "113",
+          "voucher_number": "5197962555.6532272303",
+          "availability_group": "HR:1016930",
+          "rate_code": "1020343:HR:1016930",
+          "rate_plan_code": "1020343:HR:1016930",
+          "inv_code": "HR:1016930",
+          "non_refundable": false,
+          "price": 87.48,
+          "total": 87.48,
+          "nights": 3,
+          "meal_plan": "bed-breakfast",
+          "meal_plan_presentation": "Bed and breakfast",
+          "total_guest": 2,
+          "total_adult": 2,
+          "child_ages": [],
+          "name": "Double Room with Balcony - Room Only Non remboursable - 2 Occupancy",
+          "name_presentation": "Twin room  - Bed & Breakfast - Non refundable",
+          "checkin_date": "2026-11-03",
+          "checkout_date": "2026-11-06",
+          "extra_info": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-11-03 genius rate:yes\nPrice Info:2026-11-04 genius rate:yes\nPrice Info:2026-11-05 genius rate:yes\n\nGuest Names:Constanca Paiva e Sousa\n\nMax Children:0\nBooking.com Payout Amount is 87.48 EUR",
+          "daily_prices": [
+            {
+              "date": "2026-11-03",
+              "price": 29.16,
+              "original_price": 29.16,
+              "discount": 0.0,
+              "rate_code": "1020343:HR:1016930",
+              "version": "v2"
+            },
+            {
+              "date": "2026-11-04",
+              "price": 29.16,
+              "original_price": 29.16,
+              "discount": 0.0,
+              "rate_code": "1020343:HR:1016930",
+              "version": "v2"
+            },
+            {
+              "date": "2026-11-05",
+              "price": 29.16,
+              "original_price": 29.16,
+              "discount": 0.0,
+              "rate_code": "1020343:HR:1016930",
+              "version": "v2"
+            }
+          ],
+          "extras": [],
+          "updated_at": "2026-09-20T22:17:45.000+01:00",
+          "canceled_at": null,
+          "meta": {},
+          "extras_total": 0.0,
+          "fixed_adjustments_total": 0.0,
+          "included_taxes_total": 0.0,
+          "excluded_fees_and_taxes_total": 0.0,
+          "cancelation_refund_total": 0.0,
+          "cancelation_refund_tax_type": "exclusive",
+          "cancelation_penalty_total": 0.0,
+          "cancelation_penalty_tax_type": "inclusive",
+          "promotions_total": 0.0,
+          "room_base_price": 87.48,
+          "room_sub_total": 87.48,
+          "comments": [
+            {
+              "body": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest will be charged the total price of the reservation if they cancel at any time. \n\nPrice Info:2026-11-03 genius rate:yes\nPrice Info:2026-11-04 genius rate:yes\nPrice Info:2026-11-05 genius rate:yes\n\nGuest Names:Constanca Paiva e Sousa\n\nMax Children:0\nBooking.com Payout Amount is 87.48 EUR",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            },
+            {
+              "body": "** THIS RESERVATION HAS BEEN PRE-PAID **\nReservation has a cancellation grace period. Do not charge if cancelled before 2026-09-21 00:14:56\n\nBOOKING NOTE : Payment charge is EUR 1.7496\nFlag: booker_is_genius\n\nPayment (amount:87.48 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 13.91 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
+              "channel_note": true,
+              "housekeeping": null,
+              "guest_visible": false
+            }
+          ]
+        }
+      ],
+      "payments": [
+        {
+          "state": "checkout",
+          "id": 39285310,
+          "amount": "87.48",
+          "currency": "EUR",
+          "exchanged_amount": "0.0",
+          "exchange_currency": "EUR",
+          "exchange_rate": "0.0",
+          "paid_at": null,
+          "payment_method_name": "Cash",
+          "payment_method": "cash",
+          "installment": null,
+          "response_code": null
+        }
+      ],
+      "meta_data_conversions": [],
+      "channel_profile_data_conversions": null,
+      "integration_echo_details": null,
+      "last_payment_state": "pending",
+      "message_uid": "ca52e7aa0c3f1745e63c911f93863dd4"
     },
     {
       "reservation_id": 38577652,
@@ -23450,7 +24439,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "5ddf26f7abe6317de7e739a946322988"
+      "message_uid": "80255e8ae1a7e45423e3c868f3dc92a2"
     },
     {
       "reservation_id": 38037934,
@@ -23800,7 +24789,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "c8a1d3b480b7093590b6b469a715332f"
+      "message_uid": "87f1ec7f310b18ef597b668bc03b09c1"
     },
     {
       "reservation_id": 41036106,
@@ -24019,7 +25008,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "078844f93bdcd4d120e3eb72e6015aa2"
+      "message_uid": "d71fdfe58cfc31566a20037b2efb3931"
     },
     {
       "reservation_id": 41083073,
@@ -24189,7 +25178,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "e7fc1fc36721a8a6ca810ec99f8c9c50"
+      "message_uid": "3e8f787f15a32cd2ad5a65b68cd1c7d2"
     },
     {
       "reservation_id": 39545616,
@@ -25131,7 +26120,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "f7480d57716059d6c38691bf42c25f39"
+      "message_uid": "073cce58df5cce34fb9f614c9239dd50"
     },
     {
       "reservation_id": 41138705,
@@ -25317,7 +26306,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "04c48cb918e44f6109662cd9a5638df9"
+      "message_uid": "cbeeded6f7b28e2b2a839958be1b7400"
     },
     {
       "reservation_id": 40124508,
@@ -25607,7 +26596,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "26be51448f9fe00f6ec4e32da4f73715"
+      "message_uid": "ab856823111d5ede4043f6f9f45f0230"
     },
     {
       "reservation_id": 41136452,
@@ -25769,7 +26758,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "b98c530b1a23f6460d61bb56881fdbbe"
+      "message_uid": "063716dbe7129e1fe3244008423650b7"
     },
     {
       "reservation_id": 41024024,
@@ -25947,7 +26936,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "c61c869f215d66414ad73ce4a1947fe5"
+      "message_uid": "83f38fb683f22cfdd9a65b0f4980c987"
     },
     {
       "reservation_id": 39933254,
@@ -27061,7 +28050,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "71b4258d820d14f05457bf7b9f9910d3"
+      "message_uid": "10ae237240ded6e3e33262b220c56c24"
     },
     {
       "reservation_id": 38179382,
@@ -27449,7 +28438,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "05f45fde98c578449e1ff99103f91e48"
+      "message_uid": "2046e5dd9aa2638e39bee61b78b99e13"
     },
     {
       "reservation_id": 40766566,
@@ -27961,7 +28950,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "dd93b0c1ae6c2b33f8b45069d7968509"
+      "message_uid": "234eb6828f1a070fbef1af97fdb3f0af"
     }
   ]
 }

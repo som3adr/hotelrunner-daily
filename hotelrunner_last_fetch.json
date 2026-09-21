@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-09-20T16:50:22",
+  "generated_at": "2026-09-21T09:50:45",
   "mode": "recent_updates",
   "max_pages": 15,
   "lookback_days": 14,
   "stats": {
-    "loaded": 130,
-    "updates": 85,
-    "added": 1,
-    "updated": 67,
-    "removed": 0,
+    "loaded": 131,
+    "updates": 92,
+    "added": 7,
+    "updated": 66,
+    "removed": 1,
     "skipped": 0
   },
   "fetch_meta": {
-    "pages_read": 6,
-    "last_page_count": 10,
+    "pages_read": 7,
+    "last_page_count": 2,
     "max_pages": 15,
     "max_pages_hit": false,
     "stopped_reason": "api_total_pages",
-    "records_returned": 85
+    "records_returned": 92
   },
   "first_fetched_reservations": [
     {
@@ -174,15 +174,6 @@
       "created_at": null
     },
     {
-      "reservation_id": 40925863,
-      "guest": "Bubacarr Ndow",
-      "state": "confirmed",
-      "checkin": "2026-09-27",
-      "checkout": "2026-09-30",
-      "updated_at": "2026-09-06T13:28:12.000+01:00",
-      "created_at": null
-    },
-    {
       "reservation_id": 40942322,
       "guest": "Josselin Salmon",
       "state": "canceled",
@@ -243,6 +234,15 @@
       "checkin": "2026-11-03",
       "checkout": "2026-11-05",
       "updated_at": "2026-09-08T21:11:43.000+01:00",
+      "created_at": null
+    },
+    {
+      "reservation_id": 40972668,
+      "guest": "Ambre Boisset",
+      "state": "confirmed",
+      "checkin": "2026-10-01",
+      "checkout": "2026-10-05",
+      "updated_at": "2026-09-08T21:16:09.000+01:00",
       "created_at": null
     }
   ]
