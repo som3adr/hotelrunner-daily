@@ -1763,6 +1763,16 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
     all_extras = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "extra"]
     all_notes = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "note"]
 
+    from data_model import stayline_to_normalized
+    from meal_engine import compute_meal_entitlements, summarize_dinner, dinner_preparation_notice
+    from transfer_engine import build_transfer_records, format_driver_message
+    from transfer_state import TransferStateStore
+    from system_health import SystemHealthStore
+
+    transfer_store = TransferStateStore()
+    health_store = SystemHealthStore()
+    health_status = health_store.get_health_status()
+
     for index, summary in enumerate(summaries):
         day_id = f"day-{index}"
         active = "block" if index == 0 else "hidden"
@@ -1778,12 +1788,46 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
             """
         )
 
-        meal_badges = " ".join(badge(f"{meal}: {count}", "meal") for meal, count in sorted(summary.meals.items())) or '<span class="text-sm text-slate-500">None</span>'
+        # ── Normalized Meals & Transfers via Domain Engines ───────────────────
+        day_staylines = summary.in_house + summary.arrivals + summary.departures
+        seen_res_ids = set()
+        day_norm_res = []
+        for line in day_staylines:
+            if line.reservation_id not in seen_res_ids:
+                seen_res_ids.add(line.reservation_id)
+                day_norm_res.append(stayline_to_normalized(line))
+
+        entitlements = compute_meal_entitlements(day_norm_res, summary.date)
+        dinner_summary = summarize_dinner(entitlements)
+        breakfast_total = sum(e.count for e in entitlements if e.meal == "breakfast")
+        lunch_total = sum(e.count for e in entitlements if e.meal == "lunch")
+        dinner_total = dinner_summary["total"]
+        by_house = dinner_summary["by_house"]
+        house_breakdown = " | ".join(f"{h}: {n}" for h, n in sorted(by_house.items()) if n > 0)
+        dinner_notice = dinner_preparation_notice(dinner_total)
+
+        day_transfers = build_transfer_records(day_norm_res, summary.date, transfer_store)
+
+        # ── Tomorrow transfers (prepare today) — only shown on today's view ──
+        tomorrow_transfers: list = []
+        if index == 0 and len(summaries) > 1:
+            tomorrow_summary = summaries[1]
+            tmrw_staylines = tomorrow_summary.in_house + tomorrow_summary.arrivals + tomorrow_summary.departures
+            seen_tmrw: set = set()
+            tmrw_norm_res = []
+            for line in tmrw_staylines:
+                if line.reservation_id not in seen_tmrw:
+                    seen_tmrw.add(line.reservation_id)
+                    tmrw_norm_res.append(stayline_to_normalized(line))
+            tomorrow_transfers = build_transfer_records(tmrw_norm_res, tomorrow_summary.date, transfer_store)
+
+        total_transfer_count = len(day_transfers) + len(tomorrow_transfers)
         alert_badges = " ".join(
             [
                 badge(f"Conflicts: {len(summary.room_conflicts)}", "conflict"),
                 badge(f"Blocks: {len(summary.block_conflicts)}", "block"),
                 badge(f"Bed requests: {len(summary.bed_requests)}", "neutral"),
+                badge(f"Transfers: {total_transfer_count}", "meal" if total_transfer_count else "neutral"),
             ]
         )
         arrival_items = [short_guest_line(line) for line in summary.arrivals]
@@ -1791,6 +1835,105 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
         in_house_items = [short_guest_line(line) for line in summary.in_house]
         room_items = [f"{room}: {count} guest(s)" for room, count in sorted(room_disposition(summary).items())]
         team_message = build_team_message(summary)
+
+        # ── Helper: build a transfer card HTML ──────────────────────────────
+        def _transfer_card(tr) -> str:
+            direction_label = "ARRIVÉE" if tr.is_arrival else "DÉPART"
+            dir_tone = "bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/30" if tr.is_arrival else "bg-indigo-500/20 text-indigo-300 ring-1 ring-indigo-500/30"
+            if tr.status == "ready_to_send":
+                status_badge_html = '<span class="rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">READY TO SEND</span>'
+            elif tr.status == "sent":
+                status_badge_html = '<span class="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs font-semibold text-slate-300 ring-1 ring-white/10">SENT</span>'
+            else:
+                status_badge_html = '<span class="rounded-full bg-amber-400/10 px-2.5 py-0.5 text-xs font-semibold text-amber-300 ring-1 ring-amber-400/20">NEEDS INFO</span>'
+            driver_msg = format_driver_message(tr)
+            details_text = f"Flight: {tr.flight_number or '⚠️ missing'} · {tr.airport or 'Agadir'}" if tr.is_arrival else f"Time: {tr.pickup_time or '⚠️ missing'} · {tr.destination or 'Agadir'}"
+            return f"""
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="rounded px-2 py-0.5 text-xs font-bold {dir_tone}">{direction_label}</span>
+                      <strong class="text-white text-base">{html.escape(tr.guest_name)}</strong>
+                      <span class="text-xs text-slate-400">X{tr.passenger_count} ({html.escape(tr.house)})</span>
+                    </div>
+                    <div>{status_badge_html}</div>
+                  </div>
+                  <p class="mt-1 text-xs text-slate-400">{html.escape(details_text)}</p>
+                  <div class="mt-3 rounded-lg border border-white/5 bg-slate-950/80 p-3">
+                    <div class="flex items-center justify-between gap-2 mb-1.5">
+                      <span class="text-xs font-semibold uppercase tracking-wide text-slate-400">Taxi Driver Message (French)</span>
+                      <button class="copy-transfer-btn rounded bg-emerald-400/20 px-2 py-1 text-xs font-bold text-emerald-200 transition hover:bg-emerald-400/30" data-text="{html.escape(driver_msg)}" type="button">Copy Driver Text</button>
+                    </div>
+                    <pre class="font-mono text-xs text-slate-300 whitespace-pre-wrap">{html.escape(driver_msg)}</pre>
+                  </div>
+                </div>"""
+
+        # Format Transfers HTML cards (today + tomorrow prepare section)
+        today_part = ""
+        if day_transfers:
+            today_label = f'<p class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">— Today {summary.date.strftime("%d %b")} —</p>' if tomorrow_transfers else ""
+            today_part = today_label + '<div class="grid gap-3">' + "".join(_transfer_card(tr) for tr in day_transfers) + "</div>"
+        else:
+            today_part = '<p class="text-sm text-slate-500">No transfers today ✓</p>'
+
+        tomorrow_part = ""
+        if tomorrow_transfers:
+            tmrw_date_str = summaries[1].date.strftime("%d %b") if len(summaries) > 1 else "tomorrow"
+            tomorrow_part = f"""
+            <div class="mt-4 rounded-xl border border-amber-400/20 bg-amber-400/5 p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-amber-300 mb-3">— Prepare for Tomorrow {tmrw_date_str} —</p>
+              <div class="grid gap-3">{"".join(_transfer_card(tr) for tr in tomorrow_transfers)}</div>
+            </div>"""
+
+        if not day_transfers and not tomorrow_transfers:
+            transfers_html = '<p class="text-sm text-slate-500">No transfers today or tomorrow ✓</p>'
+        else:
+            transfers_html = today_part + tomorrow_part
+
+        # Format Dinner Notice Banner
+        if dinner_notice:
+            is_cap = "CAPACITY" in dinner_notice
+            notice_banner = f"""
+            <div class="mb-3 rounded-xl border {'border-rose-400/40 bg-rose-500/10 text-rose-200' if is_cap else 'border-amber-400/30 bg-amber-400/10 text-amber-200'} p-3 font-semibold text-sm">
+              {html.escape(dinner_notice)}
+            </div>
+            """
+        else:
+            notice_banner = ""
+
+        # Format Meals Section
+        meals_section_html = f"""
+        <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Meals & Dinner Preparation</h3>
+            {f'<span class="rounded-lg bg-emerald-400/10 px-2.5 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">Normal Setup (≤13)</span>' if not dinner_notice else ''}
+          </div>
+          {notice_banner}
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-center">
+              <span class="block text-xs uppercase tracking-wide text-slate-400">Breakfast</span>
+              <span class="text-xl font-bold text-white">{breakfast_total}</span>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-center">
+              <span class="block text-xs uppercase tracking-wide text-slate-400">Lunch</span>
+              <span class="text-xl font-bold text-white">{lunch_total}</span>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-center">
+              <span class="block text-xs uppercase tracking-wide text-slate-400">Dinner</span>
+              <span class="text-xl font-bold text-white">{dinner_total}</span>
+            </div>
+            {f'<div class="text-sm text-slate-400 pl-2">By House: <strong class="text-slate-200">{html.escape(house_breakdown)}</strong></div>' if house_breakdown else ''}
+          </div>
+          {f'''
+          <details class="mt-3 rounded-xl border border-white/5 bg-slate-900/40 p-3">
+            <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide text-slate-400">Dinner Audit Trail ({len(dinner_summary['audit'])} guests)</summary>
+            <div class="mt-2 grid gap-1 text-xs text-slate-300">
+              {''.join(f'<div class="flex items-center justify-between border-b border-white/5 py-1"><span>{html.escape(item.guest_name)} ({html.escape(item.house)})</span><span class="text-slate-400">{item.count} cover(s) · {html.escape(item.reason_text)}</span></div>' for item in dinner_summary['audit'])}
+            </div>
+          </details>
+          ''' if dinner_summary['audit'] else ''}
+        </div>
+        """
 
         day_sections.append(
             f"""
@@ -1814,9 +1957,11 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
                 <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.in_house)}</p></div>
               </div>
 
+              {meals_section_html}
+
               <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
-                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Meals</h3>
-                <div class="flex flex-wrap gap-2">{meal_badges}</div>
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Transfers ({total_transfer_count}{"" if not tomorrow_transfers else f" — {len(day_transfers)} today · {len(tomorrow_transfers)} for tomorrow"})</h3>
+                {transfers_html}
               </div>
 
               <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
@@ -1899,6 +2044,29 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
           {audit_details("Notes", all_notes, "neutral")}
         </div>
       </section>
+
+      <section class="mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
+        <h2 class="text-xl font-bold text-white mb-2">System Health & Operations Engines</h2>
+        <p class="text-xs text-slate-400 mb-4">Normalized operational status across all 3 houses (Olas, Tide, Sunrise).</p>
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm">
+          <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+            <span class="block text-xs uppercase text-slate-400">Last HotelRunner Fetch</span>
+            <span class="font-semibold text-slate-200">{health_status.get('last_hotelrunner_fetch', {}).get('timestamp', 'Recent (Cache)') if health_status.get('last_hotelrunner_fetch') else 'Recent (Cache)'}</span>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+            <span class="block text-xs uppercase text-slate-400">Tomorrow Transfers Jobs</span>
+            <span class="font-semibold text-slate-200">17:00 & 20:00 (Morocco)</span>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+            <span class="block text-xs uppercase text-slate-400">Conflict Engine</span>
+            <span class="font-semibold text-emerald-400">Active (9300 Dorm Bed-Level)</span>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+            <span class="block text-xs uppercase text-slate-400">Meal Engine</span>
+            <span class="font-semibold text-emerald-400">Active (Auditable & Deduplicated)</span>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -1932,6 +2100,25 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
         }}
         const original = button.textContent;
         button.textContent = 'Copied';
+        setTimeout(() => button.textContent = original, 1400);
+      }});
+    }});
+
+    document.querySelectorAll('.copy-transfer-btn').forEach((button) => {{
+      button.addEventListener('click', async () => {{
+        const text = button.dataset.text;
+        try {{
+          await navigator.clipboard.writeText(text);
+        }} catch (error) {{
+          const temp = document.createElement('textarea');
+          temp.value = text;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        }}
+        const original = button.textContent;
+        button.textContent = 'Copied!';
         setTimeout(() => button.textContent = original, 1400);
       }});
     }});

@@ -1,113 +1,14 @@
 # HotelRunner Day-by-Day In-House Summary
 
-Period: 2026-09-21 to 2026-09-28
+Period: 2026-09-23 to 2026-09-30
 
-Status: Ready to review
-HotelRunner data was read and merged into the local cache. Review attention items, then copy the team message.
+Status: Needs attention before sending
+HotelRunner still had data when the script reached the page limit. The dashboard may be missing new or changed reservations.
 - 141 cached reservations loaded
-- 98 HotelRunner updates read
-- 0 new, 77 changed, 0 canceled/removed
-- 7 page(s) read
-
-## Monday 21 September 2026
-
-In-house guests: 30 total (30 adults, 0 children)
-Occupied bed/room lines: 20
-Arrivals: 9 | Departures: 10
-
-### Check-ins
-- Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112 | 2 adults, 0 children | Room Only | Online
-- Clement  Arnoux | Double room #110 | 2 adults, 0 children | All Inclusive | Surf Camp
-- Clement  Arnoux | Double room #112 | 2 adults, 0 children | All Inclusive | Surf Camp
-- Emre Sazpinar | Mixed dormitory #08 | 1 adults, 0 children | Bed And Breakfast | Booking.com
-- Massa Bastien | Mixed dorm #06 | 1 adults, 0 children | Bed And Breakfast | Booking.com
-- Ahmed Kasoum | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Online
-- Paul Bürger | Mixed dormitory #07 | 1 adults, 0 children | Bed And Breakfast | Online
-- Marlene Schorn | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
-- Lara  Cervi | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Online
-
-### Check-outs
-- Marlene Schorn | Mixed dorm #05 | 1 adults, 0 children | Bed And Breakfast | Booking.com
-- Rosa Schiering | Double room #110 | 2 adults, 0 children | Bed And Breakfast | Booking.com
-- Rosa Schiering | Double room #112 | 2 adults, 0 children | Bed And Breakfast | Booking.com
-- Paul Bürger | Mixed dormitory - Room only #07 | 1 adults, 0 children | Room Only | HostelWorld
-- Lara  Cervi | Mixed dormitory #08 | 1 adults, 0 children | Bed And Breakfast | Online
-- Oussama  Chawki | Mixed dormitory #11 | 1 adults, 0 children | Bed And Breakfast | Online
-- Ahmed Kasoum | Mixed dorm #06 | 1 adults, 0 children | Bed And Breakfast | Booking.com
-- Joel Nichter | Twin room #113 | 2 adults, 0 children | Bed And Breakfast | Booking.com
-- Lakatos Annamária | Tidehunter Surf House -The Slab #6700 | 2 adults, 0 children | Bed And Breakfast | Booking.com
-- youness bendriss | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Online
-
-### Meal Plans
-- All Inclusive: 12
-- Bed And Breakfast: 15
-- Room Only: 3
-
-### Possible Duplicates / Multi-Bed Reservations
-- Clement  Arnoux appears 2 times: Double room #110, Double room #112
-
-### Room Conflicts
-- The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)
-- Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)
-
-### Manual Blocks
-- None
-
-### Block Conflicts
-- None
-
-### Bed Requests
-- None found in notes/messages
-
-### Extras / Additional Fees
-- Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Surfboards Rental x14 140
-- Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Half Board formula x16 240
-- Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112: Airport Transfer (Essa / Agad) x2 130
-
-### Notes & Messages
-- Massa Bastien | Mixed dorm #06: This is a replacement booking. The original Smart Flex reservation 5874192455 is now fully replaced. If the guest pays upon arrival, we recommend validating the provided card as soon as possible. More information can be found at
-
-## Tuesday 22 September 2026
-
-In-house guests: 31 total (31 adults, 0 children)
-Occupied bed/room lines: 20
-Arrivals: 2 | Departures: 2
-
-### Check-ins
-- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 | 1 adults, 0 children | Room Only | Online
-- Sterre  de Labije | Tidehunter Surf House -The Slab #6700 | 2 adults, 0 children | Bed And Breakfast | Online
-
-### Check-outs
-- Ahmed Kasoum | Mixed dormitory #09 | 1 adults, 0 children | Bed And Breakfast | Online
-- Paul Bürger | Mixed dormitory #07 | 1 adults, 0 children | Bed And Breakfast | Online
-
-### Meal Plans
-- All Inclusive: 12
-- Bed And Breakfast: 15
-- Room Only: 4
-
-### Possible Duplicates / Multi-Bed Reservations
-- Clement  Arnoux appears 2 times: Double room #110, Double room #112
-
-### Room Conflicts
-- The Reef #6800 has multiple active reservations: Nataliia  Ambrosiichuk (3 guest(s), R183828550); Veronika  Fedorchuk (3 guest(s), R958739965)
-- Double room - Room only - Online - Exclusive Offer -10%! #112 has multiple active reservations: Niels van den Berg (2 guest(s), R954207849); Clement  Arnoux (2 guest(s), R116351490)
-
-### Manual Blocks
-- None
-
-### Block Conflicts
-- None
-
-### Bed Requests
-- None found in notes/messages
-
-### Extras / Additional Fees
-- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Half Board formula x8 120
-- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Airport Transfer (Essa / Agad) x1 65
-
-### Notes & Messages
-- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07: Would it be possible to get a transfer to Taghazout/Tamraght on the 30th September?
+- 15 HotelRunner updates read
+- 0 new, 3 changed, 1 canceled/removed
+- 1 page(s) read
+- Run again with a higher --max-pages value before sending the WhatsApp message.
 
 ## Wednesday 23 September 2026
 
@@ -353,3 +254,85 @@ Arrivals: 3 | Departures: 2
 ### Notes & Messages
 - Chloé Grasdepot | Tidehunter Surf House -The Cathedral #6600: Hi, we will be in Agadir on 28th September (in a hotel near the souk). What is the best way to come to you ? Car, taxi or bus ? Thank you !
 - rose siteur | Tidehunter Surf House -The Slab #6700: BED PREFERENCE:Triple Room with Private External Bathroom: 1 single, 1 large double
+
+## Tuesday 29 September 2026
+
+In-house guests: 11 total (11 adults, 0 children)
+Occupied bed/room lines: 8
+Arrivals: 2 | Departures: 3
+
+### Check-ins
+- Manon van Gaal | Chambre avec salle de bain privative #101 | 2 adults, 0 children | Bed And Breakfast | Booking.com
+- el mehdi  el garda | Double room #112 | 2 adults, 0 children | Bed And Breakfast | Online
+
+### Check-outs
+- Niels van den Berg | Double room - Room only - Online - Exclusive Offer -10%! #112 | 2 adults, 0 children | Room Only | Online
+- Laurence Doin | Twin room #113 | 2 adults, 0 children | Bed And Breakfast | Booking.com
+- Lisa Van den Acker | Chambre avec salle de bain privative #101 | 2 adults, 0 children | Bed And Breakfast | Booking.com
+
+### Meal Plans
+- Bed And Breakfast: 10
+- Room Only: 1
+
+### Possible Duplicates / Multi-Bed Reservations
+- None
+
+### Room Conflicts
+- None
+
+### Manual Blocks
+- None
+
+### Block Conflicts
+- None
+
+### Bed Requests
+- rose siteur | Tidehunter Surf House -The Slab #6700: single + large double requested
+- Manon van Gaal | Chambre avec salle de bain privative #101: single + large double requested
+
+### Extras / Additional Fees
+- None
+
+### Notes & Messages
+- Manon van Gaal | Chambre avec salle de bain privative #101: vate Bathroom: 1 single, 1 large double
+
+## Wednesday 30 September 2026
+
+In-house guests: 8 total (8 adults, 0 children)
+Occupied bed/room lines: 6
+Arrivals: 2 | Departures: 4
+
+### Check-ins
+- Julia Yoga Vol | Mixed dormitory #11 | 1 adults, 0 children | Room Only | Volunteer
+- Laura volunteer | Mixed dormitory #12 | 1 adults, 0 children | Bed And Breakfast | Volunteer
+
+### Check-outs
+- Alysha  volunteer | Mixed dormitory #12 | 1 adults, 0 children | Bed And Breakfast | Volunteer
+- Vivien Linda Pochopien | Mixed dormitory - Room only - Online - Exclusive Offer -10%! #07 | 1 adults, 0 children | Room Only | Online
+- Bubacarr Ndow | Mixed dorm #01 | 1 adults, 0 children | Bed And Breakfast | Booking.com
+- Manon van Gaal | Chambre avec salle de bain privative #101 | 2 adults, 0 children | Bed And Breakfast | Booking.com
+
+### Meal Plans
+- Bed And Breakfast: 7
+- Room Only: 1
+
+### Possible Duplicates / Multi-Bed Reservations
+- None
+
+### Room Conflicts
+- None
+
+### Manual Blocks
+- None
+
+### Block Conflicts
+- None
+
+### Bed Requests
+- rose siteur | Tidehunter Surf House -The Slab #6700: single + large double requested
+
+### Extras / Additional Fees
+- None
+
+### Notes & Messages
+- None

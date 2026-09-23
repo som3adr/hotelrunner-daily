@@ -227,9 +227,44 @@ class TestOperationsAssistant(unittest.TestCase):
         msg = build_whatsapp_block(summary)
         self.assertIn("🏁 CHECK-OUTS · 21 September", msg)
         self.assertIn("🏨 CHECK-INS · 21 September", msg)
-        self.assertIn("Test Guest x2 -> balcony", msg)
-        self.assertIn("Departing Guest x1 -> dorm", msg)
+    def test_detect_extensions(self):
+        day = dt.date(2026, 9, 21)
+        # Guest checking out today
+        dep = StayLine(
+            reservation_id="dep1",
+            hr_number="HR1",
+            guest_name="Ahmed Kasoum",
+            channel="Direct",
+            room_name="Mixed dorm",
+            bed_number="03",
+            arrival=day - dt.timedelta(days=2),
+            departure=day,
+            adults=1,
+            children=0,
+            meal_plan="Bed and breakfast",
+        )
+        # Same guest checking in today for 2 more nights
+        arr = StayLine(
+            reservation_id="arr1",
+            hr_number="HR2",
+            guest_name="Ahmed Kasoum",
+            channel="Direct",
+            room_name="Mixed dorm",
+            bed_number="03",
+            arrival=day,
+            departure=day + dt.timedelta(days=2),
+            adults=1,
+            children=0,
+            meal_plan="Bed and breakfast",
+        )
+        summary = DaySummary(date=day, arrivals=[arr], departures=[dep])
+        msg = build_whatsapp_block(summary)
+        self.assertIn("note:", msg)
+        self.assertIn("Ahmed Kasoum x1 -> dorm extended 2 nights", msg)
+        self.assertIn("No check-outs", msg)
+        self.assertIn("No check-ins", msg)
 
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -58,5 +58,18 @@
   "tests/test_phase9_conflicts.py::TestSunrise9300Conflicts::test_detect_house_dorm_still_olas",
   "tests/test_phase9_conflicts.py::TestSunrise9300Conflicts::test_different_9300_beds_no_conflict",
   "tests/test_phase9_conflicts.py::TestSunrise9300Conflicts::test_same_9300_1_bed_is_conflict",
-  "tests/test_phase9_conflicts.py::TestSunrise9300Conflicts::test_same_day_checkin_checkout_no_conflict"
+  "tests/test_phase9_conflicts.py::TestSunrise9300Conflicts::test_same_day_checkin_checkout_no_conflict",
+  "tests/test_tomorrow_transfers.py::test_dashboard_html_etienne_in_prepare_for_tomorrow",
+  "tests/test_tomorrow_transfers.py::test_dashboard_html_live_cache_etienne",
+  "tests/test_tomorrow_transfers.py::test_etienne_departure_not_active_today",
+  "tests/test_tomorrow_transfers.py::test_etienne_entitlement_via_all_inclusive",
+  "tests/test_tomorrow_transfers.py::test_etienne_needs_info_when_no_time",
+  "tests/test_tomorrow_transfers.py::test_etienne_scenario_core",
+  "tests/test_tomorrow_transfers.py::test_guests_entered_days_ago_still_appear",
+  "tests/test_tomorrow_transfers.py::test_message_contains_guest_name_when_transfer_exists",
+  "tests/test_tomorrow_transfers.py::test_message_no_transfers_text",
+  "tests/test_tomorrow_transfers.py::test_multiple_ai_guests_all_appear",
+  "tests/test_tomorrow_transfers.py::test_non_ai_guest_not_included_by_default",
+  "tests/test_tomorrow_transfers.py::test_sent_transfer_shows_as_sent",
+  "tests/test_tomorrow_transfers.py::test_tomorrow_transfers_uses_correct_date"
 ]

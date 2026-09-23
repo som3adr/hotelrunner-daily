@@ -5,7 +5,8 @@ on:
   # Full daily briefing at 07:00, change checks every hour 08:00 → 00:00 Morocco
   # Silent between 00:01 and 06:59 Morocco (01:00–05:59 UTC) — no notifications while sleeping
   schedule:
-    - cron: "0 6-23 * * *"  # Every hour from 07:00 to 00:00 Morocco (06:00–23:00 UTC)
+    - cron: "0 6-23 * * *"     # Every hour from 07:00 to 00:00 Morocco (06:00–23:00 UTC)
+    - cron: "*/5 6-23 * * *"   # Every 5 min for Telegram Q&A bot (same quiet-hours window)
   # Trigger manually from the GitHub website anytime
   workflow_dispatch:
     inputs:
@@ -17,6 +18,7 @@ on:
         options:
           - check
           - full
+          - transfers
 
 jobs:
   run:
@@ -50,6 +52,8 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
+            telegram_bot_state.json
+            gemini_monitor_state.json
 
           key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
           restore-keys: hotelrunner-cache-${{ runner.os }}-
@@ -69,23 +73,47 @@ jobs:
         id: mode
         run: |
           HOUR=$(date -u +%H)
+          MIN=$(date -u +%M)
+          echo "hour=$HOUR" >> $GITHUB_OUTPUT
+          echo "min=$MIN" >> $GITHUB_OUTPUT
           INPUT_MODE="${{ github.event.inputs.mode }}"
           if [ "$INPUT_MODE" = "full" ]; then
             echo "mode=full" >> $GITHUB_OUTPUT
-          elif [ "$HOUR" = "06" ]; then
+          elif [ "$INPUT_MODE" = "transfers" ]; then
+            echo "mode=transfers" >> $GITHUB_OUTPUT
+          elif [ "$HOUR" = "06" ] && [ "$MIN" = "00" ]; then
             echo "mode=full" >> $GITHUB_OUTPUT
           else
             echo "mode=check" >> $GITHUB_OUTPUT
           fi
 
+      # ── Telegram Q&A Bot (every 5 min — reactive answers to manager questions) ─
+      - name: Telegram Q&A Bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python telegram_bot.py --poll
+
       # ── Send team Telegram messages (existing, unchanged) ─────────────────────
       - name: Send Team Telegram
+        if: steps.mode.outputs.mode != 'transfers' && steps.mode.outputs.min == '00'
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python telegram_send.py --mode ${{ steps.mode.outputs.mode }}
+
+      # ── Gemini Proactive Monitor (hourly — flags operational issues) ──────────
+      - name: Gemini Proactive Monitor
+        if: steps.mode.outputs.mode == 'check' && steps.mode.outputs.min == '00'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+        run: python gemini_monitor.py --send
 
       # ── Send Manager Report (morning only) ───────────────────────────────────
       - name: Send Manager Report
@@ -98,6 +126,17 @@ jobs:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         run: python manager_report.py --send
 
+      # ── Send Tomorrow Transfers (17:00 & 20:00 Morocco = 16:00 & 19:00 UTC, or manual) ──
+      - name: Send Tomorrow Transfers
+        if: steps.mode.outputs.mode == 'transfers' || steps.mode.outputs.hour == '16' || steps.mode.outputs.hour == '19'
+        env:
+          HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
+          HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+        run: python tomorrow_transfers.py --send
+
       # ── Save updated cache and snapshot for next run ──────────────────────────
       - name: Save cache
         uses: actions/cache/save@v4
@@ -108,24 +147,29 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
+            telegram_bot_state.json
+            gemini_monitor_state.json
 
           key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
 
       # ── Deploy interactive HTML dashboard to GitHub Pages ─────────────────────
       - name: Setup Pages
+        if: steps.mode.outputs.min == '00'
         uses: actions/configure-pages@v5
 
       - name: Prepare site directory
+        if: steps.mode.outputs.min == '00'
         run: |
           mkdir -p _site
           cp hotelrunner_dashboard.html _site/index.html
 
       - name: Upload Pages artifact
+        if: steps.mode.outputs.min == '00'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
       - name: Deploy to GitHub Pages
+        if: steps.mode.outputs.min == '00'
         id: deployment
         uses: actions/deploy-pages@v4
-

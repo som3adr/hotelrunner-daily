@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-21T15:09:04",
-  "reservation_count": 141,
+  "updated_at": "2026-09-23T23:27:43",
+  "reservation_count": 140,
   "reservations": [
     {
       "reservation_id": 39461196,
@@ -1580,7 +1580,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "f2efdae37c85d6070849556e91a37f09"
+      "message_uid": "520c98b4e1761b81345f707d6898151f"
     },
     {
       "reservation_id": 41048189,
@@ -22819,192 +22819,6 @@
       "message_uid": "7449de0e8ba8aff0c98982e9f5fdfac8"
     },
     {
-      "reservation_id": 40725248,
-      "hr_number": "R270500182",
-      "provider_number": "6018654532",
-      "pms_number": null,
-      "channel": "bookingcom",
-      "channel_display": "Booking.com",
-      "source_display": null,
-      "state": "confirmed",
-      "modified": false,
-      "total_guests": 2,
-      "total_rooms": 1,
-      "guest": "alban martel",
-      "firstname": "alban",
-      "lastname": "martel",
-      "country": "FR",
-      "guest_national_id": "",
-      "guest_is_citizen": null,
-      "cancel_reason": null,
-      "completed_at": "2026-08-26T12:50:19.000+01:00",
-      "updated_at": "2026-08-26T12:52:03.000+01:00",
-      "canceled_at": null,
-      "sub_total": 116.64,
-      "extras_total": 0.0,
-      "adjustments_total": -0.0,
-      "tax_total": 0.5,
-      "item_total": "116.64",
-      "total": 116.64,
-      "currency": "EUR",
-      "checkin_date": "2026-10-27",
-      "checkout_date": "2026-10-31",
-      "note": "** THIS RESERVATION HAS BEEN PRE-PAID **\nBOOKING NOTE : Payment charge is EUR 2.3328\nThis is a Smart Flex reservation.\nUpgraded policy: Free cancellation until 4 days before check-in.\nMore information can be found at https://admin.booking.com/hotel/hoteladmin/extranet_ng/manage/booking.html?hotel_id=11149696res_id=6018654532\nBED PREFERENCE:Double Room with Balcony: 2 singles\nFlag: booker_is_genius\n\nPayment (amount:116.64 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 18.77 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
-      "payment": "BankTransfer",
-      "payment_details": null,
-      "paid_amount": 0.0,
-      "pms_version_generated": true,
-      "loyalty_order": false,
-      "loyalty_app_name": null,
-      "address": {
-        "city": ".",
-        "state": "",
-        "country": "France (FR)",
-        "country_code": "FR",
-        "phone": "33608652251",
-        "email": "amarte.146182@guest.booking.com",
-        "street": "-",
-        "street_2": "",
-        "postal_code": "-"
-      },
-      "billing_address": {
-        "bill_type": null,
-        "city": ".",
-        "state": "",
-        "country": "France",
-        "country_code": "FR",
-        "phone": "33608652251",
-        "email": "amarte.146182@guest.booking.com",
-        "street": "-",
-        "street_2": "",
-        "tax_office": "",
-        "tax_id": "",
-        "company": "",
-        "firstname": "alban",
-        "lastname": "martel"
-      },
-      "extra_adjustments_details": [],
-      "adjustment_details": [],
-      "price_adjustments_details": [],
-      "next_states": [],
-      "system_message": null,
-      "system_url": "http://olas-surf-house-2.hotelrunner.com/admin/orders/R270500182",
-      "deposit_tax_inclusive": true,
-      "requires_response": false,
-      "cancelation_policy": [],
-      "rooms": [
-        {
-          "id": 36588337,
-          "state": "confirmed",
-          "code": "1020343:HR:1016930",
-          "number": "113",
-          "voucher_number": "6018654532.6481942602",
-          "availability_group": "HR:1016930",
-          "rate_code": "1020343:HR:1016930",
-          "rate_plan_code": "1020343:HR:1016930",
-          "inv_code": "HR:1016930",
-          "non_refundable": false,
-          "price": 116.64,
-          "total": 116.64,
-          "nights": 4,
-          "meal_plan": "bed-breakfast",
-          "meal_plan_presentation": "Bed and breakfast",
-          "total_guest": 2,
-          "total_adult": 2,
-          "child_ages": [],
-          "name": "Double Room with Balcony - Room Only Non remboursable - 2 Occupancy",
-          "name_presentation": "Twin room  - Bed & Breakfast - Non refundable",
-          "checkin_date": "2026-10-27",
-          "checkout_date": "2026-10-31",
-          "extra_info": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest can cancel free of charge until 4 days before arrival. The guest will be charged the total price of the reservation if they cancel in the 4 days before arrival. \n\nPrice Info:2026-10-27 genius rate:yes\nPrice Info:2026-10-28 genius rate:yes\nPrice Info:2026-10-29 genius rate:yes\nPrice Info:2026-10-30 genius rate:yes\n\nGuest Names:alban martel\n\nMax Children:0\nBooking.com Payout Amount is 116.64 EUR",
-          "daily_prices": [
-            {
-              "date": "2026-10-27",
-              "price": 29.16,
-              "original_price": 29.16,
-              "discount": 0.0,
-              "rate_code": "1020343:HR:1016930",
-              "version": "v2"
-            },
-            {
-              "date": "2026-10-28",
-              "price": 29.16,
-              "original_price": 29.16,
-              "discount": 0.0,
-              "rate_code": "1020343:HR:1016930",
-              "version": "v2"
-            },
-            {
-              "date": "2026-10-29",
-              "price": 29.16,
-              "original_price": 29.16,
-              "discount": 0.0,
-              "rate_code": "1020343:HR:1016930",
-              "version": "v2"
-            },
-            {
-              "date": "2026-10-30",
-              "price": 29.16,
-              "original_price": 29.16,
-              "discount": 0.0,
-              "rate_code": "1020343:HR:1016930",
-              "version": "v2"
-            }
-          ],
-          "extras": [],
-          "updated_at": "2026-08-26T12:53:03.000+01:00",
-          "canceled_at": null,
-          "meta": {},
-          "extras_total": 0.0,
-          "fixed_adjustments_total": 0.0,
-          "included_taxes_total": 0.0,
-          "excluded_fees_and_taxes_total": 0.0,
-          "cancelation_refund_total": 0.0,
-          "cancelation_refund_tax_type": "exclusive",
-          "cancelation_penalty_total": 0.0,
-          "cancelation_penalty_tax_type": "inclusive",
-          "promotions_total": 0.0,
-          "room_base_price": 116.64,
-          "room_sub_total": 116.64,
-          "comments": [
-            {
-              "body": "Room Extra Info:This double room has a shared bathroom, a tiled floor and a quiet street view.\nMeal Plan:Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night.\nNon-Smoking Room\n\n\nInfo: Breakfast is included in the room rate.\nHalf board costs EUR 10 per person per night. Children and Extra Bed Policy: Children are not allowed. You haven't added any cots. You haven't added any extra beds. The maximum number of guests is 2.  Deposit Policy: The guest will be charged a prepayment of the total price of the reservation at any time.  Cancellation Policy: The guest can cancel free of charge until 4 days before arrival. The guest will be charged the total price of the reservation if they cancel in the 4 days before arrival. \n\nPrice Info:2026-10-27 genius rate:yes\nPrice Info:2026-10-28 genius rate:yes\nPrice Info:2026-10-29 genius rate:yes\nPrice Info:2026-10-30 genius rate:yes\n\nGuest Names:alban martel\n\nMax Children:0\nBooking.com Payout Amount is 116.64 EUR",
-              "channel_note": true,
-              "housekeeping": null,
-              "guest_visible": false
-            },
-            {
-              "body": "** THIS RESERVATION HAS BEEN PRE-PAID **\nBOOKING NOTE : Payment charge is EUR 2.3328\nThis is a Smart Flex reservation.\nUpgraded policy: Free cancellation until 4 days before check-in.\nMore information can be found at https://admin.booking.com/hotel/hoteladmin/extranet_ng/manage/booking.html?hotel_id=11149696res_id=6018654532\nBED PREFERENCE:Double Room with Balcony: 2 singles\nFlag: booker_is_genius\n\nPayment (amount:116.64 currency:EUR payment type:payment_on_Booking.com payout type:BankTransfer)\n\n\n\n\n\nVAT 18.77 EUR is included to payout\n\n\n, \nCity tax 4 EUR is included to payout\n\n\n\nAdult Count:2",
-              "channel_note": true,
-              "housekeeping": null,
-              "guest_visible": false
-            }
-          ]
-        }
-      ],
-      "payments": [
-        {
-          "state": "checkout",
-          "id": 38759850,
-          "amount": "116.64",
-          "currency": "EUR",
-          "exchanged_amount": "0.0",
-          "exchange_currency": "EUR",
-          "exchange_rate": "0.0",
-          "paid_at": null,
-          "payment_method_name": "Cash",
-          "payment_method": "cash",
-          "installment": null,
-          "response_code": null
-        }
-      ],
-      "meta_data_conversions": [],
-      "channel_profile_data_conversions": null,
-      "integration_echo_details": null,
-      "last_payment_state": "pending",
-      "message_uid": "e9394facbc53f19e746e3c0b4a8d913f"
-    },
-    {
       "reservation_id": 41154944,
       "hr_number": "R015024218",
       "provider_number": "6113632146",
@@ -26745,7 +26559,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "2a83da80951fad0aae87456b5e9e7a6a"
+      "message_uid": "212cd7f65e94850e30f310e8a2667516"
     },
     {
       "reservation_id": 41138705,
@@ -27221,7 +27035,7 @@
       "channel_profile_data_conversions": null,
       "integration_echo_details": null,
       "last_payment_state": "pending",
-      "message_uid": "91b3b81b6911dc36a1eaae71b899bf2a"
+      "message_uid": "d224c33ce57b8cdee877cc4d1a6c4e56"
     },
     {
       "reservation_id": 41136452,
