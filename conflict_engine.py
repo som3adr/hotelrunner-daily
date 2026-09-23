@@ -77,26 +77,50 @@ class CapacityWarning:
 # ── Room key helpers ──────────────────────────────────────────────────────────
 
 def _room_key(res: NormalizedReservation) -> str:
-    """Canonical key for grouping reservations into the same physical room."""
-    bed = res.bed.strip().casefold()
-    room = res.room.strip().casefold()
+    """Canonical key for grouping reservations into the same physical room.
+
+    For Sunrise 9300 dorm beds (9300-1 through 9300-5):
+      - Each specific bed ID (e.g. 9300-1) is tracked individually
+      - Two reservations on 9300-1 → conflict
+      - 9300-1 and 9300-2 → different beds, no conflict
+      - All 9300-x beds are capacity-checked together as a 5-bed dorm
+    """
+    bed = res.bed.strip().casefold() if res.bed else ""
+    room = res.room.strip().casefold() if res.room else ""
+
     if bed:
         return f"bed:{bed}"
     return f"room:{room}"
 
 
+def _is_sunrise_9300_bed(bed_or_room: str) -> bool:
+    """True if this is a Sunrise HotelRunner 9300 dorm bed."""
+    val = (bed_or_room or "").strip()
+    return val.startswith("9300-") or val == "9300"
+
+
 def _is_shared_room(room: str, house: str) -> bool:
-    """True for dormitories and Sunrise rooms where guests share beds up to room capacity."""
+    """True for dormitories and Sunrise rooms where guests share beds up to room capacity.
+
+    Exception: Sunrise 9300 dorm beds are tracked per individual bed (not as a shared group),
+    so they return False here — conflict detection handles them as private beds.
+    The 9300 dorm capacity is checked separately in _check_9300_dorm_capacity().
+    """
+    room_lower = (room or "").strip().casefold()
+
+    # Sunrise 9300 dorm: individual bed tracking, NOT shared-room logic
+    if _is_sunrise_9300_bed(room_lower):
+        return False
+
     if house.casefold() == "sunrise":
         return True
+
     cfg = load_config()
     rooms_cfg = cfg.get("houses", {}).get(house, {}).get("rooms", {})
-    room_lower = room.casefold()
     for room_key_cfg, room_data in rooms_cfg.items():
         if room_key_cfg.casefold() in room_lower or room_lower in room_key_cfg.casefold():
             return room_data.get("type", "") in {"dorm", "shared", "triple", "quad"}
     return "dorm" in room_lower
-
 
 
 def _room_capacity(room: str, house: str) -> int | None:
@@ -272,7 +296,54 @@ def detect_conflicts(
                     )
                     room_conflicts.append(conflict)
 
+    # Check Sunrise 9300 dorm total capacity (across all individual 9300-x beds)
+    _check_9300_dorm_capacity(active, capacity_warnings, today, horizon)
+
     return room_conflicts, capacity_warnings
+
+
+def _check_9300_dorm_capacity(
+    all_reservations: list[NormalizedReservation],
+    warnings: list[CapacityWarning],
+    today: dt.date,
+    horizon: dt.date,
+) -> None:
+    """
+    Check total Sunrise 9300 dorm occupancy (5 bed capacity) per night.
+    Each 9300-x bed is one slot. If more than 5 distinct beds are occupied on
+    any night, raise a CapacityWarning.
+    """
+    cfg = load_config()
+    capacity = cfg.get("sunrise_hotelrunner", {}).get("dorm_9300_capacity", 5)
+
+    # All reservations using any 9300-x bed (from HotelRunner Sunrise)
+    dorm_res = [
+        r for r in all_reservations
+        if (r.bed or "").strip().startswith("9300") or (r.room or "").strip().startswith("9300")
+    ]
+    if not dorm_res:
+        return
+
+    current = today
+    while current < horizon:
+        active_tonight = [r for r in dorm_res if r.is_active_on(current)]
+        # Count distinct beds occupied (each bed = 1 slot)
+        beds_occupied = len({(r.bed or r.room or "").strip() for r in active_tonight})
+        if beds_occupied > capacity:
+            warnings.append(CapacityWarning(
+                severity="action_required",
+                room="9300 Dorm",
+                house="Sunrise",
+                date=current,
+                booked=beds_occupied,
+                capacity=capacity,
+                guests=active_tonight,
+                description=(
+                    f"{beds_occupied} beds occupied in Sunrise 9300 Dorm "
+                    f"(capacity {capacity})"
+                ),
+            ))
+        current += dt.timedelta(days=1)
 
 
 def _check_dorm_capacity(

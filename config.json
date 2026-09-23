@@ -50,7 +50,12 @@
         "Sunrise 2": { "capacity": 5, "type": "dorm",          "beds": ["single","single","single","single","single"] },
         "Sunrise 3": { "capacity": 4, "type": "quad",          "beds": ["single","single","single","single"] },
         "Sunrise 4": { "capacity": 3, "type": "double+single", "beds": ["double", "single"] },
-        "Sunrise 5": { "capacity": 3, "type": "triple",        "beds": ["single","single","single"] }
+        "Sunrise 5": { "capacity": 3, "type": "triple",        "beds": ["single","single","single"] },
+        "9200": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9200" },
+        "9300": { "capacity": 5, "type": "dorm",    "display_name": "Sunrise Dorm 9300", "beds": ["9300-1","9300-2","9300-3","9300-4","9300-5"] },
+        "9400": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9400" },
+        "9500": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9500" },
+        "9600": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9600" }
       }
     }
   },
@@ -72,6 +77,11 @@
       "lunch":   ["lunch", "dejeuner", "déjeuner", "midi"],
       "dinner":  ["dinner", "diner", "dîner", "souper", "half board", "demi pension"],
       "breakfast": ["breakfast", "petit dejeuner", "petit déjeuner"]
+    },
+    "dinner_thresholds": {
+      "_comment": "0 to extra_tables_above = normal; above = extra tables; above capacity_warning_above = capacity warning",
+      "extra_tables_above": 13,
+      "capacity_warning_above": 24
     }
   },
 
@@ -158,5 +168,19 @@
       "allergies":            "Allergies",
       "notes":                "Medical Conditions / Notes"
     }
+  },
+
+  "sunrise_hotelrunner": {
+    "_comment": "Sunrise guests may also come from HotelRunner with these bed/room IDs",
+    "private_room_prefixes": ["9200", "9400", "9500", "9600"],
+    "dorm_9300_bed_prefix": "9300",
+    "dorm_9300_bed_ids": ["9300-1", "9300-2", "9300-3", "9300-4", "9300-5"],
+    "dorm_9300_capacity": 5,
+    "all_sunrise_prefixes": ["9200", "9300", "9400", "9500", "9600"]
+  },
+
+  "scheduled_jobs": {
+    "_comment": "Morocco local time (Africa/Casablanca). Two daily sends for tomorrow-transfer job.",
+    "tomorrow_transfer_times_local": ["17:00", "20:00"]
   }
 }

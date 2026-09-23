@@ -1,0 +1,278 @@
+--- PAGE 1 ---
+Olas Operations Manager
+Master documentation, architecture, business rules, execution plan and Antigravity instructions
+Purpose Upgrade the existing hotelrunner-daily project into a reliable operations manager without
+rebuilding working functionality.
+Properties Olas, Tide and Sunrise - Imsouane operations.
+Core principle Facts are calculated deterministically. Rules detect operational risk. AI explains, prioritizes
+and answers questions. AI never invents operational data.
+Current priority Meal totals, dinner preparation, tomorrow transfers, Telegram reliability/readability,
+conflicts and system health.
+Instruction to Antigravity: Treat this document as the product specification. Inspect the current repository before
+changing code. Preserve working behavior. Implement in phases, add regression tests first, and do not redesign
+modules merely for style.
+1. Existing system - preserve the baseline
+The current public repository already contains a useful modular base: HotelRunner reporting, reservation cache/audit
+files, a data model, conflict engine, extras engine, Google Sheets support, surf scheduling, manager reporting, alert state,
+Telegram sending, tests and an HTML dashboard. The normal report is documented as covering today plus the next 7
+days and includes check-ins, check-outs, in-house totals, meal plans, notes, messages, bed requests and
+duplicate/multi-bed situations.
+(cid:127) Do not start a new application. Extend the existing code.
+(cid:127) Keep the current team report unchanged unless a requirement below explicitly changes it.
+(cid:127) Keep the detailed dashboard for inspection; make Telegram action-oriented.
+(cid:127) Create a baseline tag/branch and make current tests pass before refactoring.
+(cid:127) Any refactor must be justified by one shared operational data model or reliability need.
+2. Target architecture
+All features must consume one normalized operational truth. Avoid separate parsers for dinner, Telegram, transfers and
+dashboard.
+Layer Responsibility
+Sources HotelRunner reservations + guest details + notes + Additional Fees/Extras; Sunrise/Google Sheet;
+surf schedule; manual blocks/config.
+Normalization Reservation, guest-night, room/bed, meal entitlement, extra, transfer and operational-note records.
+Rules Meal counts, dinner setup, transfer readiness, room/bed conflicts, surf/meal conflicts, missing
+information.
+Manager state Today, tomorrow, unresolved attention items, preparation tasks and delivery status.
+Outputs Dashboard, scheduled Telegram, change alerts, future conversational Telegram.
+AI layer Intent understanding, summarization, prioritization and explanation only. It must call deterministic
+data/rules for facts.
+3. Property and room model
+--- PAGE 2 ---
+Sunrise mapping - fixed business rule
+Sunrise has four private rooms plus one physical 5-bed dorm. HotelRunner bed identifiers for the dorm must not be
+treated as separate rooms.
+ID House Type Physical room / bed logic
+9200 Sunrise Private One private room
+9300-1 ... 9300-5 Sunrise Dorm One physical room 9300; five individual beds
+9400 Sunrise Private One private room
+9500 Sunrise Private One private room
+9600 Sunrise Private One private room
+(cid:127) Different 9300-x beds may be occupied simultaneously.
+(cid:127) Two overlapping reservations on the same 9300-x bed are a bed conflict.
+(cid:127) Dashboard should summarize occupancy as, for example, Sunrise - 9300 Dorm - 4/5 beds occupied.
+4. Meal entitlement and today's dinner total
+This is the first data-quality feature to finish. The system must always be able to answer How many people have dinner
+today? and explain exactly why each guest was counted.
+Sources to inspect for each active guest
+(cid:127) Meal plan: Full Board, All Inclusive and Half Board count for dinner.
+(cid:127) Notes: manually written dinner/meal arrangements must be parsed into a normalized entitlement when clear.
+(cid:127) Additional Fees / guest details: paid dinner or meal extras must be included.
+(cid:127) Sunrise / Google Sheet: normalize into the same entitlement model.
+(cid:127) Deduplication: a person with Half Board plus a dinner-related extra is still one dinner guest unless the extra explicitly
+represents additional people.
+(cid:127) Ambiguity: unknown wording goes to Needs confirmation; never guess.
+Required output
+Dinner today: 21
+Olas: 14 | Tide: 5 | Sunrise: 2
+Behind this total, provide an audit list: guest name, house, source and reason (Half Board / Full Board
+/ All Inclusive / Additional Fee / Note).
+Dinner setup rule
+(cid:127) 0-13 dinner guests: normal setup.
+(cid:127) 14-24 dinner guests: extra tables required.
+(cid:127) More than 24: capacity warning requiring manager attention.
+Do not calculate the number of extra tables until seats-per-extra-table is explicitly configured. The current
+guaranteed rule is only that more than 13 requires extra tables, while total capacity with extra tables is 24.
+5. Transfer business rules
+Transfers are a day-before preparation task. The manager must not wait until the transfer day.
+How a transfer is detected
+(cid:127) All Inclusive: transfer is included.
+--- PAGE 3 ---
+(cid:127) Notes: if a transfer request is written in the reservation note, treat it as a transfer.
+(cid:127) Additional Fees / guest details: explicit transfer extras count.
+(cid:127) Do not infer a transfer solely because a guest is arriving or departing.
+Transfer record
+(cid:127) Direction: Arrival or Departure.
+(cid:127) House: Olas, Tide or Sunrise.
+(cid:127) Date and passenger count.
+(cid:127) Arrival: flight number and airport/location when available.
+(cid:127) Departure: pickup time and destination when available.
+(cid:127) Raw source/reason: All Inclusive, note or Additional Fee.
+(cid:127) Status: Needs info -> Ready to send -> Sent.
+Taxi workflow
+Olas normally uses one taxi driver. The system therefore does not need a driver-assignment marketplace. Its job is to
+prepare the information, generate the message in the established format, remind one day before, and track whether
+Ismail has sent it.
+Arrival message format
+Arrivée *Olas*
+20 septembre 2026
+*Guest Name* X1
+Flight number: HV6491
+Agadir airport
+Departure message format
+Depart *Tide*
+18 septembre 2026
+*Guest Name* X2
+Time: 15:30
+Agadir airport
+Scheduled tomorrow-transfer check
+(cid:127) Run every evening at a configurable Morocco-local time.
+(cid:127) Always send a result, including No transfers tomorrow, so the user knows the check ran.
+(cid:127) All Inclusive + arrival/departure tomorrow + missing transfer details is itself a Needs Attention item.
+(cid:127) If information is complete but status is not Sent, keep it visible as Ready to send.
+(cid:127) Provide a Copy driver message action in the dashboard before attempting any automated WhatsApp sending.
+6. Telegram design
+Telegram has two different jobs and they must remain separate.
+A. Today/Tomorrow Change Watch
+(cid:127) Only reservations affecting today or tomorrow.
+(cid:127) Silent when nothing operationally relevant changed.
+(cid:127) Changes to extras/notes/transfer information must be included in the comparison if they affect operations.
+B. Scheduled preparation
+(cid:127) Tomorrow Transfers runs independently from reservation-change detection.
+(cid:127) Later, Tomorrow Preparation can include dinner setup, room turnovers, surf/meal issues and unresolved risks.
+--- PAGE 4 ---
+Formatting
+Use simple headings, whitespace and one divider. Avoid decorative emoji overload. Red/orange markers are reserved for
+actual attention.
+TOMORROW - TRANSFERS
+READY TO SEND
+Arrival - Olas
+Guest Name X2
+Flight: AT425
+Agadir Airport
+------------------------------
+NEEDS INFORMATION
+Departure - Tide
+Pickup time missing
+7. Telegram reliability - mandatory
+(cid:127) The pipeline must use fresh data before evaluating changes.
+(cid:127) Correct order: fetch -> normalize -> build relevant state -> compare -> send Telegram -> only after successful send
+persist/acknowledge the new notification state.
+(cid:127) If Telegram fails, do not advance the notification snapshot. Keep the alert pending for retry.
+(cid:127) Log each run with timestamp, fetch success, records processed, alert count, Telegram result and error.
+(cid:127) Add health information to dashboard: last HotelRunner fetch, last Sunrise/Sheet fetch, last checker run, last successful
+Telegram send and current error state.
+(cid:127) Do not interpret Telegram silence as success; scheduled preparation messages should make important daily jobs
+observable.
+8. Conflict and prevention engine
+Rooms and beds
+(cid:127) Detect overlapping private-room reservations.
+(cid:127) Detect overlapping assignments to the same dorm bed.
+(cid:127) Do not flag different beds in the same dorm as conflicts.
+(cid:127) Same-day checkout/check-in is not an overnight overlap.
+(cid:127) Check alternatives across Olas, Tide and Sunrise before escalating.
+(cid:127) Never automatically cancel a reservation or invent a cancellation reason.
+Surf and meals
+(cid:127) Morning surf is operationally preferred when conditions and coach decisions allow.
+(cid:127) Local planning preference: Bay - low-to-mid or mid-to-low; Cathedral - high-to-mid or mid-to-high.
+(cid:127) Coach/manager remains final authority; tide/weather data is support information only.
+(cid:127) Compare confirmed surf session + duration + return buffer with breakfast/lunch/dinner.
+(cid:127) If a conflict exists, tell kitchen ahead of time and identify affected guests.
+Extras
+(cid:127) Normalize known extras: transfer, breakfast/lunch/dinner, surf lesson, equipment, extra bed and other operational
+services.
+(cid:127) Unknown paid extras become Needs confirmation with the original description; do not silently discard them.
+--- PAGE 5 ---
+9. Dashboard specification
+Section Must show
+Today In-house, arrivals, departures, breakfast/lunch/dinner totals, surf, transfers and attention items.
+Tomorrow Prep Transfers first; then dinner setup, arrivals/departures, room turnovers and future preparation rules.
+Meals Totals by house and combined total; click-through/audit list showing why each guest is counted.
+Transfers Needs info / Ready to send / Sent; generated driver text and Copy action.
+Rooms Physical rooms and dorm-bed occupancy; Sunrise 9300 shown as one 5-bed dorm.
+Risks Room/bed conflicts, capacity issues, missing transfer data, unknown extras, surf/meal conflicts.
+System Health Last source fetches, checker run, Telegram success/failure and stale-data warning.
+10. Future conversational Telegram agent
+After the deterministic engines are trusted, the bot may accept natural-language questions. The AI interprets intent; the
+application supplies the answer.
+Examples:
+- Check today and tell me if there is a transfer I need to check.
+- How many people have dinner tonight?
+- Who arrives tomorrow?
+- What extras did this guest book?
+- Are there any room conflicts this week?
+- What do I need to prepare for tomorrow?
+- Is there anything I am forgetting?
+(cid:127) Read-only questions may answer immediately.
+(cid:127) Any future write action that changes a reservation, room, block or status should require explicit confirmation.
+(cid:127) The AI must cite/identify the underlying operational records in the UI where useful; it must not answer from memory.
+11. Execution plan for Antigravity
+Phase 0 - Protect the working version
+Create a branch/tag. Run all existing tests. Capture current dashboard/team-report/Telegram outputs as regression
+fixtures. No feature changes.
+Phase 1 - One normalized data contract
+Inspect data_model.py, extras_engine.py, google_sheets.py and current HotelRunner parsing. Define stable records for
+Reservation, GuestNight, RoomAssignment, MealEntitlement, Extra, Transfer and AttentionItem. Reuse existing
+structures where possible.
+Phase 2 - Meal engine
+Implement auditable breakfast/lunch/dinner entitlements from meal plan, notes, Additional Fees and Sunrise data. Add
+deduplication and date semantics. Expose today's dinner total and guest-level reasons.
+Phase 3 - Dinner preparation rule
+Apply 0-13 normal, 14-24 extra tables, >24 capacity warning. Do not invent number of extra tables.
+Phase 4 - Transfer engine
+Detect All Inclusive/note/Additional Fee transfers, normalize arrival/departure information, generate taxi-driver text and
+statuses.
+Phase 5 - Tomorrow Transfer job
+--- PAGE 6 ---
+Create independent daily preparation job. Always send a result. Add missing-info warnings and Sent state.
+Phase 6 - Telegram reliability
+Make delivery acknowledgement atomic: only persist notification state after successful send. Add retry behavior and run
+logs.
+Phase 7 - Telegram readability
+Create compact templates for change alerts and preparation messages. Keep existing team report separate.
+Phase 8 - Dashboard upgrade
+Add Today, Tomorrow Prep, Meals, Transfers, Rooms/Risks and System Health views using the same normalized
+engines.
+Phase 9 - Conflict/risk hardening
+Verify Sunrise dorm logic, room/bed overlaps, alternatives, extras and surf/meal warnings.
+Phase 10 - Conversational bot
+Only now add natural-language read-only questions. Map intents to deterministic query functions. Add write confirmation
+later if needed.
+12. Engineering rules - avoid coding twice
+(cid:127) Single source of truth: dashboard, Telegram and AI must call the same domain functions.
+(cid:127) Pure functions where possible: meal calculation, conflict detection and transfer readiness should be testable without
+network access.
+(cid:127) Adapters at the edges: HotelRunner and Google Sheets parsing should be separated from business rules.
+(cid:127) Configuration over scattered constants: dinner thresholds, timezone, scheduled time and room mappings belong in
+one config/domain configuration.
+(cid:127) Idempotency: rerunning a scheduled job must not duplicate notifications or corrupt state.
+(cid:127) Observability: every automation needs last-run/last-success/error information.
+(cid:127) No silent parsing: unknown meal/extra/transfer text is surfaced for review.
+(cid:127) Backward compatibility: preserve current reports unless a phase explicitly replaces an output.
+(cid:127) Small pull requests/commits: complete and test one phase before starting the next.
+13. Required test matrix
+(cid:127) Half Board guest active tonight -> exactly one dinner.
+(cid:127) Full Board guest active tonight -> exactly one dinner.
+(cid:127) All Inclusive guest active tonight -> dinner plus transfer entitlement.
+(cid:127) Room-only/B&B; guest with paid dinner Additional Fee -> dinner counted.
+(cid:127) Guest with meal plan plus duplicate dinner wording -> not double-counted.
+(cid:127) Ambiguous note/extra -> Needs confirmation, not guessed.
+(cid:127) Sunrise Google Sheet guest -> same meal logic as HotelRunner.
+(cid:127) Dinner total 13 -> normal setup; 14 -> extra tables; 24 -> extra tables but capacity OK; 25 -> capacity warning.
+(cid:127) All Inclusive arrival tomorrow with complete flight details -> Ready to send.
+(cid:127) All Inclusive arrival tomorrow missing flight/arrival details -> Needs info.
+(cid:127) Departure tomorrow missing pickup time -> Needs info.
+--- PAGE 7 ---
+(cid:127) No transfers tomorrow -> scheduled confirmation message still sent.
+(cid:127) Telegram send failure -> notification state remains pending and retries.
+(cid:127) Same 9300-1 overlapping -> conflict; 9300-1 and 9300-2 overlapping -> no bed conflict.
+(cid:127) 9300 dorm occupancy never exceeds 5 without warning.
+(cid:127) Same-day checkout/check-in -> no overnight overlap.
+(cid:127) Existing team report output remains unchanged unless explicitly approved.
+14. Definition of done
+(cid:127) Dashboard can answer today's dinner total with a guest-by-guest audit trail.
+(cid:127) Dinner preparation warning appears automatically above 13 guests and capacity warning above 24.
+(cid:127) Tomorrow transfers are surfaced every day independently of reservation changes.
+(cid:127) Taxi message is generated in the established Arrival/Departure format.
+(cid:127) Transfer status clearly shows Needs info, Ready to send or Sent.
+(cid:127) Telegram failures cannot permanently consume an alert.
+(cid:127) Sunrise room 9300 is represented as one 5-bed dorm with individual bed conflict checks.
+(cid:127) Dashboard exposes stale-data/system-health status.
+(cid:127) No existing working behavior is lost; automated tests cover the new rules.
+(cid:127) Only after these are stable should the conversational AI manager be enabled.
+15. Open configuration decisions - do not guess
+(cid:127) Exact Morocco-local time for the daily tomorrow-transfer message.
+(cid:127) Exact seats per extra dining table, if later needed to calculate the number of tables.
+(cid:127) Detailed breakfast/lunch semantics for every package if not already encoded.
+(cid:127) Any transfer wording/Additional Fee labels that the current parser does not recognize.
+(cid:127) Whether the Sent transfer status is stored manually in app state or inferred from a future messaging integration.
+Antigravity should implement safe defaults only where the existing repository already has an established
+behavior. For the items above, expose configuration or leave a clearly marked TODO rather than inventing
+business rules.
+16. Antigravity master instruction
+Read the repository first. Do not rewrite working modules. Start with tests and a baseline. Build one
+normalized operational model, then make meals, transfers, Telegram and dashboard consume it.
+Complete phases sequentially. After each phase: run tests, inspect outputs, document changed files,
+explain migration/state implications, and stop if a business rule is ambiguous. Never invent guest data,
+meal entitlement, transfer details, room availability or operational status. Keep the existing team report
+separate from manager alerts. Optimize for reliability, auditability and simple mobile use.
+Public repository baseline reviewed on 23 September 2026: som3adr/hotelrunner-daily. The repository documents a read-only
+HotelRunner report and contains the existing modules referenced in this plan.

@@ -69,12 +69,56 @@ def telegram_post(token: str, method: str, payload: dict) -> dict:
         sys.exit(f"\n[telegram_send] Telegram API error {exc.code}: {body}\n")
 
 
-def send_text(token: str, chat_id: str, text: str, label: str = "") -> None:
+def send_text(token: str, chat_id: str, text: str, label: str = "") -> bool:
+    """Send message. Returns True on success, False on failure. Does NOT exit."""
     result = telegram_post(token, "sendMessage", {"chat_id": chat_id, "text": text})
     if result.get("ok"):
         print(f"Sent: {label or text[:40]}")
+        return True
     else:
         print(f"Error sending '{label}': {result}")
+        return False
+
+
+def send_with_retry(
+    token: str, chat_id: str, text: str, label: str = "",
+    max_retries: int = 3, backoff_seconds: float = 5.0,
+) -> bool:
+    """Send with retry on failure. Returns True if any attempt succeeds."""
+    import time
+    for attempt in range(1, max_retries + 1):
+        if send_text(token, chat_id, text, label):
+            return True
+        if attempt < max_retries:
+            print(f"[telegram] Retry {attempt}/{max_retries - 1} in {backoff_seconds}s ...")
+            time.sleep(backoff_seconds)
+    return False
+
+
+def log_run(
+    log_path: Path, mode: str, fetch_success: bool,
+    records_processed: int, alert_count: int,
+    telegram_result: bool, error: str = "",
+) -> None:
+    """Append a run log entry to telegram_run_log.json."""
+    entry = {
+        "timestamp": dt.datetime.now().isoformat(timespec="seconds"),
+        "mode": mode,
+        "fetch_success": fetch_success,
+        "records_processed": records_processed,
+        "alert_count": alert_count,
+        "telegram_result": telegram_result,
+        "error": error,
+    }
+    entries: list = []
+    if log_path.exists():
+        try:
+            entries = json.loads(log_path.read_text(encoding="utf-8"))
+        except Exception:
+            entries = []
+    entries.append(entry)
+    entries = entries[-100:]  # keep last 100 entries
+    log_path.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def utf8_print(text: str) -> None:
@@ -392,6 +436,8 @@ def main() -> None:
         if alert is None:
             # Still save snapshot so quiet state is kept
             save_snapshot(new_snapshot, snapshot_path)
+            run_log_path = cache_path.parent / "telegram_run_log.json"
+            log_run(run_log_path, "check", True, len(new_snapshot.get("reservations", {})), 0, True)
             print("[check] No changes detected. Silent.")
             return
 
@@ -400,11 +446,21 @@ def main() -> None:
             utf8_print(alert)
             return
 
-        # Save snapshot after sending so next run compares fresh
-        save_snapshot(new_snapshot, snapshot_path)
-
+        # ── CRITICAL: send FIRST, persist snapshot ONLY on success ──────────
+        run_log_path = cache_path.parent / "telegram_run_log.json"
         print("[check] Changes detected — sending alert ...")
-        send_text(token, chat_id, alert, "Change alert")
+        sent_ok = send_with_retry(token, chat_id, alert, "Change alert")
+
+        if sent_ok:
+            # Only advance snapshot after confirmed delivery
+            save_snapshot(new_snapshot, snapshot_path)
+            log_run(run_log_path, "check", True,
+                    len(new_snapshot.get("reservations", {})), 1, True)
+        else:
+            log_run(run_log_path, "check", True,
+                    len(new_snapshot.get("reservations", {})), 1, False,
+                    error="Telegram send failed — snapshot NOT advanced, will retry")
+            print("[check] Telegram send failed — snapshot NOT advanced. Will retry next run.")
 
 
 if __name__ == "__main__":

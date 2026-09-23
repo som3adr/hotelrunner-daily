@@ -50,6 +50,60 @@ class NormalizedExtra:
         return self.category not in {"tax"}
 
 
+# ── MealEntitlement ───────────────────────────────────────────────────────────
+
+@dataclass
+class MealEntitlement:
+    """Auditable record of one guest's meal entitlement for a specific meal and date."""
+    reservation_id: str
+    guest_name: str
+    house: str
+    date: dt.date
+    meal: str               # breakfast | lunch | dinner
+    count: int              # number of covers (usually 1 per adult)
+    source: str             # meal_plan | extra | note
+    reason_text: str        # human-readable e.g. "Half Board" or "dinner extra"
+
+
+# ── TransferRecord ────────────────────────────────────────────────────────────
+
+@dataclass
+class TransferRecord:
+    """Normalized transfer record for one guest arrival or departure."""
+    reservation_id: str
+    guest_name: str
+    house: str
+    direction: str              # arrival | departure
+    date: dt.date
+    passenger_count: int = 1
+    flight_number: str = ""
+    airport: str = ""
+    pickup_time: str = ""       # HH:MM for departures
+    destination: str = ""
+    raw_source: str = ""        # all_inclusive | note | extra
+    status: str = "needs_info"  # needs_info | ready_to_send | sent
+
+    @property
+    def is_arrival(self) -> bool:
+        return self.direction == "arrival"
+
+    @property
+    def is_departure(self) -> bool:
+        return self.direction == "departure"
+
+
+# ── AttentionItem ─────────────────────────────────────────────────────────────
+
+@dataclass
+class AttentionItem:
+    """An operational item requiring manager attention — not a hard conflict."""
+    category: str       # meal | transfer | extra | room | surf
+    severity: str       # info | check | action_required
+    title: str
+    description: str
+    reservation_id: str = ""
+
+
 # ── NormalizedReservation ─────────────────────────────────────────────────────
 
 @dataclass
@@ -163,10 +217,27 @@ class NormalizedReservation:
 # ── House detection helpers ───────────────────────────────────────────────────
 
 def detect_house_from_stayline(room_name: str, channel: str) -> str:
-    """Map StayLine room/channel to house name."""
+    """Map StayLine room/channel to house name.
+
+    Sunrise guests booked via HotelRunner have room/bed IDs starting with
+    9200, 9300, 9400, 9500, or 9600 (Sunrise private rooms + 9300 dorm).
+    Tide rooms are identified by name keywords.
+    Everything else → Olas.
+    """
+    # Check Sunrise HotelRunner prefixes first
+    cfg = load_config()
+    sunrise_prefixes = tuple(
+        cfg.get("sunrise_hotelrunner", {}).get("all_sunrise_prefixes", ["9200", "9300", "9400", "9500", "9600"])
+    )
+    for part in (room_name.strip(), channel.strip()):
+        if part and any(part.startswith(p) for p in sunrise_prefixes):
+            return "Sunrise"
+
+    # Check Tide keywords
     text = f"{room_name} {channel}".casefold()
     if any(w in text for w in ["tidehunter", "bay", "slab", "cathedral", "reef"]):
         return "Tide"
+
     return "Olas"
 
 
@@ -362,3 +433,24 @@ def meals_for_reservation(res: NormalizedReservation, date: dt.date) -> dict[str
             result["breakfast"] += qty
 
     return result
+
+
+# ── Dinner setup rule ─────────────────────────────────────────────────────────
+
+def dinner_setup_rule(count: int) -> str:
+    """
+    Returns the dinner setup status based on guest count.
+    Thresholds loaded from config (safe defaults: 13 / 24).
+
+    Returns: 'normal' | 'extra_tables' | 'capacity_warning'
+    """
+    cfg = load_config()
+    thresholds = cfg.get("meals", {}).get("dinner_thresholds", {})
+    extra_tables_above = thresholds.get("extra_tables_above", 13)
+    capacity_warning_above = thresholds.get("capacity_warning_above", 24)
+
+    if count > capacity_warning_above:
+        return "capacity_warning"
+    if count > extra_tables_above:
+        return "extra_tables"
+    return "normal"

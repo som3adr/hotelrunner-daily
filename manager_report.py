@@ -113,16 +113,36 @@ def _build_occupancy(reservations: list[NormalizedReservation], date: dt.date) -
 # ── Meals section ─────────────────────────────────────────────────────────────
 
 def _build_meals(reservations: list[NormalizedReservation], date: dt.date) -> str:
+    from meal_engine import compute_meal_entitlements, summarize_dinner, dinner_preparation_notice
+
+    entitlements = compute_meal_entitlements(reservations, date)
+
+    # Totals by meal type
     totals = {"breakfast": 0, "lunch": 0, "dinner": 0}
-    for res in reservations:
-        counts = meals_for_reservation(res, date)
-        for meal, count in counts.items():
-            totals[meal] += count
+    for e in entitlements:
+        if e.meal in totals:
+            totals[e.meal] += e.count
+
+    # Dinner detail with per-house breakdown
+    dinner_summary = summarize_dinner(entitlements)
+    dinner_total = dinner_summary["total"]
+    by_house = dinner_summary["by_house"]
+    house_parts = " | ".join(f"{h}: {n}" for h, n in sorted(by_house.items()) if n > 0)
 
     lines = ["🍽️ MEALS"]
     lines.append(f"Breakfast: {totals['breakfast']}")
     lines.append(f"Lunch:     {totals['lunch']}")
-    lines.append(f"Dinner:    {totals['dinner']}")
+
+    dinner_line = f"Dinner:    {dinner_total}"
+    if house_parts:
+        dinner_line += f"  ({house_parts})"
+    lines.append(dinner_line)
+
+    # Preparation notice (auto-appears when >13 guests)
+    notice = dinner_preparation_notice(dinner_total)
+    if notice:
+        lines.append(notice)
+
     return "\n".join(lines)
 
 
