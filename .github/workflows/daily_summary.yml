@@ -63,6 +63,7 @@ jobs:
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         run: python hotelrunner_daily_summary.py --max-pages 15 --page-delay 1
 
 
@@ -154,22 +155,22 @@ jobs:
 
       # ── Deploy interactive HTML dashboard to GitHub Pages ─────────────────────
       - name: Setup Pages
-        if: steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
         uses: actions/configure-pages@v5
 
       - name: Prepare site directory
-        if: steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
         run: |
           mkdir -p _site
           cp hotelrunner_dashboard.html _site/index.html
 
       - name: Upload Pages artifact
-        if: steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
       - name: Deploy to GitHub Pages
-        if: steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
         id: deployment
         uses: actions/deploy-pages@v4
