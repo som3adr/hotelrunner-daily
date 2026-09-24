@@ -131,7 +131,7 @@
   "extras": {
     "surf_equipment": ["surfboard", "surfboards rental", "board rental", "wetsuit", "leash", "fins"],
     "surf_lesson":    ["surf lesson", "surf lessons", "cours de surf", "coaching", "surfaddict"],
-    "meal_extras":    ["half board formula", "lunch", "dinner", "breakfast", "meal"],
+    "meal_extras":    ["half board formula", "half board", "full board formula", "full board", "lunch", "dinner", "breakfast", "meal"],
     "transfer":       ["airport transfer", "transfer", "taxi", "shuttle"],
     "tax":            ["city tax", "tourist tax", "taxe de sejour", "vat", "tva"],
     "unknown_threshold_eur": 0

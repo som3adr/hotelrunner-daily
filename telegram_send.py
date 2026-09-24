@@ -142,9 +142,10 @@ def _import_core():
             load_room_blocks,
             build_day_summaries,
             build_whatsapp_block,
+            build_whatsapp_block_with_sunrise_sheet,
             build_manager_block,
         )
-        return load_reservation_cache, active_stay_lines, load_room_blocks, build_day_summaries, build_whatsapp_block, build_manager_block
+        return load_reservation_cache, active_stay_lines, load_room_blocks, build_day_summaries, build_whatsapp_block, build_whatsapp_block_with_sunrise_sheet, build_manager_block
     except ImportError as exc:
         sys.exit(f"\n[telegram_send] Could not import from hotelrunner_daily_summary.py: {exc}\n")
 
@@ -153,7 +154,7 @@ def _import_core():
 
 def build_messages_from_cache(cache_path: Path, target_date: dt.date) -> tuple[str, str]:
     """Returns (whatsapp_block, manager_block) for the given date."""
-    load_reservation_cache, active_stay_lines, load_room_blocks, build_day_summaries, build_whatsapp_block, build_manager_block = _import_core()
+    load_reservation_cache, active_stay_lines, load_room_blocks, build_day_summaries, build_whatsapp_block, build_whatsapp_block_with_sunrise_sheet, build_manager_block = _import_core()
     script_dir = Path(__file__).parent
 
     reservations = load_reservation_cache(cache_path)
@@ -164,7 +165,19 @@ def build_messages_from_cache(cache_path: Path, target_date: dt.date) -> tuple[s
     if not summaries:
         return f"No summary for {target_date.isoformat()}", ""
 
-    return build_whatsapp_block(summaries[0]), build_manager_block(summaries[0])
+    try:
+        from google_sheets import load_sunrise_reservations
+        sunrise_reservations = load_sunrise_reservations()
+    except Exception as exc:
+        print(f"[telegram_send] Sunrise Google Sheet unavailable: {exc}")
+        sunrise_reservations = []
+
+    if sunrise_reservations:
+        team_block = build_whatsapp_block_with_sunrise_sheet(summaries[0], sunrise_reservations)
+    else:
+        team_block = build_whatsapp_block(summaries[0])
+
+    return team_block, build_manager_block(summaries[0])
 
 
 # ── change detection ──────────────────────────────────────────────────────────
@@ -376,6 +389,8 @@ def main() -> None:
     parser.add_argument("--snapshot-file", default="hotelrunner_snapshot.json",
                         help="File used to track last-seen state for change detection.")
     parser.add_argument("--dry-run", action="store_true", help="Print without sending.")
+    parser.add_argument("--team-only", action="store_true",
+                        help="In full mode, send only the team report. Use when manager_report.py sends the manager report separately.")
     args = parser.parse_args()
 
     load_dotenv(Path(".env"))
@@ -408,13 +423,14 @@ def main() -> None:
         if args.dry_run:
             utf8_print("\n-- MESSAGE 1 (copy to WhatsApp) --\n")
             utf8_print(msg1)
-            utf8_print("\n-- MESSAGE 2 (manager view) --\n")
-            utf8_print(msg2)
+            if not args.team_only:
+                utf8_print("\n-- MESSAGE 2 (manager view) --\n")
+                utf8_print(msg2)
             return
 
         print(f"[full] Sending daily briefing for {target_date} ...")
         send_text(token, chat_id, msg1, "WhatsApp block")
-        if msg2:
+        if msg2 and not args.team_only:
             send_text(token, chat_id, msg2, "Manager block")
 
     # ── MODE: hourly change check ─────────────────────────────────────────────

@@ -107,7 +107,7 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
     from hotelrunner_daily_summary import load_reservation_cache, active_stay_lines
     from data_model import stayline_to_normalized
     from extras_engine import classify_extras_from_reservation
-    from transfer_engine import build_transfer_records
+    from transfer_engine import build_relevant_transfer_records
     from transfer_state import TransferStateStore
     from meal_engine import compute_meal_entitlements, summarize_dinner
     from conflict_engine import detect_conflicts
@@ -147,8 +147,9 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
     dinner_total = dinner_summary["total"]
 
     # Transfers
-    transfers_today = build_transfer_records(norm, today, store)
-    transfers_tomorrow = build_transfer_records(norm, tomorrow, store)
+    relevant_transfers = build_relevant_transfer_records(norm, today, store)
+    transfers_today = [t for t in relevant_transfers if t.date == today]
+    transfers_tomorrow = [t for t in relevant_transfers if t.date == tomorrow]
 
     # Conflicts
     conflicts, _ = detect_conflicts(norm, today)

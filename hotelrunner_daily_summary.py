@@ -1076,8 +1076,24 @@ def short_guest_line(line: StayLine) -> str:
     return f"{line.guest_name} - {display_room(line)} - {line.guests} guest(s) - {line.meal_plan}{extras}"
 
 
+def normalized_from_stayline_with_extras(line: StayLine):
+    from data_model import stayline_to_normalized
+    from extras_engine import classify_raw_extra
+
+    res = stayline_to_normalized(line)
+    classified = []
+    for label in line.extras:
+        extra = classify_raw_extra({"name": label})
+        if extra:
+            classified.append(extra)
+    res.extras = classified
+    return res
+
+
 def team_house(line: StayLine) -> str:
-    text = f"{line.room_name} {line.channel}".casefold()
+    text = f"{line.room_name} {line.bed_number} {line.channel}".casefold()
+    if any(prefix in text for prefix in ["9200", "9300", "9400", "9500", "9600"]):
+        return "Sunrise"
     if any(word in text for word in ["tidehunter", "bay", "slab", "cathedral", "reef"]):
         return "Tide"
     return "Olas"
@@ -1106,13 +1122,17 @@ def team_room_label(line: StayLine) -> str:
     return display_room(line)
 
 
-def team_extra_note(line: StayLine) -> str:
+def team_extra_note(line: StayLine, movement: str = "") -> str:
     parts: list[str] = []
     meal = line.meal_plan.casefold()
     if "all inclusive" in meal:
         parts.append("all meals")
     elif "half board" in meal:
         parts.append("half board")
+    elif "full board" in meal:
+        parts.append("full board")
+    elif movement == "arrival" and "bed and breakfast" in meal:
+        parts.append("breakfast")
     elif "room only" in meal:
         parts.append("room only")
 
@@ -1146,23 +1166,138 @@ def team_extra_note(line: StayLine) -> str:
     return f" ({', '.join(parts)})" if parts else ""
 
 
-def team_line(line: StayLine) -> str:
-    return f"{line.guest_name} x{line.guests} -> {team_room_label(line)}{team_extra_note(line)}"
+def team_line(line: StayLine, movement: str = "") -> str:
+    return f"{line.guest_name} x{line.guests} -> {team_room_label(line)}{team_extra_note(line, movement)}"
 
 
-HOUSE_EMOJI = {"Olas": "🏠", "Tide": "🌊"}
+HOUSE_EMOJI = {"Olas": "🏠", "Tide": "🌊", "Sunrise": "🌅"}
 
 
-def grouped_team_lines(lines: list[StayLine]) -> list[str]:
+def grouped_team_lines(lines: list[StayLine], movement: str = "") -> list[str]:
     output: list[str] = []
-    for house in ("Olas", "Tide"):
+    for house in ("Olas", "Tide", "Sunrise"):
         house_lines = [line for line in lines if team_house(line) == house]
         if not house_lines:
             continue
         emoji = HOUSE_EMOJI.get(house, "")
         output.extend(["", f"{emoji} {house}"])
-        output.extend(team_line(line) for line in house_lines)
+        output.extend(team_line(line, movement) for line in house_lines)
     return output
+
+
+def _sheet_guest_matches_hr(sheet_res: Any, hr_lines: list[StayLine], movement: str, date: dt.date) -> bool:
+    sheet_name = _normalize_name_key(getattr(sheet_res, "guest_name", ""))
+    if not sheet_name:
+        return False
+
+    for line in hr_lines:
+        if team_house(line) != "Sunrise":
+            continue
+        if _normalize_name_key(line.guest_name) != sheet_name:
+            continue
+        if movement == "arrival" and line.arrival == date:
+            return True
+        if movement == "departure" and line.departure == date:
+            return True
+    return False
+
+
+def _sunrise_sheet_line(res: Any) -> str:
+    guest_count = getattr(res, "guest_count", 0) or 1
+    room = getattr(res, "room", "") or "Sunrise"
+    details = [
+        getattr(res, "surf_level", "") or "",
+        getattr(res, "meal_plan", "") or "",
+        "⚠️ check/add HR",
+    ]
+    suffix = " · ".join(part for part in details if part)
+    return f"{res.guest_name} x{guest_count} -> {room} · {suffix}"
+
+
+def grouped_team_lines_with_sunrise_sheet(
+    lines: list[StayLine],
+    sheet_reservations: list[Any],
+    date: dt.date,
+    movement: str,
+) -> list[str]:
+    output: list[str] = []
+    for house in ("Olas", "Tide", "Sunrise"):
+        house_lines = [line for line in lines if team_house(line) == house]
+        sheet_lines: list[str] = []
+        if house == "Sunrise":
+            for res in sheet_reservations:
+                if getattr(res, "house", "") != "Sunrise":
+                    continue
+                is_movement = (
+                    getattr(res, "is_arriving_on")(date)
+                    if movement == "arrival"
+                    else getattr(res, "is_departing_on")(date)
+                )
+                if not is_movement:
+                    continue
+                if _sheet_guest_matches_hr(res, lines, movement, date):
+                    continue
+                sheet_lines.append(_sunrise_sheet_line(res))
+        if not house_lines and not sheet_lines:
+            continue
+        emoji = HOUSE_EMOJI.get(house, "")
+        output.extend(["", f"{emoji} {house}"])
+        output.extend(team_line(line, movement) for line in house_lines)
+        output.extend(sheet_lines)
+    return output
+
+
+def sunrise_sheet_reminder_lines(
+    lines: list[StayLine],
+    sheet_reservations: list[Any],
+    date: dt.date,
+    movement: str,
+) -> list[str]:
+    """Google Sheet-only Sunrise lines for visible dashboard cards."""
+    reminders: list[str] = []
+    for res in sheet_reservations:
+        if getattr(res, "house", "") != "Sunrise":
+            continue
+        is_movement = (
+            getattr(res, "is_arriving_on")(date)
+            if movement == "arrival"
+            else getattr(res, "is_departing_on")(date)
+        )
+        if not is_movement:
+            continue
+        if _sheet_guest_matches_hr(res, lines, movement, date):
+            continue
+        reminders.append(_sunrise_sheet_line(res))
+    return reminders
+
+
+def sunrise_sheet_active_reservations(
+    hr_lines: list[StayLine],
+    sheet_reservations: list[Any],
+    date: dt.date,
+) -> list[Any]:
+    """Active Google Sheet-only Sunrise reservations for meal/in-house views."""
+    active: list[Any] = []
+    for res in sheet_reservations:
+        if getattr(res, "house", "") != "Sunrise":
+            continue
+        if not getattr(res, "is_active_on")(date):
+            continue
+        if _sheet_guest_matches_hr(res, hr_lines, "arrival", getattr(res, "arrival_date", date) or date):
+            continue
+        active.append(res)
+    return active
+
+
+def sunrise_sheet_guest_line(res: Any) -> str:
+    details = [
+        getattr(res, "room", "") or "Sunrise",
+        getattr(res, "surf_level", "") or "",
+        getattr(res, "meal_plan", "") or "",
+        "Sheet",
+        "⚠️ check/add HR",
+    ]
+    return f"{res.guest_name} - " + " - ".join(part for part in details if part)
 
 
 def _normalize_name_key(name: str) -> str:
@@ -1217,14 +1352,34 @@ def build_whatsapp_block(summary: DaySummary) -> str:
     clean_deps, clean_arrs, extensions = detect_extensions(summary.departures, summary.arrivals)
 
     lines = [f"🏁 CHECK-OUTS · {date_str}"]
-    lines.extend(grouped_team_lines(clean_deps) or ["", "No check-outs"])
+    lines.extend(grouped_team_lines(clean_deps, "departure") or ["", "No check-outs"])
 
     if extensions:
         lines.extend(["", "note:"])
         lines.extend(extensions)
 
     lines.extend(["", "————", "", f"🏨 CHECK-INS · {date_str}"])
-    lines.extend(grouped_team_lines(clean_arrs) or ["", "No check-ins"])
+    lines.extend(grouped_team_lines(clean_arrs, "arrival") or ["", "No check-ins"])
+    return "\n".join(lines)
+
+
+def build_whatsapp_block_with_sunrise_sheet(summary: DaySummary, sheet_reservations: list[Any]) -> str:
+    """Team report enriched with Google Sheet-only Sunrise reminders."""
+    date_str = summary.date.strftime("%d %B")
+    clean_deps, clean_arrs, extensions = detect_extensions(summary.departures, summary.arrivals)
+
+    dep_lines = grouped_team_lines_with_sunrise_sheet(clean_deps, sheet_reservations, summary.date, "departure")
+    arr_lines = grouped_team_lines_with_sunrise_sheet(clean_arrs, sheet_reservations, summary.date, "arrival")
+
+    lines = [f"🏁 CHECK-OUTS · {date_str}"]
+    lines.extend(dep_lines or ["", "No check-outs"])
+
+    if extensions:
+        lines.extend(["", "note:"])
+        lines.extend(extensions)
+
+    lines.extend(["", "————", "", f"🏨 CHECK-INS · {date_str}"])
+    lines.extend(arr_lines or ["", "No check-ins"])
     return "\n".join(lines)
 
 
@@ -1763,7 +1918,6 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
     all_extras = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "extra"]
     all_notes = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "note"]
 
-    from data_model import stayline_to_normalized
     from meal_engine import compute_meal_entitlements, summarize_dinner, dinner_preparation_notice
     from transfer_engine import build_transfer_records, format_driver_message
     from transfer_state import TransferStateStore
@@ -1772,6 +1926,11 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
     transfer_store = TransferStateStore()
     health_store = SystemHealthStore()
     health_status = health_store.get_health_status()
+    try:
+        from google_sheets import load_sunrise_reservations
+        sunrise_sheet_reservations = load_sunrise_reservations()
+    except Exception:
+        sunrise_sheet_reservations = []
 
     for index, summary in enumerate(summaries):
         day_id = f"day-{index}"
@@ -1795,7 +1954,9 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
         for line in day_staylines:
             if line.reservation_id not in seen_res_ids:
                 seen_res_ids.add(line.reservation_id)
-                day_norm_res.append(stayline_to_normalized(line))
+                day_norm_res.append(normalized_from_stayline_with_extras(line))
+        active_sheet_res = sunrise_sheet_active_reservations(day_staylines, sunrise_sheet_reservations, summary.date)
+        day_norm_res.extend(active_sheet_res)
 
         entitlements = compute_meal_entitlements(day_norm_res, summary.date)
         dinner_summary = summarize_dinner(entitlements)
@@ -1818,7 +1979,7 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
             for line in tmrw_staylines:
                 if line.reservation_id not in seen_tmrw:
                     seen_tmrw.add(line.reservation_id)
-                    tmrw_norm_res.append(stayline_to_normalized(line))
+                    tmrw_norm_res.append(normalized_from_stayline_with_extras(line))
             tomorrow_transfers = build_transfer_records(tmrw_norm_res, tomorrow_summary.date, transfer_store)
 
         total_transfer_count = len(day_transfers) + len(tomorrow_transfers)
@@ -1831,10 +1992,20 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
             ]
         )
         arrival_items = [short_guest_line(line) for line in summary.arrivals]
+        arrival_items.extend(
+            sunrise_sheet_reminder_lines(summary.arrivals, sunrise_sheet_reservations, summary.date, "arrival")
+        )
         departure_items = [short_guest_line(line) for line in summary.departures]
+        departure_items.extend(
+            sunrise_sheet_reminder_lines(summary.departures, sunrise_sheet_reservations, summary.date, "departure")
+        )
         in_house_items = [short_guest_line(line) for line in summary.in_house]
+        in_house_items.extend(sunrise_sheet_guest_line(res) for res in active_sheet_res)
         room_items = [f"{room}: {count} guest(s)" for room, count in sorted(room_disposition(summary).items())]
-        team_message = build_team_message(summary)
+        if sunrise_sheet_reservations:
+            team_message = build_whatsapp_block_with_sunrise_sheet(summary, sunrise_sheet_reservations) + "\n\n————\n\n" + build_manager_block(summary)
+        else:
+            team_message = build_team_message(summary)
 
         # ── Helper: build a transfer card HTML ──────────────────────────────
         def _transfer_card(tr) -> str:

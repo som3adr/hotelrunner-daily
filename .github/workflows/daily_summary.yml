@@ -103,7 +103,7 @@ jobs:
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python telegram_send.py --mode ${{ steps.mode.outputs.mode }}
+        run: python telegram_send.py --mode ${{ steps.mode.outputs.mode }} --team-only
 
       # ── Gemini Proactive Monitor (hourly — flags operational issues) ──────────
       - name: Gemini Proactive Monitor

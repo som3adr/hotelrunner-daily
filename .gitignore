@@ -1,0 +1,25 @@
+.env
+credentials/
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+reservations_cache.json
+hotelrunner_latest_updates.json
+hotelrunner_snapshot.json
+telegram_bot_state.json
+telegram_run_log.json
+gemini_monitor_state.json
+alert_state.json
+transfer_state.json
+
+hotelrunner_dashboard.html
+hotelrunner_daily_summary.md
+hotelrunner_audit.json
+hotelrunner_last_fetch.json
+hotelrunner_debug_sample.json
+hotelrunner_guest_debug.json
+hotelrunner_room_debug.json
+
+Nouveau Text Document.txt

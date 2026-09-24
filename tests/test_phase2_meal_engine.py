@@ -71,6 +71,41 @@ class TestMealEngine(unittest.TestCase):
         dinners = [e for e in entitlements if e.meal == "dinner"]
         self.assertEqual(len(dinners), 1)
 
+    def test_bb_with_half_board_formula_extra_gets_breakfast_and_dinner(self):
+        """Online Half Board formula add-on means breakfast + dinner."""
+        extra = NormalizedExtra(raw_label="Half Board formula", category="meal")
+        res = _make_res("r4b", "Bed And Breakfast", adults=1, extras=[extra])
+        entitlements = compute_meal_entitlements([res], TODAY)
+
+        meals = {e.meal for e in entitlements}
+        self.assertIn("breakfast", meals)
+        self.assertIn("dinner", meals)
+        self.assertNotIn("lunch", meals)
+
+    def test_bb_with_full_board_formula_extra_gets_all_meals(self):
+        """Online Full Board formula add-on means breakfast + lunch + dinner."""
+        extra = NormalizedExtra(raw_label="Full Board formula", category="meal")
+        res = _make_res("r4c", "Bed And Breakfast", adults=1, extras=[extra])
+        entitlements = compute_meal_entitlements([res], TODAY)
+
+        meals = {e.meal for e in entitlements}
+        self.assertEqual(meals, {"breakfast", "lunch", "dinner"})
+
+    def test_selected_day_dinner_extra_only_counts_on_that_date(self):
+        """Selected-day meal extras should not count for the whole stay."""
+        extra = NormalizedExtra(
+            raw_label="Dinner",
+            category="meal",
+            dates=[TODAY + dt.timedelta(days=1)],
+        )
+        res = _make_res("r4d", "Bed And Breakfast", adults=1, extras=[extra])
+
+        today_entitlements = compute_meal_entitlements([res], TODAY)
+        selected_day_entitlements = compute_meal_entitlements([res], TODAY + dt.timedelta(days=1))
+
+        self.assertEqual([e for e in today_entitlements if e.meal == "dinner"], [])
+        self.assertEqual(len([e for e in selected_day_entitlements if e.meal == "dinner"]), 1)
+
     def test_half_board_plus_duplicate_dinner_not_double_counted(self):
         """Half Board + dinner note = still exactly 1 dinner entitlement record."""
         res = _make_res(

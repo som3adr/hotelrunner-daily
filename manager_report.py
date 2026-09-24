@@ -35,10 +35,11 @@ from data_model import (
     meals_for_reservation,
 )
 from extras_engine import (
-    classify_extras_from_reservation, get_transfer_dates_for_today,
-    get_missing_transfer_info,
+    classify_extras_from_reservation, get_missing_transfer_info,
 )
 from conflict_engine import detect_conflicts, RoomConflict, CapacityWarning
+from transfer_engine import build_relevant_transfer_records, find_transfer_confirmation_items
+from transfer_state import TransferStateStore
 from surf_schedule import (
     fetch_conditions, detect_surf_meal_conflicts,
     format_conditions_summary, session_end_time, parse_time, spot_assessment,
@@ -215,36 +216,47 @@ def _build_surf(sessions: list[dict], conditions: dict, surf_conflicts: list[dic
 # ── Transfers section ─────────────────────────────────────────────────────────
 
 def _build_transfers(reservations: list[NormalizedReservation], date: dt.date) -> str:
-    transfers = get_transfer_dates_for_today(reservations, date)
+    store = TransferStateStore()
+    transfers = build_relevant_transfer_records(reservations, date, store)
     missing = get_missing_transfer_info(reservations, date)
-    tomorrow = date + dt.timedelta(days=1)
-    transfers_tomorrow = get_transfer_dates_for_today(reservations, tomorrow)
+    confirmations = find_transfer_confirmation_items(reservations, date)
 
     lines = ["🚐 TRANSFERS"]
 
-    if not transfers and not transfers_tomorrow and not missing:
+    if not transfers and not missing and not confirmations:
         lines.append("No transfers today or tomorrow.")
         return "\n".join(lines)
 
-    if transfers:
-        lines.append("TODAY:")
-        for t in transfers:
-            arrow = "→ IN" if t["direction"] == "IN" else "← OUT"
-            amt = f" (€{t['amount']:.0f})" if t.get("amount") else ""
-            lines.append(f"  {arrow}: {t['guest']}{amt} · {t['detail']}")
+    today_transfers = [t for t in transfers if t.date == date]
+    tomorrow_transfers = [t for t in transfers if t.date == date + dt.timedelta(days=1)]
 
-    if transfers_tomorrow:
-        lines.append("TOMORROW:")
-        for t in transfers_tomorrow:
-            arrow = "→ IN" if t["direction"] == "IN" else "← OUT"
-            amt = f" (€{t['amount']:.0f})" if t.get("amount") else ""
-            lines.append(f"  {arrow}: {t['guest']}{amt} · {t['detail']}")
+    def append_records(label: str, records) -> None:
+        if not records:
+            return
+        lines.append(label)
+        for record in records:
+            arrow = "→ IN" if record.is_arrival else "← OUT"
+            status = "sent" if record.status == "sent" else "ready" if record.status == "ready_to_send" else "needs info"
+            detail = (
+                f"Flight {record.flight_number or 'missing'} · {record.airport or 'Agadir airport'}"
+                if record.is_arrival
+                else f"Pickup {record.pickup_time or 'missing'} · {record.destination or 'Agadir airport'}"
+            )
+            lines.append(f"  {arrow}: {record.guest_name} · {status} · {detail}")
+
+    append_records("TODAY:", today_transfers)
+    append_records("TOMORROW:", tomorrow_transfers)
 
     if missing:
         lines.append("")
         for m in missing:
             arr = m["arrival_date"].strftime("%d %b") if m.get("arrival_date") else ""
             lines.append(f"🟠 {m['guest']} (arriving {arr}): transfer info missing")
+
+    if confirmations:
+        lines.append("")
+        for item in confirmations:
+            lines.append(f"🟠 {item.description}")
 
     return "\n".join(lines)
 
@@ -369,7 +381,7 @@ def _build_extras_section(reservations: list[NormalizedReservation], date: dt.da
                     + (f"\n   Amount: €{extra.amount:.0f}" if extra.amount else "")
                     + "\n   → Verify what needs to be prepared"
                 )
-            elif extra.category in ("transfer", "surf_equipment", "surf_lesson") and extra.operational_note:
+            elif extra.category in ("surf_equipment", "surf_lesson") and extra.operational_note:
                 note = extra.operational_note
                 info_items.append(f"🟢 {extra.raw_label} ({res.guest_name})\n   → {note}")
 

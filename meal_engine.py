@@ -92,17 +92,33 @@ def _meals_from_plan(meal_plan: str) -> set[str]:
     return set()
 
 
-def _meals_from_extras(res: NormalizedReservation) -> set[str]:
-    """Return set of meal types confirmed by extras."""
-    result: set[str] = set()
+def _meal_sources_from_extras(res: NormalizedReservation, date: dt.date) -> dict[str, list[str]]:
+    """Return meal types confirmed by extras, with audit labels."""
+    result: dict[str, list[str]] = {}
     cfg = load_config()
     keywords = cfg.get("meals", {}).get("meal_extra_keywords", {})
+
+    def add_source(meal_type: str, label: str) -> None:
+        labels = result.setdefault(meal_type, [])
+        if label not in labels:
+            labels.append(label)
+
     for extra in res.meal_extras:
+        if extra.dates and date not in extra.dates:
+            continue
         label = extra.raw_label.casefold()
+        audit_label = extra.raw_label
+        for meal_type in _meals_from_plan(label):
+            add_source(meal_type, audit_label)
         for meal_type, kws in keywords.items():
             if any(kw in label for kw in kws):
-                result.add(meal_type)
+                add_source(meal_type, audit_label)
     return result
+
+
+def _meals_from_extras(res: NormalizedReservation, date: dt.date) -> set[str]:
+    """Return set of meal types confirmed by extras."""
+    return set(_meal_sources_from_extras(res, date))
 
 
 def _meals_from_notes(res: NormalizedReservation) -> set[str]:
@@ -134,7 +150,8 @@ def compute_meal_entitlements(
 
         # Collect confirmed meals from all sources (union = deduplication)
         from_plan = _meals_from_plan(res.meal_plan)
-        from_extras = _meals_from_extras(res)
+        extra_sources = _meal_sources_from_extras(res, date)
+        from_extras = set(extra_sources)
         from_notes = _meals_from_notes(res)
         confirmed_meals = from_plan | from_extras | from_notes
 
@@ -149,7 +166,7 @@ def compute_meal_entitlements(
             if meal in from_plan:
                 sources.append(res.meal_plan or "meal plan")
             if meal in from_extras:
-                sources.append("extra")
+                sources.extend(extra_sources.get(meal) or ["extra"])
             if meal in from_notes:
                 sources.append("note")
             reason = " + ".join(sources) if sources else (res.meal_plan or "unknown")

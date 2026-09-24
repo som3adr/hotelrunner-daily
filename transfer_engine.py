@@ -19,7 +19,7 @@ from __future__ import annotations
 import datetime as dt
 import re
 
-from data_model import NormalizedReservation, TransferRecord
+from data_model import AttentionItem, NormalizedReservation, TransferRecord
 from transfer_state import TransferStateStore
 
 
@@ -56,6 +56,11 @@ def detect_transfer_entitlement(res: NormalizedReservation) -> bool:
     if any(_note_mentions_transfer(n) for n in res.notes):
         return True
     return False
+
+
+def _dedupe_key(record: TransferRecord) -> tuple[str, str, dt.date]:
+    guest_key = " ".join(record.guest_name.casefold().split())
+    return (guest_key or record.reservation_id, record.direction, record.date)
 
 
 def _parse_flight_from_text(text: str) -> str:
@@ -116,6 +121,7 @@ def build_transfer_records(
         store = TransferStateStore()
 
     records: list[TransferRecord] = []
+    seen: set[tuple[str, str, dt.date]] = set()
 
     for res in reservations:
         if not detect_transfer_entitlement(res):
@@ -125,15 +131,99 @@ def build_transfer_records(
         if res.is_arriving_on(date):
             record = _build_arrival_record(res, date)
             record.status = _classify_status(record, store)
-            records.append(record)
+            key = _dedupe_key(record)
+            if key not in seen:
+                seen.add(key)
+                records.append(record)
 
         # Departures on this date
         if res.is_departing_on(date):
             record = _build_departure_record(res, date)
             record.status = _classify_status(record, store)
-            records.append(record)
+            key = _dedupe_key(record)
+            if key not in seen:
+                seen.add(key)
+                records.append(record)
 
     return records
+
+
+def transfer_event_dates_for_action_date(action_date: dt.date) -> tuple[dt.date, dt.date]:
+    """
+    Dates whose transfers are operationally relevant on `action_date`.
+    Today is actionable, and tomorrow is actionable for preparation.
+    """
+    return action_date, action_date + dt.timedelta(days=1)
+
+
+def build_relevant_transfer_records(
+    reservations: list[NormalizedReservation],
+    action_date: dt.date,
+    store: TransferStateStore | None = None,
+) -> list[TransferRecord]:
+    """
+    Build transfer records actionable on `action_date`.
+
+    Arrival transfers are actionable one day before arrival and on arrival day.
+    Departure transfers are actionable one day before departure and on departure day.
+    The record date remains the real arrival/departure date.
+    """
+    if store is None:
+        store = TransferStateStore()
+
+    records: list[TransferRecord] = []
+    seen: set[tuple[str, str, dt.date]] = set()
+    for event_date in transfer_event_dates_for_action_date(action_date):
+        for record in build_transfer_records(reservations, event_date, store):
+            key = _dedupe_key(record)
+            if key in seen:
+                continue
+            seen.add(key)
+            records.append(record)
+    return records
+
+
+def find_transfer_confirmation_items(
+    reservations: list[NormalizedReservation],
+    action_date: dt.date,
+) -> list[AttentionItem]:
+    """
+    Flag transfer extras that are relevant today/tomorrow but do not match
+    the reservation's arrival or departure date.
+
+    Those lines need human confirmation because the system must not guess
+    whether they are arrival or departure transfers.
+    """
+    relevant_dates = set(transfer_event_dates_for_action_date(action_date))
+    items: list[AttentionItem] = []
+    seen: set[tuple[str, str, dt.date]] = set()
+
+    for res in reservations:
+        for extra in res.transfer_extras:
+            for extra_date in extra.dates:
+                if extra_date not in relevant_dates:
+                    continue
+                if res.is_arriving_on(extra_date) or res.is_departing_on(extra_date):
+                    continue
+                key = (res.reservation_id, extra.raw_label, extra_date)
+                if key in seen:
+                    continue
+                seen.add(key)
+                items.append(
+                    AttentionItem(
+                        category="transfer",
+                        severity="check",
+                        title="TRANSFER DATE NEEDS CONFIRMATION",
+                        description=(
+                            f"{res.guest_name}: {extra.raw_label} is dated "
+                            f"{extra_date.strftime('%d %b')} but does not match arrival "
+                            "or departure. Confirm whether this is an arrival or departure transfer."
+                        ),
+                        reservation_id=res.reservation_id,
+                    )
+                )
+
+    return items
 
 
 def _build_arrival_record(res: NormalizedReservation, date: dt.date) -> TransferRecord:
