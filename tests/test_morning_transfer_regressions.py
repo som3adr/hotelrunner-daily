@@ -1,4 +1,5 @@
 import datetime as dt
+import json
 import sys
 from pathlib import Path
 
@@ -19,6 +20,7 @@ from transfer_engine import (
     find_transfer_confirmation_items,
 )
 from transfer_state import TransferStateStore
+from telegram_send import build_change_alert, build_snapshot
 
 
 TODAY = dt.date(2026, 9, 24)
@@ -96,6 +98,41 @@ def test_unknown_mid_stay_transfer_date_requires_confirmation():
     assert records == []
     assert len(confirmations) == 1
     assert "does not match arrival or departure" in confirmations[0].description
+
+
+def test_change_watcher_detects_late_transfer_extra(tmp_path, monkeypatch):
+    today = dt.date.today()
+    base = {
+        "reservation_id": "late-transfer",
+        "state": "confirmed",
+        "guest": "Late Transfer Guest",
+        "checkin_date": today.isoformat(),
+        "checkout_date": (today + dt.timedelta(days=1)).isoformat(),
+        "total_guests": 1,
+        "rooms": [{
+            "state": "confirmed",
+            "name": "RDC1",
+            "total_adult": 1,
+            "meal_plan": "Bed And Breakfast",
+            "extras": [],
+        }],
+    }
+    cache_path = tmp_path / "reservations_cache.json"
+    cache_path.write_text(json.dumps({"reservations": [base]}), encoding="utf-8")
+    old = build_snapshot(cache_path)
+
+    base["rooms"][0]["extras"] = [{
+        "name": "Airport Transfer",
+        "days": [(today + dt.timedelta(days=1)).isoformat()],
+    }]
+    cache_path.write_text(json.dumps({"reservations": [base]}), encoding="utf-8")
+    new = build_snapshot(cache_path)
+
+    alert = build_change_alert(old, new)
+
+    assert old["reservations"]["late-transfer"]["transfer"] == ""
+    assert "airport transfer" in new["reservations"]["late-transfer"]["transfer"]
+    assert "transfer details updated" in alert
 
 
 def test_transfer_records_deduplicate_same_reservation_stay_lines():

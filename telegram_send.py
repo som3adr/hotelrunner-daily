@@ -182,6 +182,39 @@ def build_messages_from_cache(cache_path: Path, target_date: dt.date) -> tuple[s
 
 # ── change detection ──────────────────────────────────────────────────────────
 
+_TRANSFER_WORDS = ("transfer", "airport", "taxi", "pickup", "pick-up", "dropoff", "drop-off", "shuttle")
+
+
+def _transfer_fingerprint(reservation: dict) -> str:
+    """Stable transfer-only snapshot used by the hourly change watcher."""
+    from extras_engine import classify_extras_from_reservation
+
+    parts: list[str] = []
+    for extra in classify_extras_from_reservation(reservation):
+        if extra.category != "transfer":
+            continue
+        dates = ",".join(sorted(day.isoformat() for day in extra.dates))
+        parts.append(f"extra:{extra.raw_label.casefold()}:{dates}")
+
+    note_values = [
+        reservation.get("note"),
+        reservation.get("notes"),
+        reservation.get("system_message"),
+    ]
+    for room in reservation.get("rooms") or []:
+        if isinstance(room, dict):
+            note_values.extend((room.get("comments"), room.get("extra_info")))
+    for value in note_values:
+        if isinstance(value, (dict, list)):
+            text = json.dumps(value, sort_keys=True, ensure_ascii=False)
+        else:
+            text = str(value or "")
+        normalized = " ".join(text.casefold().split())
+        if normalized and any(word in normalized for word in _TRANSFER_WORDS):
+            parts.append(f"note:{normalized[:500]}")
+
+    return "|".join(sorted(set(parts)))
+
 def _is_relevant_today_or_tomorrow(res: dict) -> bool:
     """
     Returns True if a reservation touches today or tomorrow:
@@ -232,6 +265,7 @@ def build_snapshot(cache_path: Path) -> dict:
             "departure": str(res.get("checkout_date") or "")[:10],
             "adults":    adults,
             "meal_plan": meal_plan[:40],
+            "transfer":  _transfer_fingerprint(res),
         }
     return snapshot
 
@@ -326,14 +360,17 @@ def build_change_alert(old: dict, new: dict, latest_updates_path: Path | None = 
         notified_cancellations.add(rid)
 
     # 4. Modified
-    IMPORTANT_FIELDS = {"state", "guest", "room", "arrival", "departure", "adults", "meal_plan"}
+    IMPORTANT_FIELDS = {"state", "guest", "room", "arrival", "departure", "adults", "meal_plan", "transfer"}
     for rid in sorted(common_ids):
         o, n = old_res[rid], new_res[rid]
-        diffs = [
-            f"{k}: {o[k]} → {n[k]}"
-            for k in IMPORTANT_FIELDS
-            if o.get(k) != n.get(k)
-        ]
+        diffs = []
+        for key in IMPORTANT_FIELDS:
+            if o.get(key) == n.get(key):
+                continue
+            if key == "transfer":
+                diffs.append("transfer details updated")
+            else:
+                diffs.append(f"{key}: {o.get(key, '')} → {n.get(key, '')}")
         if diffs:
             lines.append(f"✏️ CHANGED: {n['guest']} · {n['room']} · " + ", ".join(diffs))
 

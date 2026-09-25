@@ -1,12 +1,14 @@
 name: HotelRunner Daily Summary
 
 on:
-  # ── 7:00 AM Morocco time every day (UTC+1 = 06:00 UTC) ──────────────────────
-  # Full daily briefing at 07:00, change checks every hour 08:00 → 00:00 Morocco
-  # Silent between 00:01 and 06:59 Morocco (01:00–05:59 UTC) — no notifications while sleeping
+  # Avoid the top of the hour because GitHub may delay or drop busy cron events.
   schedule:
-    - cron: "0 6-23 * * *"     # Every hour from 07:00 to 00:00 Morocco (06:00–23:00 UTC)
-    - cron: "5-55/5 6-23 * * *" # Q&A at :05…:55; avoids duplicate full runs at :00
+    - cron: "7 7 * * *"
+      timezone: "Africa/Casablanca"
+    - cron: "22 7 * * *"
+      timezone: "Africa/Casablanca"
+    - cron: "17 0,8-23 * * *"
+      timezone: "Africa/Casablanca"
   # Trigger manually from the GitHub website anytime
   workflow_dispatch:
     inputs:
@@ -19,6 +21,10 @@ on:
           - check
           - full
           - transfers
+
+concurrency:
+  group: hotelrunner-operations
+  cancel-in-progress: false
 
 jobs:
   run:
@@ -52,8 +58,11 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            telegram_bot_state.json
             gemini_monitor_state.json
+            morning_delivery_state.json
+            transfer_state.json
+            system_health.json
+            telegram_run_log.json
 
           key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
           restore-keys: hotelrunner-cache-${{ runner.os }}-
@@ -68,38 +77,38 @@ jobs:
 
 
       # ── Determine which mode to run ───────────────────────────────────────────
-      # At 06:00 UTC (= 07:00 Morocco) → full daily briefing + manager report
-      # All other hours → change-check (silent unless something changed)
+      # Use the triggering schedule, not the runner clock, because cron jobs can be delayed.
       - name: Decide mode
         id: mode
         run: |
-          HOUR=$(date -u +%H)
-          MIN=$(date -u +%M)
+          HOUR=$(TZ=Africa/Casablanca date +%H)
+          MIN=$(TZ=Africa/Casablanca date +%M)
+          SCHEDULE="${{ github.event.schedule }}"
           echo "hour=$HOUR" >> $GITHUB_OUTPUT
           echo "min=$MIN" >> $GITHUB_OUTPUT
           INPUT_MODE="${{ github.event.inputs.mode }}"
           if [ "$INPUT_MODE" = "full" ]; then
             echo "mode=full" >> $GITHUB_OUTPUT
+            echo "scheduled_morning=false" >> $GITHUB_OUTPUT
           elif [ "$INPUT_MODE" = "transfers" ]; then
             echo "mode=transfers" >> $GITHUB_OUTPUT
-          elif [ "$HOUR" = "06" ] && [ "$MIN" = "00" ]; then
+            echo "scheduled_morning=false" >> $GITHUB_OUTPUT
+          elif [ "$SCHEDULE" = "7 7 * * *" ] || [ "$SCHEDULE" = "22 7 * * *" ]; then
             echo "mode=full" >> $GITHUB_OUTPUT
+            echo "scheduled_morning=true" >> $GITHUB_OUTPUT
           else
             echo "mode=check" >> $GITHUB_OUTPUT
+            echo "scheduled_morning=false" >> $GITHUB_OUTPUT
           fi
 
-      # ── Telegram Q&A Bot (every 5 min — reactive answers to manager questions) ─
-      - name: Telegram Q&A Bot
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
-        run: python telegram_bot.py --poll
+      - name: Check morning delivery
+        id: morning
+        if: steps.mode.outputs.scheduled_morning == 'true'
+        run: python morning_delivery.py check >> $GITHUB_OUTPUT
 
       # ── Send team Telegram messages (existing, unchanged) ─────────────────────
       - name: Send Team Telegram
-        if: steps.mode.outputs.mode != 'transfers' && (steps.mode.outputs.min == '00' || github.event.inputs.mode == 'full')
+        if: steps.mode.outputs.mode != 'transfers' && (steps.mode.outputs.scheduled_morning != 'true' || steps.morning.outputs.sent != 'true')
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
@@ -109,7 +118,7 @@ jobs:
 
       # ── Gemini Proactive Monitor (hourly — flags operational issues) ──────────
       - name: Gemini Proactive Monitor
-        if: steps.mode.outputs.mode == 'check' && steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.mode == 'check'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -120,7 +129,7 @@ jobs:
 
       # ── Send Manager Report (morning only) ───────────────────────────────────
       - name: Send Manager Report
-        if: steps.mode.outputs.mode == 'full'
+        if: steps.mode.outputs.mode == 'full' && (steps.mode.outputs.scheduled_morning != 'true' || steps.morning.outputs.sent != 'true')
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
@@ -129,9 +138,13 @@ jobs:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         run: python manager_report.py --send
 
-      # ── Send Tomorrow Transfers (17:00 & 20:00 Morocco = 16:00 & 19:00 UTC, or manual) ──
+      - name: Mark morning delivery
+        if: steps.mode.outputs.scheduled_morning == 'true' && steps.morning.outputs.sent != 'true' && success()
+        run: python morning_delivery.py mark
+
+      # ── Send Tomorrow Transfers at 17:xx and 20:xx Morocco time, or manually ──
       - name: Send Tomorrow Transfers
-        if: steps.mode.outputs.mode == 'transfers' || steps.mode.outputs.hour == '16' || steps.mode.outputs.hour == '19'
+        if: steps.mode.outputs.mode == 'transfers' || steps.mode.outputs.hour == '17' || steps.mode.outputs.hour == '20'
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
@@ -150,30 +163,33 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            telegram_bot_state.json
             gemini_monitor_state.json
+            morning_delivery_state.json
+            transfer_state.json
+            system_health.json
+            telegram_run_log.json
 
           key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
 
       # ── Deploy interactive HTML dashboard to GitHub Pages ─────────────────────
       - name: Setup Pages
-        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
+        if: steps.mode.outputs.mode != 'transfers'
         uses: actions/configure-pages@v5
 
       - name: Prepare site directory
-        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
+        if: steps.mode.outputs.mode != 'transfers'
         run: |
           mkdir -p _site
           cp hotelrunner_dashboard.html _site/index.html
           cp olas-surf-camp.png _site/olas-surf-camp.png
 
       - name: Upload Pages artifact
-        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
+        if: steps.mode.outputs.mode != 'transfers'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
       - name: Deploy to GitHub Pages
-        if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'
+        if: steps.mode.outputs.mode != 'transfers'
         id: deployment
         uses: actions/deploy-pages@v4

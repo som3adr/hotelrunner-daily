@@ -25,11 +25,13 @@ import os
 import sys
 import urllib.request
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 STATE_FILE = Path("telegram_bot_state.json")
 CACHE_FILE = Path("reservations_cache.json")
+MOROCCO_TZ = ZoneInfo("Africa/Casablanca")
 
 QA_SYSTEM_PROMPT = """You are the operations assistant for Olas surf camp in Imsouane, Morocco.
 
@@ -275,7 +277,7 @@ def main() -> None:
         print("[telegram_bot] No new messages.")
         return
 
-    morocco_now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=1)
+    morocco_now = dt.datetime.now(MOROCCO_TZ)
     morocco_time_str = morocco_now.strftime("%H:%M Morocco time")
 
     cache_path = Path(args.cache_file)
@@ -300,8 +302,24 @@ def main() -> None:
             print(f"[telegram_bot] Ignoring message from unknown chat {chat_id}")
             continue
 
-        # Skip bot commands (start, help)
-        if text.startswith("/"):
+        command = text.split()[0].casefold() if text.startswith("/") else ""
+        if command in {"/start", "/help"}:
+            _telegram_reply(
+                token,
+                chat_id,
+                "Ask me an operations question in normal text. Use /status to check whether the bot is running.",
+            )
+            continue
+        if command == "/status":
+            cache_status = "ready" if cache_path.exists() else "missing"
+            _telegram_reply(
+                token,
+                chat_id,
+                f"Telegram Q&A is running. Reservation cache: {cache_status}. Time: {morocco_time_str}.",
+            )
+            continue
+        if command:
+            _telegram_reply(token, chat_id, "Unknown command. Use /help or ask a question in normal text.")
             continue
 
         print(f"[telegram_bot] Question: {text!r}")
