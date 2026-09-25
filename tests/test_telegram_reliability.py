@@ -141,7 +141,7 @@ def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
     monkeypatch.setattr(telegram_bot, "_ask_ai", lambda *args: (_ for _ in ()).throw(AssertionError("AI called")))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "123")
-    monkeypatch.setenv("GEMINI_API_KEY", "key")
+    monkeypatch.setenv("CODECRAFT_API_KEY", "key")
     monkeypatch.setattr(sys, "argv", ["telegram_bot.py", "--poll", "--cache-file", str(cache)])
 
     telegram_bot.main()
@@ -184,19 +184,13 @@ def test_codecraft_lists_models_and_generates_answer(monkeypatch):
     ]
 
 
-def test_ai_prefers_codecraft_over_gemini(monkeypatch):
+def test_ai_uses_codecraft(monkeypatch):
     import codecraft_client
-    import gemini_client
     import telegram_bot
 
     monkeypatch.setattr(codecraft_client, "generate_content", lambda *args, **kwargs: "CodeCraft answer")
-    monkeypatch.setattr(
-        gemini_client,
-        "generate_content",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("Gemini should not run")),
-    )
 
-    answer = telegram_bot._ask_ai("cc_key", "gemini_key", "question", "context", "12:00")
+    answer = telegram_bot._ask_ai("cc_key", "question", "context", "12:00")
 
     assert answer == "CodeCraft answer"
 
@@ -217,3 +211,17 @@ def test_workflows_separate_operations_from_qa_and_use_morocco_time():
     assert "Save compatible reservation cache" in qa
     assert 'timezone: "Africa/Casablanca"' in qa
     assert "telegram-qa-state-" in qa
+    assert "GEMINI_API_KEY" not in daily + qa
+    assert "CodeCraft Operations Monitor" in daily
+    assert daily.index("Deploy to GitHub Pages") < daily.index("CodeCraft Operations Monitor")
+
+
+def test_operations_monitor_does_not_turn_provider_failure_into_alert(monkeypatch):
+    import operations_monitor
+
+    monkeypatch.setattr(
+        "codecraft_client.generate_content",
+        lambda *args, **kwargs: (_ for _ in ()).throw(TimeoutError("timed out")),
+    )
+
+    assert operations_monitor._call_codecraft("key", "briefing", "12:00") is None

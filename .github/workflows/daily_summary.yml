@@ -58,7 +58,7 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            gemini_monitor_state.json
+            operations_monitor_state.json
             morning_delivery_state.json
             transfer_state.json
             system_health.json
@@ -116,17 +116,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python telegram_send.py --mode ${{ steps.mode.outputs.mode }} --team-only
 
-      # ── Gemini Proactive Monitor (hourly — flags operational issues) ──────────
-      - name: Gemini Proactive Monitor
-        if: steps.mode.outputs.mode == 'check'
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
-          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-        run: python gemini_monitor.py --send
-
       # ── Send Manager Report (morning only) ───────────────────────────────────
       - name: Send Manager Report
         if: steps.mode.outputs.mode == 'full' && (steps.mode.outputs.scheduled_morning != 'true' || steps.morning.outputs.sent != 'true')
@@ -163,7 +152,7 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            gemini_monitor_state.json
+            operations_monitor_state.json
             morning_delivery_state.json
             transfer_state.json
             system_health.json
@@ -193,3 +182,16 @@ jobs:
         if: steps.mode.outputs.mode != 'transfers'
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Optional AI analysis runs last, so provider problems cannot delay reports or Pages.
+      - name: CodeCraft Operations Monitor
+        if: steps.mode.outputs.mode == 'check'
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CODECRAFT_API_KEY: ${{ secrets.CODECRAFT_API_KEY }}
+          CODECRAFT_MODEL: ${{ secrets.CODECRAFT_MODEL }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+        run: python operations_monitor.py --send

@@ -326,14 +326,14 @@ become relevant tomorrow even when the reservation did not change today.
 ### Telegram Q&A
 
 `telegram_bot.py --poll` processes questions from the configured Telegram
-chat only. It builds a current operational context and sends it to Gemini.
+chat only. It builds a current operational context and sends it to CodeCraft.
 
-`gemini_client.py` supports:
+`codecraft_client.py` supports:
 
-- Optional `GEMINI_MODEL` configuration
-- Modern default model candidates
-- Fallback when a configured model returns HTTP 404
-- Clear errors when no configured model is available
+- Optional `CODECRAFT_MODEL` configuration
+- Live model discovery for the configured API key
+- Fallback to another compatible chat model
+- Standard browser-like request headers required by CodeCraft
 
 The bot is scheduled every five minutes outside quiet hours. It is not a
 continuously running webhook service, so responses can take several minutes.
@@ -353,11 +353,14 @@ The workflow:
 3. Restores cache and state files
 4. Fetches fresh HotelRunner data
 5. Regenerates the dashboard
-6. Runs Telegram Q&A polling
-7. Selects full, check, or transfers mode
-8. Sends the relevant Telegram reports
-9. Saves cache and state
-10. Publishes the HTML dashboard and logo to GitHub Pages
+6. Selects full, check, or transfers mode
+7. Sends the relevant Telegram reports
+8. Saves cache and state
+9. Publishes the HTML dashboard and logo to GitHub Pages
+10. Runs the optional CodeCraft operations monitor after deployment
+
+Telegram Q&A polling runs in the separate `telegram_qa.yml` workflow every
+five minutes outside quiet hours.
 
 Modes:
 
@@ -379,8 +382,8 @@ HOTELRUNNER_TOKEN
 HOTELRUNNER_HR_ID
 TELEGRAM_BOT_TOKEN
 TELEGRAM_CHAT_ID
-GEMINI_API_KEY
-GEMINI_MODEL                 # optional
+CODECRAFT_API_KEY
+CODECRAFT_MODEL              # optional
 GOOGLE_CREDENTIALS_JSON      # or a local credentials file
 ```
 
@@ -392,9 +395,9 @@ Production requires:
 - `HOTELRUNNER_HR_ID`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
-- `GEMINI_API_KEY`
+- `CODECRAFT_API_KEY`
 - `GOOGLE_CREDENTIALS_JSON`
-- `GEMINI_MODEL` when an explicit model is preferred
+- `CODECRAFT_MODEL` when an explicit model is preferred
 
 Never commit real tokens, Telegram identifiers, Google credentials, raw
 reservation caches, generated dashboards, or guest debug files.
@@ -477,7 +480,7 @@ Runtime state is intentionally not committed:
 - `alert_state.json`
 - `transfer_state.json`
 - `telegram_bot_state.json`
-- `gemini_monitor_state.json`
+- `operations_monitor_state.json`
 - `telegram_run_log.json`
 - `hotelrunner_dashboard.html`
 - Audit and guest debug files

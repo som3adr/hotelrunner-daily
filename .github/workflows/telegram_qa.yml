@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       self_test:
-        description: "Send a real CodeCraft/Gemini and Telegram self-test"
+        description: "Send a real CodeCraft and Telegram self-test"
         required: false
         default: false
         type: boolean
@@ -44,7 +44,7 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            gemini_monitor_state.json
+            operations_monitor_state.json
             morning_delivery_state.json
             transfer_state.json
             system_health.json
@@ -69,7 +69,7 @@ jobs:
             hotelrunner_snapshot.json
             hotelrunner_latest_updates.json
             alert_state.json
-            gemini_monitor_state.json
+            operations_monitor_state.json
             morning_delivery_state.json
             transfer_state.json
             system_health.json
@@ -87,8 +87,6 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
           CODECRAFT_API_KEY: ${{ secrets.CODECRAFT_API_KEY }}
           CODECRAFT_MODEL: ${{ secrets.CODECRAFT_MODEL }}
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}

@@ -1,11 +1,11 @@
 """
 telegram_bot.py
 ───────────────
-Reactive Telegram Q&A bot powered by Gemini.
+Reactive Telegram Q&A bot powered by CodeCraft.
 
 Polls Telegram every 5 minutes (via GitHub Actions cron) for new messages.
 For each new message from the manager, builds a context briefing from live
-reservation data and asks Gemini to answer.
+reservation data and asks CodeCraft to answer.
 
 Usage:
   python telegram_bot.py --poll             # process new messages
@@ -14,7 +14,7 @@ Usage:
 Required env vars:
   TELEGRAM_BOT_TOKEN
   TELEGRAM_CHAT_ID
-  GEMINI_API_KEY
+  CODECRAFT_API_KEY
 """
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def _telegram_reply(token: str, chat_id: int, text: str) -> bool:
 # ── Context builder ───────────────────────────────────────────────────────────
 
 def _build_context(cache_path: Path, today: dt.date) -> str:
-    """Build a rich context string for Gemini to answer questions."""
+    """Build a rich context string for CodeCraft to answer questions."""
     from hotelrunner_daily_summary import load_reservation_cache, active_stay_lines
     from data_model import stayline_to_normalized, merge_cross_source_duplicates
     from extras_engine import classify_extras_from_reservation
@@ -228,27 +228,17 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
     return "\n".join(out)
 
 
-# ── Gemini Q&A ────────────────────────────────────────────────────────────────
+# ── CodeCraft Q&A ─────────────────────────────────────────────────────────────
 
-def _ask_ai(codecraft_key: str, gemini_key: str, question: str, context: str, morocco_time: str) -> str:
+def _ask_ai(codecraft_key: str, question: str, context: str, morocco_time: str) -> str:
     system = QA_SYSTEM_PROMPT.format(morocco_time=morocco_time, context=context)
     full_prompt = f"{system}\n\nManager's question: {question}"
-    errors = []
-    if codecraft_key:
-        try:
-            from codecraft_client import generate_content
-            return generate_content(codecraft_key, full_prompt, max_output_tokens=400)
-        except Exception as exc:
-            print(f"[telegram_bot] CodeCraft failed: {exc}")
-            errors.append(f"CodeCraft: {exc}")
-    if gemini_key:
-        try:
-            from gemini_client import generate_content
-            return generate_content(gemini_key, full_prompt, max_output_tokens=400)
-        except Exception as exc:
-            print(f"[telegram_bot] Gemini failed: {exc}")
-            errors.append(f"Gemini: {exc}")
-    return "Sorry, I couldn't reach the AI service: " + " | ".join(errors)
+    try:
+        from codecraft_client import generate_content
+        return generate_content(codecraft_key, full_prompt, max_output_tokens=400)
+    except Exception as exc:
+        print(f"[telegram_bot] CodeCraft failed: {exc}")
+        return "Sorry, I couldn't reach CodeCraft right now. Please try again in a few minutes."
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -269,11 +259,10 @@ def main() -> None:
 
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     our_chat_id_str = os.environ.get("TELEGRAM_CHAT_ID", "")
-    gemini_key = os.environ.get("GEMINI_API_KEY", "")
     codecraft_key = os.environ.get("CODECRAFT_API_KEY", "")
 
-    if not token or not our_chat_id_str or not (codecraft_key or gemini_key):
-        sys.exit("[telegram_bot] Missing Telegram settings or an AI provider API key")
+    if not token or not our_chat_id_str or not codecraft_key:
+        sys.exit("[telegram_bot] Missing Telegram settings or CODECRAFT_API_KEY")
 
     # Only respond to messages from the configured chat (security)
     try:
@@ -287,7 +276,6 @@ def main() -> None:
     if args.self_test:
         answer = _ask_ai(
             codecraft_key,
-            "" if codecraft_key else gemini_key,
             "Reply exactly with: AI provider connection works",
             "Self-test only; no reservation data is needed.",
             morocco_time_str,
@@ -338,11 +326,10 @@ def main() -> None:
             continue
         if command == "/status":
             cache_status = "ready" if cache_path.exists() else "missing"
-            provider = "CodeCraft" if codecraft_key else "Gemini"
             _telegram_reply(
                 token,
                 chat_id,
-                f"Telegram Q&A is running. AI: {provider}. Reservation cache: {cache_status}. Time: {morocco_time_str}.",
+                f"Telegram Q&A is running. AI: CodeCraft. Reservation cache: {cache_status}. Time: {morocco_time_str}.",
             )
             continue
         if command:
@@ -361,7 +348,7 @@ def main() -> None:
                 except Exception as exc:
                     context = f"(Error loading reservation data: {exc})"
 
-        answer = _ask_ai(codecraft_key, gemini_key, text, context, morocco_time_str)
+        answer = _ask_ai(codecraft_key, text, context, morocco_time_str)
         print(f"[telegram_bot] Answer: {answer[:80]}...")
 
         if args.dry_run:

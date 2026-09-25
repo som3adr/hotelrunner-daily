@@ -1,21 +1,19 @@
 """
-gemini_monitor.py
-─────────────────
 Proactive AI operations monitor for Olas surf camp.
 
 Runs on schedule (hourly via GitHub Actions).
-Reads the current operational state, sends a briefing to Gemini,
+Reads the current operational state, sends a briefing to CodeCraft,
 and forwards any flagged issues to Telegram.
-Silent when Gemini finds nothing to flag (NOTHING response).
+Silent when CodeCraft finds nothing to flag (NOTHING response).
 
 Usage:
-  python gemini_monitor.py --dry-run    # print without sending
-  python gemini_monitor.py --send       # send to Telegram
+  python operations_monitor.py --dry-run    # print without sending
+  python operations_monitor.py --send       # send to Telegram
 
 Required env vars for --send:
   TELEGRAM_BOT_TOKEN
   TELEGRAM_CHAT_ID
-  GEMINI_API_KEY
+  CODECRAFT_API_KEY
 """
 from __future__ import annotations
 
@@ -27,13 +25,14 @@ import os
 import sys
 import urllib.request
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-STATE_FILE = Path("gemini_monitor_state.json")
+STATE_FILE = Path("operations_monitor_state.json")
 CACHE_FILE = Path("reservations_cache.json")
 
 SYSTEM_PROMPT = """You are the operations assistant for Olas surf camp in Imsouane, Morocco.
@@ -100,7 +99,7 @@ def _already_alerted(text: str, state: dict) -> bool:
 # ── Operational briefing builder ──────────────────────────────────────────────
 
 def _build_briefing(cache_path: Path, today: dt.date) -> str:
-    """Build a compact operational briefing for Gemini to analyze."""
+    """Build a compact operational briefing for CodeCraft to analyze."""
     from hotelrunner_daily_summary import load_reservation_cache, active_stay_lines
     from data_model import stayline_to_normalized, merge_cross_source_duplicates
     from extras_engine import classify_extras_from_reservation
@@ -224,18 +223,19 @@ def _build_briefing(cache_path: Path, today: dt.date) -> str:
     return "\n".join(lines_out)
 
 
-# ── Gemini API call ───────────────────────────────────────────────────────────
+# ── CodeCraft API call ────────────────────────────────────────────────────────
 
-def _call_gemini(api_key: str, briefing: str, morocco_time: str) -> str:
-    """Call Gemini API and return the response text."""
-    from gemini_client import generate_content
+def _call_codecraft(api_key: str, briefing: str, morocco_time: str) -> str | None:
+    """Call CodeCraft, returning None when the optional provider is unavailable."""
+    from codecraft_client import generate_content
 
     system = SYSTEM_PROMPT.format(morocco_time=morocco_time)
     prompt = f"{system}\n\n--- OPERATIONAL BRIEFING ---\n{briefing}\n--- END BRIEFING ---"
     try:
         return generate_content(api_key, prompt)
     except Exception as exc:
-        return f"[gemini_monitor] Gemini API error: {exc}"
+        print(f"[operations_monitor] CodeCraft error: {exc}")
+        return None
 
 
 # ── Telegram send ─────────────────────────────────────────────────────────────
@@ -248,14 +248,14 @@ def _telegram_send(token: str, chat_id: str, text: str) -> bool:
         with urllib.request.urlopen(req, timeout=15) as resp:
             return bool(json.loads(resp.read()).get("ok"))
     except Exception as exc:
-        print(f"[gemini_monitor] Telegram error: {exc}")
+        print(f"[operations_monitor] Telegram error: {exc}")
         return False
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Gemini proactive operations monitor")
+    parser = argparse.ArgumentParser(description="CodeCraft proactive operations monitor")
     parser.add_argument("--dry-run", action="store_true", help="Print without sending")
     parser.add_argument("--send", action="store_true", help="Send to Telegram")
     parser.add_argument("--cache-file", default="reservations_cache.json")
@@ -271,59 +271,63 @@ def main() -> None:
         except ValueError:
             sys.exit("Invalid --date. Use YYYY-MM-DD.")
 
-    morocco_now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=1)
+    morocco_now = dt.datetime.now(ZoneInfo("Africa/Casablanca"))
     morocco_time_str = morocco_now.strftime("%H:%M Morocco time")
 
     # Quiet hours: 00:01–06:59 Morocco
     if not args.dry_run and 1 <= morocco_now.hour <= 6:
-        print(f"[gemini_monitor] Quiet hours ({morocco_now.hour:02d}:xx Morocco). Skipping.")
+        print(f"[operations_monitor] Quiet hours ({morocco_now.hour:02d}:xx Morocco). Skipping.")
         return
 
     cache_path = Path(args.cache_file)
     if not cache_path.exists():
-        sys.exit(f"[gemini_monitor] Cache not found: {cache_path}")
+        sys.exit(f"[operations_monitor] Cache not found: {cache_path}")
 
-    api_key = os.environ.get("GEMINI_API_KEY", "")
+    api_key = os.environ.get("CODECRAFT_API_KEY", "")
     if not api_key:
-        sys.exit("[gemini_monitor] GEMINI_API_KEY not set")
+        sys.exit("[operations_monitor] CODECRAFT_API_KEY not set")
 
-    print(f"[gemini_monitor] Building briefing for {today} ...")
+    print(f"[operations_monitor] Building briefing for {today} ...")
     briefing = _build_briefing(cache_path, today)
 
     if args.dry_run:
         print("\n--- BRIEFING ---")
         print(briefing)
-        print("\n--- (would send to Gemini) ---")
+        print("\n--- (would send to CodeCraft) ---")
         return
 
-    print("[gemini_monitor] Calling Gemini ...")
-    response = _call_gemini(api_key, briefing, morocco_time_str)
+    print("[operations_monitor] Calling CodeCraft ...")
+    response = _call_codecraft(api_key, briefing, morocco_time_str)
+
+    if response is None:
+        print("[operations_monitor] Provider unavailable. No Telegram alert sent.")
+        return
 
     if response.strip().upper() == "NOTHING" or not response.strip():
-        print("[gemini_monitor] Gemini: nothing to flag. Silent.")
+        print("[operations_monitor] Nothing to flag. Silent.")
         return
 
     # Check if already alerted today
     state = _load_state()
     if _already_alerted(response, state):
-        print("[gemini_monitor] Already alerted this issue today. Skipping.")
+        print("[operations_monitor] Already alerted this issue today. Skipping.")
         _save_state(state)
         return
 
-    print(f"[gemini_monitor] Gemini flagged:\n{response}")
+    print(f"[operations_monitor] CodeCraft flagged:\n{response}")
 
     if args.send:
         token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
         chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
         if not token or not chat_id:
-            sys.exit("[gemini_monitor] TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID required")
+            sys.exit("[operations_monitor] TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID required")
 
         header = f"🤖 OPS ASSISTANT · {morocco_now.strftime('%d %b · %H:%M')}\n"
         ok = _telegram_send(token, chat_id, header + response)
         if ok:
-            print("[gemini_monitor] Sent to Telegram.")
+            print("[operations_monitor] Sent to Telegram.")
         else:
-            print("[gemini_monitor] Telegram send failed.")
+            print("[operations_monitor] Telegram send failed.")
 
     _save_state(state)
 
