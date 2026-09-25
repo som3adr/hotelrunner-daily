@@ -78,7 +78,7 @@ def generate_content(
                 return text
         except urllib.error.HTTPError as exc:
             last_error = exc
-            if exc.code == 404:
+            if exc.code == 404 or exc.code in TRANSIENT_HTTP_CODES:
                 continue
             raise RuntimeError(f"Gemini request failed with HTTP {exc.code}") from exc
         except Exception as exc:
@@ -86,7 +86,9 @@ def generate_content(
             break
 
 
-    if isinstance(last_error, urllib.error.HTTPError) and last_error.code == 404:
+    if isinstance(last_error, urllib.error.HTTPError) and (
+        last_error.code == 404 or last_error.code in TRANSIENT_HTTP_CODES
+    ):
         discovered = available_generate_models(api_key)
         preferred = [
             model for model in discovered
@@ -99,7 +101,7 @@ def generate_content(
                     return text
             except urllib.error.HTTPError as exc:
                 last_error = exc
-                if exc.code in {400, 404}:
+                if exc.code in {400, 404} or exc.code in TRANSIENT_HTTP_CODES:
                     continue
                 raise RuntimeError(f"Gemini request failed with HTTP {exc.code}") from exc
             except Exception as exc:

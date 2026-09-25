@@ -88,6 +88,39 @@ def test_gemini_retries_temporary_503(monkeypatch):
     assert calls == 3
 
 
+def test_gemini_tries_next_model_after_repeated_503(monkeypatch):
+    import gemini_client
+
+    calls = []
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({"candidates": [{"content": {"parts": [{"text": "Fallback worked"}]}}]}).encode()
+
+    def fake_open(request, timeout=30):
+        calls.append(request.full_url)
+        if "overloaded-model" in request.full_url:
+            raise HTTPError(request.full_url, 503, "Unavailable", {}, None)
+        return Response()
+
+    monkeypatch.setattr(gemini_client.urllib.request, "urlopen", fake_open)
+    monkeypatch.setattr(gemini_client.time, "sleep", lambda seconds: None)
+
+    answer = gemini_client.generate_content(
+        "key", "prompt", models=["overloaded-model", "fallback-model"]
+    )
+
+    assert answer == "Fallback worked"
+    assert sum("overloaded-model" in call for call in calls) == 3
+    assert any("fallback-model" in call for call in calls)
+
+
 def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
     import telegram_bot
 
