@@ -226,6 +226,41 @@ def summarize_dinner(entitlements: list[MealEntitlement]) -> dict:
     }
 
 
+def format_dinner_team_message(
+    entitlements: list[MealEntitlement],
+    reservations: list[NormalizedReservation],
+) -> str:
+    """Return a copy-ready dinner list grouped Sunrise, Olas, then Tide."""
+    dinner_items = [item for item in entitlements if item.meal == "dinner"]
+    by_id = {res.reservation_id: res for res in reservations}
+    house_order = {"Sunrise": 0, "Olas": 1, "Tide": 2}
+    grouped: dict[tuple[str, str], dict] = {}
+    for item in dinner_items:
+        key = (item.house, item.guest_name.casefold())
+        entry = grouped.setdefault(key, {"item": item, "count": 0, "ids": []})
+        entry["count"] += item.count
+        entry["ids"].append(item.reservation_id)
+    dinner_groups = sorted(grouped.values(), key=lambda entry: (
+        house_order.get(entry["item"].house, 99),
+        entry["item"].guest_name.casefold(),
+    ))
+    lines = ["Dinner for tonight", ""]
+    for entry in dinner_groups:
+        item = entry["item"]
+        res = next((by_id.get(rid) for rid in entry["ids"] if by_id.get(rid)), None)
+        notes = []
+        if res:
+            for value in (res.diet, res.allergies):
+                cleaned = str(value or "").strip()
+                if cleaned and cleaned.casefold() not in {"no", "none", "i eat everything"}:
+                    notes.append(cleaned)
+        house = "SandyCamp" if item.house == "Sunrise" else item.house
+        detail = f" ({' · '.join(notes)})" if notes else ""
+        first_name = item.guest_name.strip().split()[0] if item.guest_name.strip() else item.guest_name
+        lines.append(f"{first_name} x{entry['count']}{detail} ({house})")
+    return "\n".join(lines)
+
+
 # ── Dinner preparation notice ─────────────────────────────────────────────────
 
 def dinner_preparation_notice(count: int) -> str | None:

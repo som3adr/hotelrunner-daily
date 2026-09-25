@@ -15,6 +15,13 @@ Three houses managed together:
 | **Tide** | Secondary property |
 | **Sunrise** | Third property — guests come from HotelRunner AND Google Sheet |
 
+### Physical Rooms And Capacity
+
+- Olas: RDC1 (2), RDC2 (2), Balcony (2), RDC3 (3), and two 6-bed dorms.
+- Tide: Bay (2), Cathedral (4), Slab (3), and Reef (3). All are private rooms with private bathrooms; Slab's private bathroom is outside the room.
+- Sunrise: Sunrise 1 (3), Sunrise 2 dorm (5), Sunrise 3 (4), Sunrise 4 (3), and Sunrise 5 (3).
+- A matching Sunrise guest in Google Sheets and HotelRunner is one stay, not two. Keep the Sheet row for Marcel, merge its operational details, and do not show check/add HR after a HotelRunner match exists.
+
 ---
 
 ## Sunrise Room IDs (HotelRunner)
@@ -140,6 +147,21 @@ Zephyr Agadir
 The current workflow is: Copy Driver Message → send manually.
 
 The **user confirms sent status manually** (stored in `transfer_state.json`).
+
+## Checkout Payment Rules
+
+- Remind the manager one day before checkout and again on checkout day.
+- Apply to Online, Hostelworld, and Surf Camp reservations.
+- Remaining accommodation balance is HotelRunner total minus recorded paid amount.
+- No recorded payment does not prove non-payment: collect the full amount or confirm PayPal.
+- Actual recorded payment always overrides an expected deposit percentage.
+- Surf Camp reservations completed before 1 September 2026 used 50/50.
+- Surf Camp reservations completed from 1 September 2026 use 20/80.
+- Check recorded surf lessons, meals, Timlalin, board rental, transfers, and group messages.
+
+## Room Preparation Requests
+
+Bed setup and similar requests appear for arrival preparation and on arrival day. They are suppressed after check-in because the room has already been prepared.
 
 ### Default Airport
 

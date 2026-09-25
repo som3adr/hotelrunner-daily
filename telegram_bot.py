@@ -30,7 +30,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 STATE_FILE = Path("telegram_bot_state.json")
 CACHE_FILE = Path("reservations_cache.json")
-GEMINI_MODEL = "gemini-1.5-flash"
 
 QA_SYSTEM_PROMPT = """You are the operations assistant for Olas surf camp in Imsouane, Morocco.
 
@@ -105,7 +104,7 @@ def _telegram_reply(token: str, chat_id: int, text: str) -> bool:
 def _build_context(cache_path: Path, today: dt.date) -> str:
     """Build a rich context string for Gemini to answer questions."""
     from hotelrunner_daily_summary import load_reservation_cache, active_stay_lines
-    from data_model import stayline_to_normalized
+    from data_model import stayline_to_normalized, merge_cross_source_duplicates
     from extras_engine import classify_extras_from_reservation
     from transfer_engine import build_relevant_transfer_records
     from transfer_state import TransferStateStore
@@ -129,6 +128,7 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
         norm += load_sunrise_reservations()
     except Exception:
         pass
+    norm = merge_cross_source_duplicates(norm)
 
     tomorrow = today + dt.timedelta(days=1)
     store = TransferStateStore()
@@ -195,6 +195,11 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
     for c in conflicts:
         out.append(f"  {c.room}: {c.description}")
 
+    from settlement_engine import build_settlement_reminders, format_settlement_section
+    settlement = format_settlement_section(build_settlement_reminders(norm, today))
+    if settlement:
+        out.append("\n" + settlement)
+
     out.append("\nSPECIAL NOTES (diet / allergies / medical):")
     flagged = 0
     for r in norm:
@@ -224,26 +229,14 @@ def _build_context(cache_path: Path, today: dt.date) -> str:
 # ── Gemini Q&A ────────────────────────────────────────────────────────────────
 
 def _ask_gemini(api_key: str, question: str, context: str, morocco_time: str) -> str:
+    from gemini_client import generate_content
+
     system = QA_SYSTEM_PROMPT.format(morocco_time=morocco_time, context=context)
     full_prompt = f"{system}\n\nManager's question: {question}"
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={api_key}"
-    payload = json.dumps({
-        "contents": [{"parts": [{"text": full_prompt}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 400},
-    }).encode("utf-8")
-
-    req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            result = json.loads(resp.read())
-            candidates = result.get("candidates", [])
-            if candidates:
-                parts = candidates[0].get("content", {}).get("parts", [])
-                return " ".join(p.get("text", "") for p in parts).strip()
+        return generate_content(api_key, full_prompt, max_output_tokens=400)
     except Exception as exc:
         return f"Sorry, I couldn't reach Gemini: {exc}"
-    return "Sorry, no response from Gemini."
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────

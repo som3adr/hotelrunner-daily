@@ -32,7 +32,7 @@ _setup_path()
 
 from data_model import (
     NormalizedReservation, load_config, stayline_to_normalized,
-    meals_for_reservation,
+    meals_for_reservation, merge_cross_source_duplicates,
 )
 from extras_engine import (
     classify_extras_from_reservation, get_missing_transfer_info,
@@ -86,8 +86,7 @@ def load_all_reservations(cache_path: Path, date: dt.date) -> list[NormalizedRes
         print(f"[manager_report] Sunrise data unavailable: {exc}")
         sunrise_reservations = []
 
-    all_reservations = hr_reservations + sunrise_reservations
-    return all_reservations
+    return merge_cross_source_duplicates(hr_reservations + sunrise_reservations)
 
 
 # ── Occupancy section ─────────────────────────────────────────────────────────
@@ -283,15 +282,6 @@ def _build_movements(reservations: list[NormalizedReservation], date: dt.date) -
     fmt_list("Arrivals tomorrow", arr_tomorrow)
     fmt_list("Departures tomorrow", dep_tomorrow)
 
-    # Unpaid balances
-    unpaid = [r for r in reservations
-              if r.has_unpaid_balance and (r.is_arriving_on(date) or r.is_arriving_on(tomorrow))]
-    if unpaid:
-        lines.append("")
-        lines.append("💳 UNPAID BALANCES (arriving soon):")
-        for r in unpaid:
-            lines.append(f"  🟠 {r.guest_name}: owes €{r.unpaid_amount:.0f}")
-
     # Sunrise guests today
     sunrise_today = [r for r in reservations
                      if r.house == "Sunrise" and r.is_active_on(date)]
@@ -424,6 +414,11 @@ def build_manager_report(
         sections.append(DIVIDER + "\n" + diet)
 
     sections.append(DIVIDER + "\n" + _build_transfers(reservations, date))
+
+    from settlement_engine import build_settlement_reminders, format_settlement_section
+    settlement = format_settlement_section(build_settlement_reminders(reservations, date))
+    if settlement:
+        sections.append(DIVIDER + "\n" + settlement)
 
     # Conflicts
     urgent_items, check_items_conflict, _ = _build_conflicts_section(

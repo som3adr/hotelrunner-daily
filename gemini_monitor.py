@@ -33,7 +33,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-GEMINI_MODEL = "gemini-1.5-flash"
 STATE_FILE = Path("gemini_monitor_state.json")
 CACHE_FILE = Path("reservations_cache.json")
 
@@ -103,7 +102,7 @@ def _already_alerted(text: str, state: dict) -> bool:
 def _build_briefing(cache_path: Path, today: dt.date) -> str:
     """Build a compact operational briefing for Gemini to analyze."""
     from hotelrunner_daily_summary import load_reservation_cache, active_stay_lines
-    from data_model import stayline_to_normalized
+    from data_model import stayline_to_normalized, merge_cross_source_duplicates
     from extras_engine import classify_extras_from_reservation
     from transfer_engine import build_transfer_records
     from transfer_state import TransferStateStore
@@ -127,6 +126,7 @@ def _build_briefing(cache_path: Path, today: dt.date) -> str:
         norm += load_sunrise_reservations()
     except Exception:
         pass
+    norm = merge_cross_source_duplicates(norm)
 
     tomorrow = today + dt.timedelta(days=1)
     store = TransferStateStore()
@@ -216,6 +216,11 @@ def _build_briefing(cache_path: Path, today: dt.date) -> str:
     if flagged == 0:
         lines_out.append("  None")
 
+    from settlement_engine import build_settlement_reminders, format_settlement_section
+    settlement = format_settlement_section(build_settlement_reminders(norm, today))
+    if settlement:
+        lines_out.append("\n" + settlement)
+
     return "\n".join(lines_out)
 
 
@@ -223,28 +228,14 @@ def _build_briefing(cache_path: Path, today: dt.date) -> str:
 
 def _call_gemini(api_key: str, briefing: str, morocco_time: str) -> str:
     """Call Gemini API and return the response text."""
+    from gemini_client import generate_content
+
     system = SYSTEM_PROMPT.format(morocco_time=morocco_time)
     prompt = f"{system}\n\n--- OPERATIONAL BRIEFING ---\n{briefing}\n--- END BRIEFING ---"
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={api_key}"
-    payload = json.dumps({
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 512},
-    }).encode("utf-8")
-
-    req = urllib.request.Request(
-        url, data=payload, headers={"Content-Type": "application/json"}
-    )
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            result = json.loads(resp.read())
-            candidates = result.get("candidates", [])
-            if candidates:
-                parts = candidates[0].get("content", {}).get("parts", [])
-                return " ".join(p.get("text", "") for p in parts).strip()
+        return generate_content(api_key, prompt)
     except Exception as exc:
         return f"[gemini_monitor] Gemini API error: {exc}"
-    return "NOTHING"
 
 
 # ── Telegram send ─────────────────────────────────────────────────────────────

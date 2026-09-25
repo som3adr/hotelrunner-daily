@@ -154,6 +154,8 @@ class NormalizedReservation:
     # Payment (HotelRunner)
     total_amount: float = 0.0
     paid_amount: float = 0.0
+    payment_record_count: int = 0
+    booking_date: dt.date | None = None
 
     # Group booking flag
     is_group_booking: bool = False
@@ -260,6 +262,8 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
     # Payment info from raw reservation if available
     total_amount = 0.0
     paid_amount = 0.0
+    payment_record_count = 0
+    booking_date = None
     if raw_reservation:
         try:
             total_amount = float(raw_reservation.get("total") or 0)
@@ -269,6 +273,24 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
             paid_amount = float(raw_reservation.get("paid_amount") or 0)
         except (TypeError, ValueError):
             paid_amount = 0.0
+        payments = raw_reservation.get("payments")
+        if isinstance(payments, list):
+            payment_record_count = len([
+                payment for payment in payments
+                if not isinstance(payment, dict)
+                or str(payment.get("state") or "").casefold() not in {"failed", "cancelled", "canceled"}
+            ])
+        completed_at = str(raw_reservation.get("completed_at") or "").strip()
+        if completed_at:
+            try:
+                booking_date = dt.date.fromisoformat(completed_at[:10])
+            except ValueError:
+                booking_date = None
+    else:
+        total_amount = float(getattr(line, "total_amount", 0) or 0)
+        paid_amount = float(getattr(line, "paid_amount", 0) or 0)
+        payment_record_count = int(getattr(line, "payment_record_count", 0) or 0)
+        booking_date = getattr(line, "booking_date", None)
 
     return NormalizedReservation(
         reservation_id=line.reservation_id,
@@ -289,7 +311,49 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
         bed_request=line.bed_request,
         total_amount=total_amount,
         paid_amount=paid_amount,
+        payment_record_count=payment_record_count,
+        booking_date=booking_date,
     )
+
+
+def _reservation_identity_key(res: NormalizedReservation) -> tuple[str, dt.date | None, dt.date | None]:
+    name = re.sub(r"[^a-z0-9]+", "", res.guest_name.casefold())
+    return name, res.arrival_date, res.departure_date
+
+
+def merge_cross_source_duplicates(
+    reservations: list[NormalizedReservation],
+) -> list[NormalizedReservation]:
+    """Merge a matching Sunrise Sheet row into HotelRunner without double counting.
+
+    Only exact guest/date matches across different sources are merged. Multiple
+    HotelRunner stay lines for the same group remain separate.
+    """
+    hotelrunner_by_key = {
+        _reservation_identity_key(res): res
+        for res in reservations
+        if res.source == "hotelrunner"
+    }
+    merged: list[NormalizedReservation] = []
+    for res in reservations:
+        if res.source != "google_sheet":
+            merged.append(res)
+            continue
+        target = hotelrunner_by_key.get(_reservation_identity_key(res))
+        if target is None:
+            merged.append(res)
+            continue
+        for field_name in (
+            "meal_plan", "surf_package", "surf_level", "surf_goals",
+            "diet", "allergies", "medical_notes", "arrival_transfer",
+            "departure_transfer",
+        ):
+            if not getattr(target, field_name) and getattr(res, field_name):
+                setattr(target, field_name, getattr(res, field_name))
+        for note in res.notes:
+            if note not in target.notes:
+                target.notes.append(note)
+    return merged
 
 
 # ── Adapter: Google Sheet row → NormalizedReservation ─────────────────────────

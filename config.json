@@ -15,11 +15,11 @@
     "Olas": {
       "emoji": "🏠",
       "source": "hotelrunner",
-      "total_capacity": 30,
+      "total_capacity": 21,
       "rooms": {
         "RDC1":     { "bed_number": "110", "capacity": 2, "type": "double" },
         "RDC2":     { "bed_number": "112", "capacity": 2, "type": "double" },
-        "RDC3":     { "bed_number": "101", "capacity": 2, "type": "double" },
+        "RDC3":     { "bed_number": "101", "capacity": 3, "type": "private", "setup": "triple_or_double" },
         "balcony":  { "bed_number": "113", "capacity": 2, "type": "twin" },
         "dorm 03":  { "bed_number": "03",  "capacity": 6, "type": "dorm" },
         "dorm 04":  { "bed_number": "04",  "capacity": 6, "type": "dorm" },
@@ -33,12 +33,12 @@
     "Tide": {
       "emoji": "🌊",
       "source": "hotelrunner",
-      "total_capacity": 16,
+      "total_capacity": 12,
       "rooms": {
-        "bay":       { "bed_number": "6500", "capacity": 4, "type": "villa" },
-        "slab":      { "bed_number": "6700", "capacity": 4, "type": "villa" },
-        "cathedral": { "bed_number": "6600", "capacity": 4, "type": "villa" },
-        "reef":      { "bed_number": "6800", "capacity": 6, "type": "villa" }
+        "bay":       { "bed_number": "6500", "capacity": 2, "type": "private", "setup": "double_or_twin", "bathroom": "ensuite" },
+        "slab":      { "bed_number": "6700", "capacity": 3, "type": "private", "setup": "triple_or_double", "bathroom": "private_external" },
+        "cathedral": { "bed_number": "6600", "capacity": 4, "type": "private", "setup": "quad_or_double_or_twin", "bathroom": "ensuite" },
+        "reef":      { "bed_number": "6800", "capacity": 3, "type": "private", "setup": "triple_or_double", "bathroom": "ensuite" }
       }
     },
     "Sunrise": {
@@ -46,11 +46,11 @@
       "source": "google_sheet",
       "total_capacity": 18,
       "rooms": {
-        "Sunrise 1": { "capacity": 3, "type": "double+single", "beds": ["double", "single"] },
+        "Sunrise 1": { "capacity": 3, "type": "private", "setup": "double+single", "beds": ["double", "single"] },
         "Sunrise 2": { "capacity": 5, "type": "dorm",          "beds": ["single","single","single","single","single"] },
-        "Sunrise 3": { "capacity": 4, "type": "quad",          "beds": ["single","single","single","single"] },
-        "Sunrise 4": { "capacity": 3, "type": "double+single", "beds": ["double", "single"] },
-        "Sunrise 5": { "capacity": 3, "type": "triple",        "beds": ["single","single","single"] },
+        "Sunrise 3": { "capacity": 4, "type": "private", "setup": "quad",          "beds": ["single","single","single","single"] },
+        "Sunrise 4": { "capacity": 3, "type": "private", "setup": "double+single", "beds": ["double", "single"] },
+        "Sunrise 5": { "capacity": 3, "type": "private", "setup": "triple",        "beds": ["single","single","single"] },
         "9200": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9200" },
         "9300": { "capacity": 5, "type": "dorm",    "display_name": "Sunrise Dorm 9300", "beds": ["9300-1","9300-2","9300-3","9300-4","9300-5"] },
         "9400": { "capacity": 2, "type": "private", "display_name": "Sunrise Private 9400" },
@@ -182,5 +182,12 @@
   "scheduled_jobs": {
     "_comment": "Morocco local time (Africa/Casablanca). Two daily sends for tomorrow-transfer job.",
     "tomorrow_transfer_times_local": ["17:00", "20:00"]
+  },
+
+  "payments": {
+    "surf_camp_policy_change_date": "2026-09-01",
+    "surf_camp_deposit_before_percent": 50,
+    "surf_camp_deposit_after_percent": 20,
+    "reminder_days_before_checkout": 1
   }
 }

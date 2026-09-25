@@ -233,11 +233,30 @@ def detect_conflicts(
         by_room.setdefault(key, []).append(res)
 
     for room_key_str, room_res in by_room.items():
-        if len(room_res) < 2:
-            continue
-
         house_name = room_key_str.split("::")[0]
         is_shared = _is_shared_room(room_res[0].room, house_name)
+
+        # A single booking can exceed a physical room's capacity.
+        capacity = _room_capacity(room_res[0].room, house_name)
+        if capacity and not is_shared:
+            for res in room_res:
+                if res.guest_count <= capacity:
+                    continue
+                first_night = max(today, res.arrival_date)
+                if first_night < res.departure_date:
+                    capacity_warnings.append(CapacityWarning(
+                        severity="action_required",
+                        room=res.room,
+                        house=house_name,
+                        date=first_night,
+                        booked=res.guest_count,
+                        capacity=capacity,
+                        guests=[res],
+                        description=f"{res.guest_count} guests booked in {res.room} (capacity {capacity})",
+                    ))
+
+        if len(room_res) < 2:
+            continue
 
         if is_shared:
             # For shared rooms / dorms: check capacity per night

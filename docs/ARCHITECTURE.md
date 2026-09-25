@@ -16,6 +16,7 @@ NORMALIZATION LAYER
 DOMAIN ENGINES
   meal_engine.py      → MealEntitlement[]
   transfer_engine.py  → TransferRecord[]
+  settlement_engine.py → SettlementReminder[]
   conflict_engine.py  → RoomConflict[], CapacityWarning[]
   surf_schedule.py    → surf session data
   ↓

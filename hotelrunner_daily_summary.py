@@ -63,6 +63,10 @@ class StayLine:
     notes: tuple[str, ...] = ()
     extras: tuple[str, ...] = ()
     bed_request: str = ""
+    total_amount: float = 0.0
+    paid_amount: float = 0.0
+    payment_record_count: int = 0
+    booking_date: dt.date | None = None
 
     @property
     def guests(self) -> int:
@@ -876,6 +880,21 @@ def active_stay_lines(reservations: list[dict[str, Any]]) -> list[StayLine]:
         hr_number = str(first_value(reservation, ["hr_number", "provider_number"], "") or "")
         notes = tuple(extract_notes(reservation))
         bed = detect_bed_request(list(notes), reservation)
+        try:
+            total_amount = float(reservation.get("total") or 0)
+        except (TypeError, ValueError):
+            total_amount = 0.0
+        try:
+            paid_amount = float(reservation.get("paid_amount") or 0)
+        except (TypeError, ValueError):
+            paid_amount = 0.0
+        payments = reservation.get("payments")
+        payment_record_count = len([
+            payment for payment in payments
+            if not isinstance(payment, dict)
+            or str(payment.get("state") or "").casefold() not in {"failed", "cancelled", "canceled"}
+        ]) if isinstance(payments, list) else 0
+        booking_date = parse_date(str(reservation.get("completed_at") or "")[:10])
         rooms = reservation_rooms(reservation) or [{}]
 
         for room_data in rooms:
@@ -905,6 +924,10 @@ def active_stay_lines(reservations: list[dict[str, Any]]) -> list[StayLine]:
                     notes=notes,
                     extras=tuple(extract_extras(reservation, room_data)),
                     bed_request=bed,
+                    total_amount=total_amount,
+                    paid_amount=paid_amount,
+                    payment_record_count=payment_record_count,
+                    booking_date=booking_date,
                 )
             )
 
@@ -942,7 +965,7 @@ def build_day_summaries(lines: list[StayLine], start: dt.date, days_ahead: int, 
                 guest_day_counts[line.guest_name.casefold()] += 1
                 occupied_rooms.setdefault(room_key(line), []).append(line)
 
-                if line.bed_request:
+                if line.bed_request and line.arrival == day:
                     summary.bed_requests.append(f"{line.guest_name} | {display_room(line)}: {line.bed_request}")
                 # Extras and notes are only shown on the arrival day to avoid
                 # repeating the same information for every in-house day.
@@ -1081,6 +1104,10 @@ def normalized_from_stayline_with_extras(line: StayLine):
     from extras_engine import classify_raw_extra
 
     res = stayline_to_normalized(line)
+    res.total_amount = line.total_amount
+    res.paid_amount = line.paid_amount
+    res.payment_record_count = line.payment_record_count
+    res.booking_date = line.booking_date
     classified = []
     for label in line.extras:
         extra = classify_raw_extra({"name": label})
@@ -1918,7 +1945,11 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
     all_extras = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "extra"]
     all_notes = [f"{item['day']}: {item['text']}" for item in audit_results if item["type"] == "note"]
 
-    from meal_engine import compute_meal_entitlements, summarize_dinner, dinner_preparation_notice
+    from meal_engine import (
+        compute_meal_entitlements, summarize_dinner,
+        dinner_preparation_notice, format_dinner_team_message,
+    )
+    from settlement_engine import build_settlement_reminders
     from transfer_engine import build_transfer_records, format_driver_message
     from transfer_state import TransferStateStore
     from system_health import SystemHealthStore
@@ -1956,7 +1987,12 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
                 seen_res_ids.add(line.reservation_id)
                 day_norm_res.append(normalized_from_stayline_with_extras(line))
         active_sheet_res = sunrise_sheet_active_reservations(day_staylines, sunrise_sheet_reservations, summary.date)
-        day_norm_res.extend(active_sheet_res)
+        active_sheet_all = [
+            res for res in sunrise_sheet_reservations
+            if res.is_active_on(summary.date)
+        ]
+        from data_model import merge_cross_source_duplicates
+        day_norm_res = merge_cross_source_duplicates(day_norm_res + active_sheet_all)
 
         entitlements = compute_meal_entitlements(day_norm_res, summary.date)
         dinner_summary = summarize_dinner(entitlements)
@@ -1966,6 +2002,45 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
         by_house = dinner_summary["by_house"]
         house_breakdown = " | ".join(f"{h}: {n}" for h, n in sorted(by_house.items()) if n > 0)
         dinner_notice = dinner_preparation_notice(dinner_total)
+        dinner_team_message = format_dinner_team_message(entitlements, day_norm_res)
+        dinner_copy_html = ""
+        if dinner_summary["audit"]:
+            dinner_copy_html = f"""
+            <div class="mt-3 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-3">
+              <div class="mb-2 flex items-center justify-between gap-2">
+                <span class="text-xs font-semibold uppercase text-emerald-200">Team Dinner List</span>
+                <button class="copy-text-btn rounded bg-emerald-400 px-2.5 py-1 text-xs font-bold text-slate-950" data-text="{html.escape(dinner_team_message)}" type="button">Copy Dinner List</button>
+              </div>
+              <pre class="whitespace-pre-wrap font-mono text-sm text-slate-200">{html.escape(dinner_team_message)}</pre>
+            </div>"""
+
+        settlement_reminders = build_settlement_reminders(day_norm_res, summary.date)
+        settlement_html = ""
+        if settlement_reminders:
+            payment_cards = []
+            for item in settlement_reminders:
+                when = "COLLECT TODAY" if item.timing == "today" else "PREPARE FOR TOMORROW"
+                amount = (
+                    f"Total €{item.total_amount:.2f} · recorded €{item.paid_amount:.2f} · remaining €{item.remaining_amount:.2f}"
+                    if item.total_amount > 0 else "Reservation total needs confirmation"
+                )
+                extras = ", ".join(item.extra_checks) if item.extra_checks else "No recorded extras; check group messages"
+                policy = (
+                    f" · expected {item.expected_deposit_percent}% Surf Camp deposit"
+                    if item.expected_deposit_percent is not None else ""
+                )
+                payment_cards.append(
+                    f'<div class="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">'
+                    f'<strong class="text-amber-200">{when} — {html.escape(item.guest_name)} ({html.escape(item.house)})</strong>'
+                    f'<p class="mt-1 text-sm text-slate-200">{html.escape(amount + policy)}</p>'
+                    f'<p class="text-sm text-slate-300">{html.escape(item.action)}</p>'
+                    f'<p class="mt-1 text-xs text-slate-400">Check extras: {html.escape(extras)}</p></div>'
+                )
+            settlement_html = (
+                '<div class="mt-4 rounded-2xl border border-amber-400/20 bg-slate-950/70 p-4">'
+                '<h3 class="mb-3 text-sm font-semibold uppercase text-amber-200">Checkout Payments</h3>'
+                '<div class="grid gap-2">' + "".join(payment_cards) + '</div></div>'
+            )
 
         day_transfers = build_transfer_records(day_norm_res, summary.date, transfer_store)
 
@@ -2095,6 +2170,7 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
             </div>
             {f'<div class="text-sm text-slate-400 pl-2">By House: <strong class="text-slate-200">{html.escape(house_breakdown)}</strong></div>' if house_breakdown else ''}
           </div>
+          {dinner_copy_html}
           {f'''
           <details class="mt-3 rounded-xl border border-white/5 bg-slate-900/40 p-3">
             <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wide text-slate-400">Dinner Audit Trail ({len(dinner_summary['audit'])} guests)</summary>
@@ -2129,6 +2205,7 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
               </div>
 
               {meals_section_html}
+              {settlement_html}
 
               <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
                 <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Transfers ({total_transfer_count}{"" if not tomorrow_transfers else f" — {len(day_transfers)} today · {len(tomorrow_transfers)} for tomorrow"})</h3>
@@ -2163,14 +2240,21 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HotelRunner Daily Dashboard</title>
+  <link rel="icon" type="image/png" href="olas-surf-camp.png">
+  <link rel="apple-touch-icon" href="olas-surf-camp.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
   <header class="border-b border-white/10 bg-slate-950/80 px-5 py-5 backdrop-blur">
     <div class="mx-auto max-w-7xl">
-      <p class="text-sm uppercase tracking-wide text-emerald-300">Read-only HotelRunner operations</p>
-      <h1 class="mt-1 text-3xl font-bold text-white">Daily In-House Dashboard</h1>
-      <p class="mt-2 text-sm text-slate-400">Generated {html.escape(generated_at.strftime('%Y-%m-%d %H:%M'))}. Cache-backed with recent HotelRunner updates.</p>
+      <div class="flex items-center gap-4">
+        <img src="olas-surf-camp.png" alt="Olas Surf Experience" class="h-20 w-20 shrink-0 rounded-lg bg-white object-contain p-1">
+        <div>
+          <p class="text-sm uppercase tracking-wide text-emerald-300">Olas Surf Experience · Operations</p>
+          <h1 class="mt-1 text-3xl font-bold text-white">Daily In-House Dashboard</h1>
+          <p class="mt-2 text-sm text-slate-400">Generated {html.escape(generated_at.strftime('%Y-%m-%d %H:%M'))}. Cache-backed with recent HotelRunner updates.</p>
+        </div>
+      </div>
       <section class="mt-4 rounded-2xl border {status_tone} p-4">
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
           <div>
@@ -2290,6 +2374,25 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
         }}
         const original = button.textContent;
         button.textContent = 'Copied!';
+        setTimeout(() => button.textContent = original, 1400);
+      }});
+    }});
+
+    document.querySelectorAll('.copy-text-btn').forEach((button) => {{
+      button.addEventListener('click', async () => {{
+        const text = button.dataset.text;
+        try {{
+          await navigator.clipboard.writeText(text);
+        }} catch (error) {{
+          const temp = document.createElement('textarea');
+          temp.value = text;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        }}
+        const original = button.textContent;
+        button.textContent = 'Copied';
         setTimeout(() => button.textContent = original, 1400);
       }});
     }});

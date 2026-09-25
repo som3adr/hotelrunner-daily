@@ -6,7 +6,7 @@ on:
   # Silent between 00:01 and 06:59 Morocco (01:00–05:59 UTC) — no notifications while sleeping
   schedule:
     - cron: "0 6-23 * * *"     # Every hour from 07:00 to 00:00 Morocco (06:00–23:00 UTC)
-    - cron: "*/5 6-23 * * *"   # Every 5 min for Telegram Q&A bot (same quiet-hours window)
+    - cron: "5-55/5 6-23 * * *" # Q&A at :05…:55; avoids duplicate full runs at :00
   # Trigger manually from the GitHub website anytime
   workflow_dispatch:
     inputs:
@@ -94,6 +94,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
         run: python telegram_bot.py --poll
 
       # ── Send team Telegram messages (existing, unchanged) ─────────────────────
@@ -113,6 +114,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         run: python gemini_monitor.py --send
 
@@ -163,6 +165,7 @@ jobs:
         run: |
           mkdir -p _site
           cp hotelrunner_dashboard.html _site/index.html
+          cp olas-surf-camp.png _site/olas-surf-camp.png
 
       - name: Upload Pages artifact
         if: steps.mode.outputs.min == '00' || github.event_name == 'workflow_dispatch'

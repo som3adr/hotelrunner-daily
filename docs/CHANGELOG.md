@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-25
+
+- Added shared checkout settlement reminders and the September Surf Camp deposit policy.
+- Added a copyable, house-grouped dinner list while preserving the audit trail.
+- Suppressed fulfilled bed/setup requests after check-in.
+- Merged matching Sunrise Sheet and HotelRunner stays before operational counts.
+- Corrected physical room capacities for Olas, Tide, and Sunrise.
+- Added configurable Gemini model fallback and separated Q&A from hourly runs.
+
 ---
 
 ## 2026-09-23 — Phases 1–9 Implementation
