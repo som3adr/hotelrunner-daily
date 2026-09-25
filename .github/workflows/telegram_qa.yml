@@ -5,6 +5,12 @@ on:
     - cron: "2-57/5 0,7-23 * * *"
       timezone: "Africa/Casablanca"
   workflow_dispatch:
+    inputs:
+      self_test:
+        description: "Send a real CodeCraft/Gemini and Telegram self-test"
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: telegram-qa
@@ -83,8 +89,15 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          CODECRAFT_API_KEY: ${{ secrets.CODECRAFT_API_KEY }}
+          CODECRAFT_MODEL: ${{ secrets.CODECRAFT_MODEL }}
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-        run: python telegram_bot.py --poll
+        run: |
+          if [ "${{ inputs.self_test }}" = "true" ]; then
+            python telegram_bot.py --self-test
+          else
+            python telegram_bot.py --poll
+          fi
 
       - name: Save Telegram Q&A state
         uses: actions/cache/save@v4

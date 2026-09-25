@@ -138,7 +138,7 @@ def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
         "_telegram_reply",
         lambda token, chat_id, text: replies.append((chat_id, text)) or True,
     )
-    monkeypatch.setattr(telegram_bot, "_ask_gemini", lambda *args: (_ for _ in ()).throw(AssertionError("Gemini called")))
+    monkeypatch.setattr(telegram_bot, "_ask_ai", lambda *args: (_ for _ in ()).throw(AssertionError("AI called")))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "123")
     monkeypatch.setenv("GEMINI_API_KEY", "key")
@@ -149,6 +149,56 @@ def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
     assert replies[0][0] == 123
     assert "Q&A is running" in replies[0][1]
     assert "Reservation cache: ready" in replies[0][1]
+
+
+def test_codecraft_lists_models_and_generates_answer(monkeypatch):
+    import codecraft_client
+
+    calls = []
+
+    class Response:
+        def __init__(self, payload):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps(self.payload).encode()
+
+    def fake_open(request, timeout=45):
+        calls.append(request.full_url)
+        if request.full_url.endswith("/models"):
+            return Response({"data": [{"id": "fast-chat", "type": "chat", "pricing": {"input_per_1k": 0.1, "output_per_1k": 0.1}}]})
+        return Response({"choices": [{"message": {"content": "CodeCraft works"}}]})
+
+    monkeypatch.setattr(codecraft_client.urllib.request, "urlopen", fake_open)
+
+    assert codecraft_client.generate_content("cc_test", "hello") == "CodeCraft works"
+    assert calls == [
+        "https://codecraftapi.com/v1/models",
+        "https://codecraftapi.com/v1/chat/completions",
+    ]
+
+
+def test_ai_prefers_codecraft_over_gemini(monkeypatch):
+    import codecraft_client
+    import gemini_client
+    import telegram_bot
+
+    monkeypatch.setattr(codecraft_client, "generate_content", lambda *args, **kwargs: "CodeCraft answer")
+    monkeypatch.setattr(
+        gemini_client,
+        "generate_content",
+        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("Gemini should not run")),
+    )
+
+    answer = telegram_bot._ask_ai("cc_key", "gemini_key", "question", "context", "12:00")
+
+    assert answer == "CodeCraft answer"
 
 
 def test_workflows_separate_operations_from_qa_and_use_morocco_time():
