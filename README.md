@@ -1,5 +1,9 @@
 # HotelRunner Daily Summary
 
+> New developers should begin with the complete
+> [Developer Guide](docs/DEVELOPER_GUIDE.md), which explains the product,
+> architecture, business rules, automation, privacy model, and deployment.
+
 This folder contains a read-only HotelRunner report script.
 
 It is separate from the invoice files so it can be kept, moved, or deleted without touching the invoice work.
