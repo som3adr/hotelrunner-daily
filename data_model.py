@@ -154,6 +154,7 @@ class NormalizedReservation:
     # Payment (HotelRunner)
     total_amount: float = 0.0
     paid_amount: float = 0.0
+    currency: str = "EUR"
     payment_record_count: int = 0
     booking_date: dt.date | None = None
 
@@ -281,6 +282,7 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
                 or str(payment.get("state") or "").casefold() not in {"failed", "cancelled", "canceled"}
             ])
         completed_at = str(raw_reservation.get("completed_at") or "").strip()
+        currency = str(raw_reservation.get("currency") or "EUR").strip().upper()
         if completed_at:
             try:
                 booking_date = dt.date.fromisoformat(completed_at[:10])
@@ -291,6 +293,7 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
         paid_amount = float(getattr(line, "paid_amount", 0) or 0)
         payment_record_count = int(getattr(line, "payment_record_count", 0) or 0)
         booking_date = getattr(line, "booking_date", None)
+        currency = str(getattr(line, "currency", "EUR") or "EUR").strip().upper()
 
     return NormalizedReservation(
         reservation_id=line.reservation_id,
@@ -311,6 +314,7 @@ def stayline_to_normalized(line: Any, raw_reservation: dict[str, Any] | None = N
         bed_request=line.bed_request,
         total_amount=total_amount,
         paid_amount=paid_amount,
+        currency=currency,
         payment_record_count=payment_record_count,
         booking_date=booking_date,
     )

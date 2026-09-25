@@ -65,6 +65,7 @@ class StayLine:
     bed_request: str = ""
     total_amount: float = 0.0
     paid_amount: float = 0.0
+    currency: str = "EUR"
     payment_record_count: int = 0
     booking_date: dt.date | None = None
 
@@ -888,6 +889,7 @@ def active_stay_lines(reservations: list[dict[str, Any]]) -> list[StayLine]:
             paid_amount = float(reservation.get("paid_amount") or 0)
         except (TypeError, ValueError):
             paid_amount = 0.0
+        currency = str(reservation.get("currency") or "EUR").strip().upper()
         payments = reservation.get("payments")
         payment_record_count = len([
             payment for payment in payments
@@ -926,6 +928,7 @@ def active_stay_lines(reservations: list[dict[str, Any]]) -> list[StayLine]:
                     bed_request=bed,
                     total_amount=total_amount,
                     paid_amount=paid_amount,
+                    currency=currency,
                     payment_record_count=payment_record_count,
                     booking_date=booking_date,
                 )
@@ -1106,6 +1109,7 @@ def normalized_from_stayline_with_extras(line: StayLine):
     res = stayline_to_normalized(line)
     res.total_amount = line.total_amount
     res.paid_amount = line.paid_amount
+    res.currency = line.currency
     res.payment_record_count = line.payment_record_count
     res.booking_date = line.booking_date
     classified = []
@@ -1897,7 +1901,12 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
 """
 
 
-def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime, run_status: RunStatus | None = None) -> str:
+def build_dashboard_html(
+    summaries: list[DaySummary],
+    generated_at: dt.datetime,
+    run_status: RunStatus | None = None,
+    settlement_reservations: list | None = None,
+) -> str:
     """Render the modern Tailwind dashboard. This intentionally overrides the legacy renderer above."""
     day_buttons: list[str] = []
     day_sections: list[str] = []
@@ -2014,25 +2023,51 @@ def build_dashboard_html(summaries: list[DaySummary], generated_at: dt.datetime,
               <pre class="whitespace-pre-wrap font-mono text-sm text-slate-200">{html.escape(dinner_team_message)}</pre>
             </div>"""
 
-        settlement_reminders = build_settlement_reminders(day_norm_res, summary.date)
+        settlement_source = settlement_reservations if settlement_reservations is not None else day_norm_res
+        settlement_reminders = build_settlement_reminders(settlement_source, summary.date)
         settlement_html = ""
         if settlement_reminders:
             payment_cards = []
             for item in settlement_reminders:
                 when = "COLLECT TODAY" if item.timing == "today" else "PREPARE FOR TOMORROW"
-                amount = (
-                    f"Total €{item.total_amount:.2f} · recorded €{item.paid_amount:.2f} · remaining €{item.remaining_amount:.2f}"
-                    if item.total_amount > 0 else "Reservation total needs confirmation"
-                )
+                amount_lines = []
+                for currency, (total, paid, remaining) in item.currency_balances.items():
+                    total_text = f"€{total:.2f}" if currency == "EUR" else f"{total:.2f} {currency}"
+                    paid_text = f"€{paid:.2f}" if currency == "EUR" else f"{paid:.2f} {currency}"
+                    remaining_text = f"€{remaining:.2f}" if currency == "EUR" else f"{remaining:.2f} {currency}"
+                    amount_lines.append(
+                        f"Total {total_text} · recorded {paid_text} · remaining {remaining_text}"
+                    )
+                amount = "<br>".join(html.escape(line) for line in amount_lines) if amount_lines else "Reservation total needs confirmation"
                 extras = ", ".join(item.extra_checks) if item.extra_checks else "No recorded extras; check group messages"
                 policy = (
                     f" · expected {item.expected_deposit_percent}% Surf Camp deposit"
                     if item.expected_deposit_percent is not None else ""
                 )
+                linked = ""
+                if len(item.components) > 1:
+                    component_lines = []
+                    for component in item.components:
+                        dates = (
+                            f"{component.arrival_date.strftime('%d %b')} → {component.departure_date.strftime('%d %b')}"
+                            if component.arrival_date else component.departure_date.strftime('%d %b')
+                        )
+                        component_lines.append(
+                            f'<li>{html.escape(component.channel)} · {html.escape(dates)} · '
+                            f'total {html.escape(("€" if component.currency == "EUR" else "") + f"{component.total_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))} · '
+                            f'recorded {html.escape(("€" if component.currency == "EUR" else "") + f"{component.paid_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))} · '
+                            f'remaining {html.escape(("€" if component.currency == "EUR" else "") + f"{component.remaining_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))}</li>'
+                        )
+                    linked = (
+                        '<p class="mt-2 text-xs font-semibold uppercase text-amber-200">Linked reservation records</p>'
+                        '<ul class="mt-1 grid gap-1 text-xs text-slate-300">'
+                        + "".join(component_lines) + '</ul>'
+                    )
                 payment_cards.append(
                     f'<div class="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">'
                     f'<strong class="text-amber-200">{when} — {html.escape(item.guest_name)} ({html.escape(item.house)})</strong>'
-                    f'<p class="mt-1 text-sm text-slate-200">{html.escape(amount + policy)}</p>'
+                    f'<p class="mt-1 text-sm text-slate-200">{amount}{html.escape(policy)}</p>'
+                    f'{linked}'
                     f'<p class="text-sm text-slate-300">{html.escape(item.action)}</p>'
                     f'<p class="mt-1 text-xs text-slate-400">Check extras: {html.escape(extras)}</p></div>'
                 )
@@ -2556,7 +2591,13 @@ def main() -> None:
 
     if not args.no_dashboard:
         dashboard_path = Path(args.dashboard_output)
-        dashboard = build_dashboard_html(summaries, generated_at=dt.datetime.now(), run_status=run_status)
+        settlement_reservations = [normalized_from_stayline_with_extras(line) for line in stay_lines]
+        dashboard = build_dashboard_html(
+            summaries,
+            generated_at=dt.datetime.now(),
+            run_status=run_status,
+            settlement_reservations=settlement_reservations,
+        )
         dashboard_path.write_text(dashboard, encoding="utf-8")
         print(f"Saved dashboard to: {dashboard_path.resolve()}")
 

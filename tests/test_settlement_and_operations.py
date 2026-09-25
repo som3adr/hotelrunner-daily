@@ -82,6 +82,89 @@ def test_split_room_booking_has_one_payment_reminder():
     assert len(build_settlement_reminders([first, second], TODAY)) == 1
 
 
+def test_consecutive_same_guest_records_are_combined_at_final_checkout():
+    hostelworld = reservation(
+        reservation_id="ruby-hostelworld",
+        guest_name="Ruby Smith",
+        channel="HostelWorld",
+        arrival_date=dt.date(2026, 9, 18),
+        departure_date=dt.date(2026, 9, 23),
+        total_amount=720,
+        paid_amount=0,
+    )
+    extension = reservation(
+        reservation_id="ruby-olas",
+        guest_name=" Ruby   Smith ",
+        channel="Online",
+        arrival_date=dt.date(2026, 9, 23),
+        departure_date=TODAY,
+        total_amount=28,
+        paid_amount=0,
+    )
+
+    reminders = build_settlement_reminders([hostelworld, extension], TODAY)
+
+    assert len(reminders) == 1
+    assert reminders[0].remaining_amount == 748
+    assert [part.channel for part in reminders[0].components] == ["HostelWorld", "Online"]
+    assert "combined balance of €748.00" in reminders[0].action
+
+
+def test_non_consecutive_same_guest_records_are_not_combined():
+    older = reservation(
+        reservation_id="old-stay",
+        guest_name="Returning Guest",
+        departure_date=dt.date(2026, 9, 10),
+        total_amount=100,
+        paid_amount=0,
+    )
+    current = reservation(
+        reservation_id="current-stay",
+        guest_name="Returning Guest",
+        arrival_date=dt.date(2026, 9, 20),
+        departure_date=TODAY,
+        total_amount=50,
+        paid_amount=0,
+    )
+
+    reminder = build_settlement_reminders([older, current], TODAY)[0]
+
+    assert reminder.remaining_amount == 50
+    assert len(reminder.components) == 1
+
+
+def test_hostelworld_note_balance_and_mixed_currency_stay_separate():
+    hostelworld = reservation(
+        reservation_id="ruby-hostelworld",
+        guest_name="Ruby Smith",
+        channel="HostelWorld",
+        arrival_date=dt.date(2026, 9, 18),
+        departure_date=dt.date(2026, 9, 23),
+        total_amount=720,
+        paid_amount=0,
+        currency="MAD",
+        notes=["paid:108.00 - due:612.00 - OTAcommission:108.00 - OTAdue:0.00 - paymenttype:Deposit"],
+    )
+    extension = reservation(
+        reservation_id="ruby-direct",
+        guest_name="Ruby Smith",
+        channel="Online",
+        arrival_date=dt.date(2026, 9, 23),
+        departure_date=TODAY,
+        total_amount=28,
+        paid_amount=0,
+        currency="EUR",
+    )
+
+    reminder = build_settlement_reminders([hostelworld, extension], TODAY)[0]
+
+    assert reminder.currency_balances == {
+        "MAD": (720.0, 108.0, 612.0),
+        "EUR": (28.0, 0.0, 28.0),
+    }
+    assert "each balance shown" in reminder.action
+
+
 def test_sheet_guest_matching_hotelrunner_is_merged_not_double_counted():
     hr = reservation(guest_name="Same Person", house="Sunrise", room="Sunrise 4")
     sheet = reservation(
@@ -164,7 +247,11 @@ def test_bed_request_only_appears_on_arrival_day():
 
 def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     import google_sheets
-    from hotelrunner_daily_summary import StayLine, build_day_summaries, build_dashboard_html
+    from hotelrunner_daily_summary import (
+        StayLine,
+        build_day_summaries,
+        build_dashboard_html,
+    )
 
     monkeypatch.setattr(google_sheets, "load_sunrise_reservations", lambda: [])
     line = StayLine(
@@ -193,3 +280,58 @@ def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     assert "remaining €300.00" in html
     assert '<link rel="icon" type="image/png" href="olas-surf-camp.png">' in html
     assert 'alt="Olas Surf Experience"' in html
+
+
+def test_dashboard_combines_consecutive_booking_records_at_final_checkout(monkeypatch):
+    import google_sheets
+    from hotelrunner_daily_summary import (
+        StayLine,
+        build_day_summaries,
+        build_dashboard_html,
+        normalized_from_stayline_with_extras,
+    )
+
+    monkeypatch.setattr(google_sheets, "load_sunrise_reservations", lambda: [])
+    earlier = StayLine(
+        reservation_id="ruby-hostelworld",
+        hr_number="HR-OLD",
+        guest_name="Ruby Smith",
+        channel="HostelWorld",
+        room_name="dorm",
+        bed_number="10",
+        arrival=TODAY - dt.timedelta(days=7),
+        departure=TODAY - dt.timedelta(days=2),
+        adults=1,
+        children=0,
+        meal_plan="Bed And Breakfast",
+        total_amount=720,
+    )
+    extension = StayLine(
+        reservation_id="ruby-direct",
+        hr_number="HR-NEW",
+        guest_name="Ruby Smith",
+        channel="Online",
+        room_name="dorm",
+        bed_number="10",
+        arrival=TODAY - dt.timedelta(days=2),
+        departure=TODAY,
+        adults=1,
+        children=0,
+        meal_plan="Bed And Breakfast",
+        total_amount=28,
+    )
+    settlement_reservations = [
+        normalized_from_stayline_with_extras(earlier),
+        normalized_from_stayline_with_extras(extension),
+    ]
+
+    html = build_dashboard_html(
+        build_day_summaries([earlier, extension], TODAY, 0),
+        generated_at=dt.datetime(2026, 9, 25, 7, 0),
+        settlement_reservations=settlement_reservations,
+    )
+
+    assert "Total €748.00" in html
+    assert "Linked reservation records" in html
+    assert "HostelWorld" in html
+    assert "Online" in html
