@@ -18,6 +18,7 @@ class SettlementComponent:
     paid_amount: float
     remaining_amount: float
     currency: str = "EUR"
+    payment_note: str = ""
 
 
 @dataclass
@@ -44,17 +45,19 @@ _HOSTELWORLD_BALANCE_RE = re.compile(
 )
 
 
-def _component_amounts(res: NormalizedReservation) -> tuple[float, float, float]:
+def _component_amounts(res: NormalizedReservation) -> tuple[float, float, float, str]:
     total = res.total_amount
     paid = res.paid_amount
+    if "booking.com" in res.channel.casefold():
+        return total, total, 0.0, "Paid through Booking.com"
     if "hostelworld" in res.channel.casefold():
         note_text = "\n".join(res.notes)
         match = _HOSTELWORLD_BALANCE_RE.search(note_text)
         if match:
             paid = float(match.group(1))
             due = float(match.group(2))
-            return max(total, paid + due), paid, due
-    return total, paid, max(0.0, total - paid)
+            return max(total, paid + due), paid, due, "HostelWorld deposit recorded"
+    return total, paid, max(0.0, total - paid), ""
 
 
 def _money(amount: float, currency: str) -> str:
@@ -135,7 +138,7 @@ def build_settlement_reminders(
 
         components = []
         for linked in chain:
-            total, paid, remaining = _component_amounts(linked)
+            total, paid, remaining, payment_note = _component_amounts(linked)
             components.append(SettlementComponent(
                 reservation_id=linked.reservation_id,
                 channel=linked.channel or "Unknown",
@@ -145,6 +148,7 @@ def build_settlement_reminders(
                 paid_amount=paid,
                 remaining_amount=remaining,
                 currency=linked.currency or "EUR",
+                payment_note=payment_note,
             ))
         currency_balances: dict[str, tuple[float, float, float]] = {}
         for component in components:
@@ -189,7 +193,10 @@ def build_settlement_reminders(
                 action = "Collect the full amount or confirm whether it was paid through PayPal."
         else:
             status = "partial"
-            action = f"Collect the recorded remaining balance of €{remaining:.2f}, then verify extras."
+            action = (
+                f"Collect the recorded remaining balance of {_money(remaining, components[0].currency)}, "
+                "then verify extras."
+            )
 
         reminders.append(SettlementReminder(
             reservation_id=res.reservation_id,
@@ -234,6 +241,7 @@ def format_settlement_section(reminders: list[SettlementReminder]) -> str:
                 lines.append(
                     f"• {component.channel} · {dates} · total {_money(component.total_amount, component.currency)} · "
                     f"recorded {_money(component.paid_amount, component.currency)} · remaining {_money(component.remaining_amount, component.currency)}"
+                    + (f" · {component.payment_note}" if component.payment_note else "")
                 )
         if item.expected_deposit_percent is not None:
             lines.append(f"Surf Camp policy: expected {item.expected_deposit_percent}% deposit")

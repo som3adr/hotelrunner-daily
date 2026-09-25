@@ -2056,7 +2056,8 @@ def build_dashboard_html(
                             f'<li>{html.escape(component.channel)} · {html.escape(dates)} · '
                             f'total {html.escape(("€" if component.currency == "EUR" else "") + f"{component.total_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))} · '
                             f'recorded {html.escape(("€" if component.currency == "EUR" else "") + f"{component.paid_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))} · '
-                            f'remaining {html.escape(("€" if component.currency == "EUR" else "") + f"{component.remaining_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))}</li>'
+                            f'remaining {html.escape(("€" if component.currency == "EUR" else "") + f"{component.remaining_amount:.2f}" + ("" if component.currency == "EUR" else " " + component.currency))}'
+                            f'{" · " + html.escape(component.payment_note) if component.payment_note else ""}</li>'
                         )
                     linked = (
                         '<p class="mt-2 text-xs font-semibold uppercase text-amber-200">Linked reservation records</p>'

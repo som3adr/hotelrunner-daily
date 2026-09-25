@@ -2,6 +2,8 @@ import datetime as dt
 import json
 from urllib.error import HTTPError
 
+import pytest
+
 from data_model import NormalizedExtra, NormalizedReservation, merge_cross_source_duplicates
 from meal_engine import compute_meal_entitlements, format_dinner_team_message
 from settlement_engine import build_settlement_reminders
@@ -163,6 +165,39 @@ def test_hostelworld_note_balance_and_mixed_currency_stay_separate():
         "EUR": (28.0, 0.0, 28.0),
     }
     assert "each balance shown" in reminder.action
+
+
+def test_booking_dot_com_link_is_platform_paid_and_only_extension_is_collected():
+    booking = reservation(
+        reservation_id="marlene-booking",
+        guest_name="Marlene Schorn",
+        channel="Booking.com",
+        arrival_date=dt.date(2026, 9, 18),
+        departure_date=dt.date(2026, 9, 21),
+        total_amount=43.74,
+        paid_amount=0,
+        currency="EUR",
+    )
+    extension = reservation(
+        reservation_id="marlene-online",
+        guest_name="Marlene Schorn",
+        channel="Online",
+        arrival_date=dt.date(2026, 9, 21),
+        departure_date=TODAY,
+        total_amount=55.50,
+        paid_amount=0,
+        currency="EUR",
+    )
+
+    reminder = build_settlement_reminders([booking, extension], TODAY)[0]
+
+    total, paid, remaining = reminder.currency_balances["EUR"]
+    assert total == pytest.approx(99.24)
+    assert paid == pytest.approx(43.74)
+    assert remaining == pytest.approx(55.50)
+    assert reminder.components[0].remaining_amount == 0
+    assert reminder.components[0].payment_note == "Paid through Booking.com"
+    assert "€55.50" in reminder.action
 
 
 def test_sheet_guest_matching_hotelrunner_is_merged_not_double_counted():
