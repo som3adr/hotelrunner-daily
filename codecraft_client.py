@@ -10,12 +10,16 @@ import urllib.request
 
 BASE_URL = "https://codecraftapi.com/v1"
 TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
+DEFAULT_HEADERS = {
+    "Accept": "application/json",
+    "User-Agent": "HotelRunner-Daily/1.0",
+}
 
 
 def available_models(api_key: str) -> list[dict]:
     request = urllib.request.Request(
         f"{BASE_URL}/models",
-        headers={"Authorization": f"Bearer {api_key}"},
+        headers={**DEFAULT_HEADERS, "Authorization": f"Bearer {api_key}"},
     )
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
@@ -63,6 +67,7 @@ def _request_content(api_key: str, model: str, prompt: str, max_tokens: int) -> 
         f"{BASE_URL}/chat/completions",
         data=payload,
         headers={
+            **DEFAULT_HEADERS,
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
