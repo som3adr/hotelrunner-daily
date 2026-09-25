@@ -239,12 +239,14 @@ def _ask_ai(codecraft_key: str, gemini_key: str, question: str, context: str, mo
             from codecraft_client import generate_content
             return generate_content(codecraft_key, full_prompt, max_output_tokens=400)
         except Exception as exc:
+            print(f"[telegram_bot] CodeCraft failed: {exc}")
             errors.append(f"CodeCraft: {exc}")
     if gemini_key:
         try:
             from gemini_client import generate_content
             return generate_content(gemini_key, full_prompt, max_output_tokens=400)
         except Exception as exc:
+            print(f"[telegram_bot] Gemini failed: {exc}")
             errors.append(f"Gemini: {exc}")
     return "Sorry, I couldn't reach the AI service: " + " | ".join(errors)
 
@@ -285,7 +287,7 @@ def main() -> None:
     if args.self_test:
         answer = _ask_ai(
             codecraft_key,
-            gemini_key,
+            "" if codecraft_key else gemini_key,
             "Reply exactly with: AI provider connection works",
             "Self-test only; no reservation data is needed.",
             morocco_time_str,
