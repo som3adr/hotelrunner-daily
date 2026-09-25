@@ -99,7 +99,7 @@ jobs:
 
       # ── Send team Telegram messages (existing, unchanged) ─────────────────────
       - name: Send Team Telegram
-        if: steps.mode.outputs.mode != 'transfers' && steps.mode.outputs.min == '00'
+        if: steps.mode.outputs.mode != 'transfers' && (steps.mode.outputs.min == '00' || github.event.inputs.mode == 'full')
         env:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
