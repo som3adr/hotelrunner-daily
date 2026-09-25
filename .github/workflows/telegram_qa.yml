@@ -30,6 +30,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Restore latest reservation cache
+        id: reservation-cache
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -44,6 +45,30 @@ jobs:
             telegram_run_log.json
           key: telegram-qa-input-${{ github.run_id }}
           restore-keys: hotelrunner-cache-${{ runner.os }}-
+
+      - name: Refresh missing reservation cache
+        if: hashFiles('reservations_cache.json') == ''
+        env:
+          HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
+          HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+        run: python hotelrunner_daily_summary.py --max-pages 15 --page-delay 1 --no-dashboard
+
+      - name: Save compatible reservation cache
+        if: steps.reservation-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            reservations_cache.json
+            hotelrunner_snapshot.json
+            hotelrunner_latest_updates.json
+            alert_state.json
+            gemini_monitor_state.json
+            morning_delivery_state.json
+            transfer_state.json
+            system_health.json
+            telegram_run_log.json
+          key: hotelrunner-cache-${{ runner.os }}-${{ github.run_id }}
 
       - name: Restore Telegram Q&A state
         uses: actions/cache/restore@v4

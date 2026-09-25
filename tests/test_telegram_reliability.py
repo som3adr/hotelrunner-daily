@@ -59,6 +59,35 @@ def test_gemini_defaults_do_not_include_shutdown_model():
     assert "gemini-2.0-flash" not in gemini_client.DEFAULT_MODELS
 
 
+def test_gemini_retries_temporary_503(monkeypatch):
+    import gemini_client
+
+    calls = 0
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return json.dumps({"candidates": [{"content": {"parts": [{"text": "Recovered"}]}}]}).encode()
+
+    def fake_open(request, timeout=30):
+        nonlocal calls
+        calls += 1
+        if calls < 3:
+            raise HTTPError(request.full_url, 503, "Unavailable", {}, None)
+        return Response()
+
+    monkeypatch.setattr(gemini_client.urllib.request, "urlopen", fake_open)
+    monkeypatch.setattr(gemini_client.time, "sleep", lambda seconds: None)
+
+    assert gemini_client.generate_content("key", "prompt", models=["working-model"]) == "Recovered"
+    assert calls == 3
+
+
 def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
     import telegram_bot
 
@@ -101,5 +130,7 @@ def test_workflows_separate_operations_from_qa_and_use_morocco_time():
     assert "morning_delivery.py mark" in daily
     assert "Telegram Q&A Bot" not in daily
     assert "telegram_bot.py --poll" in qa
+    assert "Refresh missing reservation cache" in qa
+    assert "Save compatible reservation cache" in qa
     assert 'timezone: "Africa/Casablanca"' in qa
     assert "telegram-qa-state-" in qa

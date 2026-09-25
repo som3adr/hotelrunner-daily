@@ -3,11 +3,13 @@ from __future__ import annotations
 
 import json
 import os
+import time
 import urllib.error
 import urllib.request
 
 
 DEFAULT_MODELS = ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash")
+TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
 
 
 def configured_models() -> list[str]:
@@ -37,11 +39,18 @@ def available_generate_models(api_key: str) -> list[str]:
     return models
 
 
-def _request_content(api_key: str, model: str, payload: bytes) -> str:
+def _request_content(api_key: str, model: str, payload: bytes, attempts: int = 3) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
     request = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        result = json.loads(response.read())
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                result = json.loads(response.read())
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code not in TRANSIENT_HTTP_CODES or attempt == attempts - 1:
+                raise
+            time.sleep(2 ** attempt)
     parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
     return " ".join(part.get("text", "") for part in parts).strip()
 
