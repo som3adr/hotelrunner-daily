@@ -17,8 +17,19 @@ def available_models(api_key: str) -> list[dict]:
         f"{BASE_URL}/models",
         headers={"Authorization": f"Bearer {api_key}"},
     )
-    with urllib.request.urlopen(request, timeout=20) as response:
-        result = json.loads(response.read())
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            result = json.loads(response.read())
+    except urllib.error.HTTPError as exc:
+        detail = ""
+        try:
+            payload = json.loads(exc.read())
+            error = payload.get("error") or {}
+            detail = str(error.get("code") or error.get("message") or "")
+        except Exception:
+            pass
+        suffix = f" ({detail})" if detail else ""
+        raise RuntimeError(f"CodeCraft model access failed with HTTP {exc.code}{suffix}") from exc
     return [item for item in result.get("data", []) if item.get("id")]
 
 
