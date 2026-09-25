@@ -315,6 +315,10 @@ def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     assert "remaining €300.00" in html
     assert '<link rel="icon" type="image/png" href="olas-surf-camp.png">' in html
     assert 'alt="Olas Surf Experience"' in html
+    assert 'class="mobile-nav"' in html
+    assert 'data-jump="payments"' in html
+    assert 'class="dashboard-shell' in html
+    assert 'Updated 25 Sep · 07:00 Morocco time' in html
 
 
 def test_dashboard_combines_consecutive_booking_records_at_final_checkout(monkeypatch):

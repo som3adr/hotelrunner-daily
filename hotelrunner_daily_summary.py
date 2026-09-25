@@ -1979,7 +1979,7 @@ def build_dashboard_html(
         attention_count = len(summary.block_conflicts) + len(summary.room_conflicts) + len(summary.possible_duplicates) + len(summary.bed_requests)
         day_buttons.append(
             f"""
-            <button class="day-tab rounded-xl border {button_active} p-3 text-left transition hover:border-emerald-300/40" data-target="{day_id}">
+            <button class="day-tab rounded-xl border {button_active} p-3 text-left transition hover:border-emerald-300/40" data-target="{day_id}" type="button">
               <span class="block text-xs uppercase tracking-wide text-slate-500">{html.escape(summary.date.strftime('%A'))}</span>
               <span class="mt-1 block text-base font-bold">{html.escape(summary.date.strftime('%d %b'))}</span>
               <span class="mt-2 flex items-center justify-between text-xs text-slate-400"><span>{len(summary.arrivals)} in / {len(summary.departures)} out</span><strong class="text-slate-100">{summary.guests}</strong></span>
@@ -2073,7 +2073,7 @@ def build_dashboard_html(
                     f'<p class="mt-1 text-xs text-slate-400">Check extras: {html.escape(extras)}</p></div>'
                 )
             settlement_html = (
-                '<div class="mt-4 rounded-2xl border border-amber-400/20 bg-slate-950/70 p-4">'
+                '<div class="payments-card ops-card mt-4 rounded-2xl border border-amber-400/20 bg-slate-950/70 p-4">'
                 '<h3 class="mb-3 text-sm font-semibold uppercase text-amber-200">Checkout Payments</h3>'
                 '<div class="grid gap-2">' + "".join(payment_cards) + '</div></div>'
             )
@@ -2185,7 +2185,7 @@ def build_dashboard_html(
 
         # Format Meals Section
         meals_section_html = f"""
-        <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+        <div class="meals-card ops-card mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
             <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Meals & Dinner Preparation</h3>
             {f'<span class="rounded-lg bg-emerald-400/10 px-2.5 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">Normal Setup (≤13)</span>' if not dinner_notice else ''}
@@ -2229,26 +2229,26 @@ def build_dashboard_html(
                 <div class="flex flex-wrap gap-2">{alert_badges}</div>
               </div>
 
-              <div class="grid gap-3 md:grid-cols-4">
-                <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+              <div class="overview-grid grid gap-3 md:grid-cols-4">
+                <div class="stat-card stat-card-primary rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
                   <p class="text-sm text-emerald-200">In-house</p>
                   <p class="mt-1 text-3xl font-bold text-white">{summary.guests}</p>
                   <p class="text-xs text-emerald-100/70">{summary.adults} adults, {summary.children} children</p>
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.arrivals)}</p></div>
-                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.departures)}</p></div>
-                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.in_house)}</p></div>
+                <div class="stat-card rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Arrivals</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.arrivals)}</p></div>
+                <div class="stat-card rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Departures</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.departures)}</p></div>
+                <div class="stat-card rounded-2xl border border-white/10 bg-slate-950/70 p-4"><p class="text-sm text-slate-400">Occupied lines</p><p class="mt-1 text-3xl font-bold text-white">{len(summary.in_house)}</p></div>
               </div>
 
               {meals_section_html}
               {settlement_html}
 
-              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+              <div class="transfers-card ops-card mt-4 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
                 <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Transfers ({total_transfer_count}{"" if not tomorrow_transfers else f" — {len(day_transfers)} today · {len(tomorrow_transfers)} for tomorrow"})</h3>
                 {transfers_html}
               </div>
 
-              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+              <div class="team-message-card ops-card mt-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
                 <div class="mb-3 flex items-center justify-between gap-3">
                   <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Team Message</h3>
                   <button class="copy-team-message rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold text-slate-950 transition hover:bg-emerald-300" type="button">Copy Message</button>
@@ -2256,9 +2256,9 @@ def build_dashboard_html(
                 <textarea class="team-message h-72 w-full resize-y rounded-xl border border-white/10 bg-slate-900 p-4 font-mono text-sm leading-6 text-slate-100 outline-none focus:border-emerald-300">{html.escape(team_message)}</textarea>
               </div>
 
-              <div class="mt-4 grid gap-4 xl:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2">{list_cards(arrival_items)}</div></div>
-                <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2">{list_cards(departure_items)}</div></div>
+              <div class="movement-grid mt-4 grid gap-4 xl:grid-cols-2">
+                <div class="ops-card arrivals-card rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Arrivals</h3><div class="grid gap-2">{list_cards(arrival_items)}</div></div>
+                <div class="ops-card departures-card rounded-2xl border border-white/10 bg-slate-950/70 p-4"><h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Departures</h3><div class="grid gap-2">{list_cards(departure_items)}</div></div>
               </div>
 
               <div class="mt-4 grid gap-3">
@@ -2279,19 +2279,119 @@ def build_dashboard_html(
   <link rel="icon" type="image/png" href="olas-surf-camp.png">
   <link rel="apple-touch-icon" href="olas-surf-camp.png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {{
+      color-scheme: light;
+      --ink: #17312f;
+      --muted: #657874;
+      --line: #dce5df;
+      --paper: #ffffff;
+      --canvas: #f3f7f4;
+      --ocean: #087f73;
+      --ocean-dark: #07645d;
+      --mint: #dff3ea;
+      --sun: #f4c95d;
+      --coral: #df6b57;
+      --navy: #17384d;
+    }}
+    * {{ box-sizing: border-box; letter-spacing: 0 !important; }}
+    html {{ scroll-behavior: smooth; }}
+    body.dashboard-shell {{ margin: 0; background: var(--canvas) !important; color: var(--ink) !important; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
+    .dashboard-shell [class*="text-slate-"] {{ color: var(--muted) !important; }}
+    .dashboard-shell .text-white, .dashboard-shell [class*="text-emerald-1"], .dashboard-shell [class*="text-emerald-2"] {{ color: var(--ink) !important; }}
+    .dashboard-shell [class*="bg-slate-9"] {{ background: var(--paper) !important; }}
+    .dashboard-shell [class*="border-white"] {{ border-color: var(--line) !important; }}
+    .dashboard-shell .rounded-2xl, .dashboard-shell .rounded-xl, .dashboard-shell .rounded-lg {{ border-radius: 8px !important; }}
+    .dashboard-shell .rounded-full {{ border-radius: 999px !important; }}
+    .app-header {{ position: relative; border-bottom: 1px solid var(--line) !important; background: var(--paper) !important; padding: 18px 20px !important; }}
+    .brand-row {{ display: flex; align-items: center; gap: 14px; }}
+    .brand-logo {{ width: 58px !important; height: 58px !important; border: 1px solid var(--line); border-radius: 8px !important; }}
+    .brand-kicker {{ color: var(--ocean) !important; font-size: 11px !important; font-weight: 800; }}
+    .brand-title {{ color: var(--ink) !important; font-size: clamp(21px, 4vw, 30px) !important; line-height: 1.08; }}
+    .generated-time {{ margin-top: 5px !important; font-size: 12px !important; }}
+    .status-banner {{ margin-top: 14px !important; padding: 12px 14px !important; border-radius: 8px !important; }}
+    .status-banner h2 {{ font-size: 16px !important; }}
+    .workspace {{ padding: 18px 20px 92px !important; }}
+    .day-nav {{ background: var(--paper) !important; border-color: var(--line) !important; border-radius: 8px !important; box-shadow: 0 8px 24px rgba(29, 62, 56, .06); }}
+    .day-nav-list {{ display: grid; gap: 8px; }}
+    .day-tab {{ min-width: 0; border-radius: 7px !important; background: #f8faf8 !important; border-color: var(--line) !important; color: var(--ink) !important; }}
+    .day-tab[aria-selected="true"] {{ background: var(--mint) !important; border-color: var(--ocean) !important; box-shadow: inset 3px 0 0 var(--ocean); }}
+    .day-panel > div:first-child h2 {{ color: var(--ink) !important; font-size: clamp(24px, 5vw, 32px) !important; }}
+    .day-panel > div:first-child p {{ color: var(--ocean) !important; font-weight: 800; }}
+    .day-panel > div:first-child .inline-flex {{ background: #e5ece8 !important; color: #29443f !important; border-color: #c8d6d0 !important; }}
+    .overview-grid {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }}
+    .stat-card {{ min-height: 108px; background: var(--paper) !important; border-color: var(--line) !important; box-shadow: 0 8px 20px rgba(29, 62, 56, .05); }}
+    .stat-card-primary {{ background: var(--mint) !important; border-color: #add9c9 !important; }}
+    .stat-card p:nth-child(2) {{ color: var(--ink) !important; }}
+    .ops-card, .day-panel > .mt-4:not(.movement-grid), .day-panel details {{ background: var(--paper) !important; border-color: var(--line) !important; box-shadow: 0 8px 24px rgba(29, 62, 56, .055); }}
+    .ops-card h3 {{ color: var(--navy) !important; font-weight: 850 !important; }}
+    .meals-card {{ border-top: 4px solid var(--ocean) !important; }}
+    .meals-card .text-emerald-300 {{ color: var(--ocean-dark) !important; background: var(--mint) !important; }}
+    .payments-card {{ border-top: 4px solid var(--sun) !important; }}
+    .transfers-card {{ border-top: 4px solid #4b7ca6 !important; }}
+    .team-message-card {{ border-top: 4px solid var(--coral) !important; }}
+    .arrivals-card {{ border-top: 4px solid #4aaa83 !important; }}
+    .departures-card {{ border-top: 4px solid #7b76b7 !important; }}
+    .payments-card > div > div {{ background: #fffdf5 !important; border-color: #eadca6 !important; }}
+    .team-message {{ background: #f7faf8 !important; border-color: var(--line) !important; color: #263d39 !important; min-height: 260px; }}
+    button {{ cursor: pointer; }}
+    .copy-team-message, .copy-text-btn {{ background: var(--ocean) !important; color: white !important; border-radius: 6px !important; }}
+    .copy-transfer-btn {{ color: var(--ocean-dark) !important; background: var(--mint) !important; }}
+    details > summary {{ list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; }}
+    details > summary::-webkit-details-marker {{ display: none; }}
+    details > summary::after {{ content: "+"; display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--line); border-radius: 50%; color: var(--ocean); flex: 0 0 auto; }}
+    details[open] > summary::after {{ content: "−"; }}
+    .audit-section, .health-section {{ background: var(--paper) !important; border-color: var(--line) !important; box-shadow: 0 8px 24px rgba(29, 62, 56, .05); }}
+    .mobile-nav {{ display: none; }}
+    @media (max-width: 1023px) {{
+      .workspace {{ display: block !important; max-width: 860px !important; }}
+      .day-nav {{ position: sticky; top: 0; z-index: 20; margin: 0 -20px 18px; padding: 10px 20px !important; border-left: 0 !important; border-right: 0 !important; overflow: hidden; }}
+      .day-nav > p {{ display: none; }}
+      .day-nav-list {{ display: flex !important; grid-template-columns: none !important; overflow-x: auto; gap: 8px; scrollbar-width: none; }}
+      .day-nav-list::-webkit-scrollbar {{ display: none; }}
+      .day-tab {{ flex: 0 0 112px !important; width: 112px !important; padding: 9px 10px !important; }}
+      .day-tab span:last-child {{ display: none; }}
+    }}
+    @media (max-width: 640px) {{
+      .app-header {{ padding: 13px 14px !important; }}
+      .brand-row {{ align-items: flex-start; }}
+      .brand-logo {{ width: 48px !important; height: 48px !important; }}
+      .brand-title {{ margin-top: 2px !important; }}
+      .generated-time {{ white-space: normal; }}
+      .status-banner {{ padding: 10px 12px !important; }}
+      .status-banner h2 {{ font-size: 14px !important; }}
+      .status-banner p, .status-banner ul {{ font-size: 12px !important; }}
+      .workspace {{ padding: 0 14px 88px !important; }}
+      .day-nav {{ margin: 0 -14px 14px; padding: 9px 14px !important; }}
+      .day-panel > div:first-child {{ margin-bottom: 13px !important; }}
+      .overview-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }}
+      .stat-card {{ min-height: 86px; padding: 12px !important; }}
+      .stat-card p:nth-child(2) {{ font-size: 25px !important; }}
+      .ops-card, .movement-grid > div, .day-panel details {{ padding: 13px !important; }}
+      .movement-grid {{ gap: 10px !important; }}
+      .team-message {{ height: 240px !important; padding: 12px !important; font-size: 12px !important; line-height: 1.55 !important; }}
+      .mobile-nav {{ position: fixed; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); z-index: 50; display: grid; grid-template-columns: repeat(4, 1fr); padding: 7px; background: rgba(23,49,47,.96); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; box-shadow: 0 16px 40px rgba(13,34,31,.3); backdrop-filter: blur(14px); }}
+      .mobile-nav button {{ min-height: 44px; border: 0; background: transparent; color: #d8e6e1; font-size: 10px; font-weight: 800; text-transform: uppercase; }}
+      .mobile-nav button::before {{ display: block; margin-bottom: 2px; font-size: 18px; line-height: 1; }}
+      .mobile-nav button[data-jump="top"]::before {{ content: "⌂"; }}
+      .mobile-nav button[data-jump="meals"]::before {{ content: "●"; color: #63c8a5; }}
+      .mobile-nav button[data-jump="payments"]::before {{ content: "€"; color: var(--sun); }}
+      .mobile-nav button[data-jump="team"]::before {{ content: "↗"; color: #f4937f; }}
+    }}
+  </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-  <header class="border-b border-white/10 bg-slate-950/80 px-5 py-5 backdrop-blur">
+<body class="dashboard-shell min-h-screen bg-slate-950 text-slate-100">
+  <header class="app-header border-b border-white/10 bg-slate-950/80 px-5 py-5 backdrop-blur">
     <div class="mx-auto max-w-7xl">
-      <div class="flex items-center gap-4">
-        <img src="olas-surf-camp.png" alt="Olas Surf Experience" class="h-20 w-20 shrink-0 rounded-lg bg-white object-contain p-1">
+      <div class="brand-row flex items-center gap-4">
+        <img src="olas-surf-camp.png" alt="Olas Surf Experience" class="brand-logo h-20 w-20 shrink-0 rounded-lg bg-white object-contain p-1">
         <div>
-          <p class="text-sm uppercase tracking-wide text-emerald-300">Olas Surf Experience · Operations</p>
-          <h1 class="mt-1 text-3xl font-bold text-white">Daily In-House Dashboard</h1>
-          <p class="mt-2 text-sm text-slate-400">Generated {html.escape(generated_at.strftime('%Y-%m-%d %H:%M'))}. Cache-backed with recent HotelRunner updates.</p>
+          <p class="brand-kicker text-sm uppercase tracking-wide text-emerald-300">Olas Surf Experience · Operations</p>
+          <h1 class="brand-title mt-1 text-3xl font-bold text-white">Daily Operations</h1>
+          <p class="generated-time mt-2 text-sm text-slate-400">Updated {html.escape(generated_at.strftime('%d %b · %H:%M'))} Morocco time</p>
         </div>
       </div>
-      <section class="mt-4 rounded-2xl border {status_tone} p-4">
+      <section class="status-banner mt-4 rounded-2xl border {status_tone} p-4">
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
           <div>
             <p class="text-xs font-bold uppercase tracking-wide">{status_badge}</p>
@@ -2304,16 +2404,16 @@ def build_dashboard_html(
     </div>
   </header>
 
-  <div class="mx-auto grid max-w-7xl gap-5 px-5 py-5 lg:grid-cols-[230px_1fr]">
-    <nav class="h-fit rounded-2xl border border-white/10 bg-slate-900/70 p-3 lg:sticky lg:top-5">
+  <div class="workspace mx-auto grid max-w-7xl gap-5 px-5 py-5 lg:grid-cols-[230px_1fr]">
+    <nav class="day-nav h-fit rounded-2xl border border-white/10 bg-slate-900/70 p-3 lg:sticky lg:top-5" aria-label="Report days">
       <p class="mb-3 px-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Days</p>
-      <div class="grid gap-2">{"".join(day_buttons)}</div>
+      <div class="day-nav-list grid gap-2">{"".join(day_buttons)}</div>
     </nav>
 
     <main>
       {"".join(day_sections)}
 
-      <section class="mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
+      <section class="audit-section mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
         <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 class="text-2xl font-bold text-white">Audit Results</h2>
@@ -2336,7 +2436,7 @@ def build_dashboard_html(
         </div>
       </section>
 
-      <section class="mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
+      <section class="health-section mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
         <h2 class="text-xl font-bold text-white mb-2">System Health & Operations Engines</h2>
         <p class="text-xs text-slate-400 mb-4">Normalized operational status across all 3 houses (Olas, Tide, Sunrise).</p>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm">
@@ -2361,10 +2461,19 @@ def build_dashboard_html(
     </main>
   </div>
 
+  <nav class="mobile-nav" aria-label="Quick navigation">
+    <button type="button" data-jump="top">Today</button>
+    <button type="button" data-jump="meals">Meals</button>
+    <button type="button" data-jump="payments">Payments</button>
+    <button type="button" data-jump="team">Team</button>
+  </nav>
+
   <script>
     document.querySelectorAll('.day-tab').forEach((button) => {{
+      button.setAttribute('aria-selected', button.dataset.target === 'day-0' ? 'true' : 'false');
       button.addEventListener('click', () => {{
         document.querySelectorAll('.day-tab').forEach((item) => {{
+          item.setAttribute('aria-selected', 'false');
           item.classList.remove('border-emerald-300/50', 'bg-emerald-400/10', 'text-emerald-100');
           item.classList.add('border-white/10', 'bg-slate-950/60', 'text-slate-300');
         }});
@@ -2373,10 +2482,24 @@ def build_dashboard_html(
           item.classList.remove('block');
         }});
         button.classList.add('border-emerald-300/50', 'bg-emerald-400/10', 'text-emerald-100');
+        button.setAttribute('aria-selected', 'true');
         button.classList.remove('border-white/10', 'bg-slate-950/60', 'text-slate-300');
         const panel = document.getElementById(button.dataset.target);
         panel.classList.remove('hidden');
         panel.classList.add('block');
+      }});
+    }});
+
+    document.querySelectorAll('.mobile-nav button').forEach((button) => {{
+      button.addEventListener('click', () => {{
+        const panel = document.querySelector('.day-panel.block') || document.querySelector('.day-panel:not(.hidden)');
+        const targets = {{
+          top: panel,
+          meals: panel && panel.querySelector('.meals-card'),
+          payments: panel && panel.querySelector('.payments-card'),
+          team: panel && panel.querySelector('.team-message-card'),
+        }};
+        (targets[button.dataset.jump] || panel)?.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
       }});
     }});
 
