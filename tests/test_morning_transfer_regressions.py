@@ -279,6 +279,45 @@ def test_checkins_show_bed_and_breakfast_meal_plan():
     assert "Breakfast Guest x1 -> dorm (breakfast)" in msg
 
 
+def test_bed_setup_requests_only_appear_for_checkins():
+    departure = StayLine(
+        reservation_id="bed-departure",
+        hr_number="HR-BED-OUT",
+        guest_name="Departing Guest",
+        channel="Direct",
+        room_name="bay",
+        bed_number="6500",
+        arrival=TODAY - dt.timedelta(days=3),
+        departure=TODAY,
+        adults=2,
+        children=0,
+        meal_plan="Bed And Breakfast",
+        bed_request="separate beds",
+    )
+    arrival = StayLine(
+        reservation_id="bed-arrival",
+        hr_number="HR-BED-IN",
+        guest_name="Arriving Guest",
+        channel="Direct",
+        room_name="bay",
+        bed_number="6500",
+        arrival=TODAY,
+        departure=TOMORROW,
+        adults=2,
+        children=0,
+        meal_plan="Bed And Breakfast",
+        bed_request="large double bed",
+    )
+
+    msg = build_whatsapp_block(
+        DaySummary(date=TODAY, arrivals=[arrival], departures=[departure])
+    )
+
+    checkout_block, checkin_block = msg.split("🏨 CHECK-INS", maxsplit=1)
+    assert "separate beds" not in checkout_block
+    assert "large double bed" in checkin_block
+
+
 def test_dashboard_html_includes_sunrise_sheet_check_add_hr(monkeypatch):
     import google_sheets
 

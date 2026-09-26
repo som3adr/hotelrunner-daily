@@ -1182,7 +1182,7 @@ def team_extra_note(line: StayLine, movement: str = "") -> str:
     elif "room only" in meal:
         parts.append("room only")
 
-    if line.bed_request:
+    if movement == "arrival" and line.bed_request:
         parts.append(line.bed_request)
 
     for extra in line.extras:
