@@ -32,7 +32,7 @@ BED_PATTERNS = [
 
 NUMBERED_SEPARATE_BEDS_PATTERN = re.compile(
     r"\b(?P<count>[2-9]|two|three|four|five|six|seven|eight|nine)\s+"
-    r"(?:separate\s+)?(?:single\s+)?beds?\b",
+    r"(?:(?:separate\s+)?(?:single\s+)?beds?|singles)\b",
     re.I,
 )
 

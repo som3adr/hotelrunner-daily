@@ -304,6 +304,22 @@ def test_three_separate_single_beds_request_preserves_quantity():
     assert detect_bed_request(notes, reservation_data) == "3 separate single beds requested"
 
 
+def test_booking_note_three_singles_is_a_bed_request():
+    from hotelrunner_daily_summary import detect_bed_request, extract_notes
+
+    reservation_data = {
+        "note": (
+            "** THIS RESERVATION HAS BEEN PRE-PAID **\n"
+            "BED PREFERENCE:Comfort Triple Room with Shower: 3 singles\n"
+            "BOOKING NOTE : Payment charge is EUR 1.548\n"
+            "Flag: booker_is_genius"
+        )
+    }
+    notes = extract_notes(reservation_data)
+
+    assert detect_bed_request(notes, reservation_data) == "3 separate single beds requested"
+
+
 def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     import google_sheets
     from hotelrunner_daily_summary import (
