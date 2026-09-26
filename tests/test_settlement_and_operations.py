@@ -293,6 +293,17 @@ def test_bed_request_only_appears_on_arrival_day():
     assert summaries[2].bed_requests == []
 
 
+def test_three_separate_single_beds_request_preserves_quantity():
+    from hotelrunner_daily_summary import detect_bed_request, extract_notes
+
+    reservation_data = {
+        "special_requests": "I'd like to request 3 separate single beds. Is this possible?"
+    }
+    notes = extract_notes(reservation_data)
+
+    assert detect_bed_request(notes, reservation_data) == "3 separate single beds requested"
+
+
 def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     import google_sheets
     from hotelrunner_daily_summary import (
@@ -332,6 +343,7 @@ def test_dashboard_contains_copyable_dinner_and_payment_panels(monkeypatch):
     assert 'data-jump="payments"' in html
     assert 'class="dashboard-shell' in html
     assert 'Updated 25 Sep · 07:00 Morocco time' in html
+    assert "Reservation notes only · GRM inbox not connected" in html
 
 
 def test_dashboard_combines_consecutive_booking_records_at_final_checkout(monkeypatch):

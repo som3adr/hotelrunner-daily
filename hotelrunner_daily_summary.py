@@ -25,10 +25,16 @@ DEFAULT_MAX_PAGES = 15
 
 BED_PATTERNS = [
     ("single + large double requested", re.compile(r"\b(single bed|1 single).{0,80}\b(large double|double bed|king|queen|grand lit)\b|\b(large double|double bed|king|queen|grand lit).{0,80}\b(single bed|1 single)\b", re.I)),
-    ("separate beds", re.compile(r"\b(separate|twin beds|two single|2 single|2 singles|two singles|lits separes)\b", re.I)),
+    ("separate beds", re.compile(r"\b(separate beds?|separate single beds?|twin beds?|two single beds?|2 single beds?|2 singles|two singles|lits separes)\b", re.I)),
     ("single bed requested", re.compile(r"\b(1 single bed|single bed)\b", re.I)),
     ("large double bed", re.compile(r"\b(1 large double|large double|large bed|double bed|king|queen|matrimonial|lit double|grand lit)\b", re.I)),
 ]
+
+NUMBERED_SEPARATE_BEDS_PATTERN = re.compile(
+    r"\b(?P<count>[2-9]|two|three|four|five|six|seven|eight|nine)\s+"
+    r"(?:separate\s+)?(?:single\s+)?beds?\b",
+    re.I,
+)
 
 NEGATED_SEPARATE_BED_PATTERN = re.compile(
     r"\b(don't|do not|dont|not|no)\b.{0,50}\b(separate|twin|two single|2 single|single beds)\b",
@@ -246,11 +252,20 @@ def detect_bed_request(notes: list[str], reservation: dict[str, Any]) -> str:
     text = re.sub(r"\bDouble or Twin Room with Private Bathroom\b", "", text, flags=re.I)
     text = re.sub(r"\bDouble or Twin Room\b", "", text, flags=re.I)
     found: list[str] = []
+    numbered = NUMBERED_SEPARATE_BEDS_PATTERN.search(text)
+    if numbered and not NEGATED_SEPARATE_BED_PATTERN.search(text):
+        count = {
+            "two": "2", "three": "3", "four": "4", "five": "5", "six": "6",
+            "seven": "7", "eight": "8", "nine": "9",
+        }.get(numbered.group("count").casefold(), numbered.group("count"))
+        found.append(f"{count} separate single beds requested")
     for label, pattern in BED_PATTERNS:
         if pattern.search(text):
             if label in {"separate beds", "single + large double requested"} and NEGATED_SEPARATE_BED_PATTERN.search(text):
                 continue
             found.append(label)
+    if numbered:
+        found = [item for item in found if item != "separate beds"]
     if "single + large double requested" in found:
         found = ["single + large double requested"]
     return ", ".join(dict.fromkeys(found))
@@ -2455,7 +2470,7 @@ def build_dashboard_html(
       <section class="health-section mt-6 rounded-2xl border border-white/10 bg-slate-900/70 p-5">
         <h2 class="text-xl font-bold text-white mb-2">System Health & Operations Engines</h2>
         <p class="text-xs text-slate-400 mb-4">Normalized operational status across all 3 houses (Olas, Tide, Sunrise).</p>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm">
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 text-sm">
           <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
             <span class="block text-xs uppercase text-slate-400">Last HotelRunner Fetch</span>
             <span class="font-semibold text-slate-200">{health_status.get('last_hotelrunner_fetch', {}).get('timestamp', 'Recent (Cache)') if health_status.get('last_hotelrunner_fetch') else 'Recent (Cache)'}</span>
@@ -2471,6 +2486,10 @@ def build_dashboard_html(
           <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
             <span class="block text-xs uppercase text-slate-400">Meal Engine</span>
             <span class="font-semibold text-emerald-400">Active (Auditable & Deduplicated)</span>
+          </div>
+          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-3">
+            <span class="block text-xs uppercase text-slate-400">Guest Message Coverage</span>
+            <span class="font-semibold text-amber-300">Reservation notes only · GRM inbox not connected</span>
           </div>
         </div>
       </section>

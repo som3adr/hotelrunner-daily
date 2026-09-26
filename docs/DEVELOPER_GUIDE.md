@@ -338,6 +338,16 @@ chat only. It builds a current operational context and sends it to CodeCraft.
 The bot is scheduled every five minutes outside quiet hours. It is not a
 continuously running webhook service, so responses can take several minutes.
 
+### HotelRunner GRM Conversation Boundary
+
+The reservation API can expose notes and special-request fields, and those are
+parsed for operational requests. The separate HotelRunner GRM conversation
+inbox is not available through the documented custom-app reservation API and
+is not currently ingested. The dashboard must not interpret an empty request
+field as proof that the guest sent no message. Until HotelRunner provides a
+supported conversation endpoint, important GRM requests need a reservation
+note or another structured operational source.
+
 ## 8. Automation
 
 Production automation is defined in:
