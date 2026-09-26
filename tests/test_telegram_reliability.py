@@ -3,6 +3,8 @@ import sys
 from pathlib import Path
 from urllib.error import HTTPError
 
+import pytest
+
 
 def test_morning_delivery_guard_marks_only_current_day(tmp_path):
     from morning_delivery import mark_sent, was_sent
@@ -151,6 +153,25 @@ def test_telegram_status_replies_without_gemini(tmp_path, monkeypatch):
     assert "Reservation cache: ready" in replies[0][1]
 
 
+def test_full_morning_report_fails_when_telegram_rejects_delivery(tmp_path, monkeypatch):
+    import telegram_send
+
+    cache = tmp_path / "reservations_cache.json"
+    cache.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(telegram_send, "load_dotenv", lambda path: None)
+    monkeypatch.setattr(telegram_send, "get_env", lambda key: "configured")
+    monkeypatch.setattr(telegram_send, "build_messages_from_cache", lambda path, day: ("team", "manager"))
+    monkeypatch.setattr(telegram_send, "send_with_retry", lambda *args, **kwargs: False)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["telegram_send.py", "--mode", "full", "--team-only", "--cache-file", str(cache)],
+    )
+
+    with pytest.raises(SystemExit, match="not accepted by Telegram"):
+        telegram_send.main()
+
+
 def test_codecraft_lists_models_and_generates_answer(monkeypatch):
     import codecraft_client
 
@@ -201,10 +222,15 @@ def test_workflows_separate_operations_from_qa_and_use_morocco_time():
 
     assert 'cron: "7 7 * * *"' in daily
     assert 'cron: "22 7 * * *"' in daily
-    assert daily.count('timezone: "Africa/Casablanca"') == 3
+    assert 'cron: "37 7 * * *"' in daily
+    assert 'cron: "37 6 * * *"' in daily
+    assert daily.count('timezone: "Africa/Casablanca"') == 5
     assert "github.event.schedule" in daily
     assert "morning_delivery.py check" in daily
     assert "morning_delivery.py mark" in daily
+    assert "operations_qa.py" in daily
+    assert "--lookback-days 730" in daily
+    assert "reconcile" in daily
     assert "Telegram Q&A Bot" not in daily
     assert "telegram_bot.py --poll" in qa
     assert "Refresh missing reservation cache" in qa

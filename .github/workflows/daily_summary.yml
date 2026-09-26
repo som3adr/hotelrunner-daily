@@ -3,9 +3,14 @@ name: HotelRunner Daily Summary
 on:
   # Avoid the top of the hour because GitHub may delay or drop busy cron events.
   schedule:
+    # Rebuild the operational cache from a broad creation-date window before morning.
+    - cron: "37 6 * * *"
+      timezone: "Africa/Casablanca"
     - cron: "7 7 * * *"
       timezone: "Africa/Casablanca"
     - cron: "22 7 * * *"
+      timezone: "Africa/Casablanca"
+    - cron: "37 7 * * *"
       timezone: "Africa/Casablanca"
     - cron: "17 0,8-23 * * *"
       timezone: "Africa/Casablanca"
@@ -21,6 +26,7 @@ on:
           - check
           - full
           - transfers
+          - reconcile
 
 concurrency:
   group: hotelrunner-operations
@@ -73,7 +79,15 @@ jobs:
           HOTELRUNNER_TOKEN: ${{ secrets.HOTELRUNNER_TOKEN }}
           HOTELRUNNER_HR_ID: ${{ secrets.HOTELRUNNER_HR_ID }}
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-        run: python hotelrunner_daily_summary.py --max-pages 15 --page-delay 1
+        run: |
+          if [ "${{ github.event.schedule }}" = "37 6 * * *" ] || [ "${{ github.event.inputs.mode }}" = "reconcile" ]; then
+            python hotelrunner_daily_summary.py --lookback-days 730 --max-pages 100 --page-delay 0.25
+          else
+            python hotelrunner_daily_summary.py --max-pages 15 --page-delay 1
+          fi
+
+      - name: Validate operational output
+        run: python operations_qa.py
 
 
       # ── Determine which mode to run ───────────────────────────────────────────
@@ -93,7 +107,10 @@ jobs:
           elif [ "$INPUT_MODE" = "transfers" ]; then
             echo "mode=transfers" >> $GITHUB_OUTPUT
             echo "scheduled_morning=false" >> $GITHUB_OUTPUT
-          elif [ "$SCHEDULE" = "7 7 * * *" ] || [ "$SCHEDULE" = "22 7 * * *" ]; then
+          elif [ "$INPUT_MODE" = "reconcile" ]; then
+            echo "mode=check" >> $GITHUB_OUTPUT
+            echo "scheduled_morning=false" >> $GITHUB_OUTPUT
+          elif [ "$SCHEDULE" = "7 7 * * *" ] || [ "$SCHEDULE" = "22 7 * * *" ] || [ "$SCHEDULE" = "37 7 * * *" ]; then
             echo "mode=full" >> $GITHUB_OUTPUT
             echo "scheduled_morning=true" >> $GITHUB_OUTPUT
           else

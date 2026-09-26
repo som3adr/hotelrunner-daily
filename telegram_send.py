@@ -466,9 +466,11 @@ def main() -> None:
             return
 
         print(f"[full] Sending daily briefing for {target_date} ...")
-        send_text(token, chat_id, msg1, "WhatsApp block")
+        sent_ok = send_with_retry(token, chat_id, msg1, "WhatsApp block")
         if msg2 and not args.team_only:
-            send_text(token, chat_id, msg2, "Manager block")
+            sent_ok = send_with_retry(token, chat_id, msg2, "Manager block") and sent_ok
+        if not sent_ok:
+            sys.exit("[telegram_send] Daily briefing was not accepted by Telegram after retries")
 
     # ── MODE: hourly change check ─────────────────────────────────────────────
     elif args.mode == "check":

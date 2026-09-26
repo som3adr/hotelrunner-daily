@@ -2027,7 +2027,7 @@ def build_dashboard_html(
         settlement_reminders = build_settlement_reminders(settlement_source, summary.date)
         settlement_html = ""
         if settlement_reminders:
-            payment_cards = []
+            payment_cards = {"today": [], "tomorrow": []}
             for item in settlement_reminders:
                 when = "COLLECT TODAY" if item.timing == "today" else "PREPARE FOR TOMORROW"
                 amount_lines = []
@@ -2064,7 +2064,7 @@ def build_dashboard_html(
                         '<ul class="mt-1 grid gap-1 text-xs text-slate-300">'
                         + "".join(component_lines) + '</ul>'
                     )
-                payment_cards.append(
+                payment_cards[item.timing].append(
                     f'<div class="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">'
                     f'<strong class="text-amber-200">{when} — {html.escape(item.guest_name)} ({html.escape(item.house)})</strong>'
                     f'<p class="mt-1 text-sm text-slate-200">{amount}{html.escape(policy)}</p>'
@@ -2072,10 +2072,23 @@ def build_dashboard_html(
                     f'<p class="text-sm text-slate-300">{html.escape(item.action)}</p>'
                     f'<p class="mt-1 text-xs text-slate-400">Check extras: {html.escape(extras)}</p></div>'
                 )
+            payment_groups = []
+            if payment_cards["today"]:
+                payment_groups.append(
+                    '<section class="payment-group payment-group-today">'
+                    '<h4 class="payment-group-title">Today</h4>'
+                    '<div class="grid gap-2">' + "".join(payment_cards["today"]) + '</div></section>'
+                )
+            if payment_cards["tomorrow"]:
+                payment_groups.append(
+                    '<section class="payment-group payment-group-tomorrow">'
+                    '<h4 class="payment-group-title">Prepare for tomorrow</h4>'
+                    '<div class="grid gap-2">' + "".join(payment_cards["tomorrow"]) + '</div></section>'
+                )
             settlement_html = (
                 '<div class="payments-card ops-card mt-4 rounded-2xl border border-amber-400/20 bg-slate-950/70 p-4">'
                 '<h3 class="mb-3 text-sm font-semibold uppercase text-amber-200">Checkout Payments</h3>'
-                '<div class="grid gap-2">' + "".join(payment_cards) + '</div></div>'
+                '<div class="payment-groups grid gap-4">' + "".join(payment_groups) + '</div></div>'
             )
 
         day_transfers = build_transfer_records(day_norm_res, summary.date, transfer_store)
@@ -2328,6 +2341,9 @@ def build_dashboard_html(
     .meals-card {{ border-top: 4px solid var(--ocean) !important; }}
     .meals-card .text-emerald-300 {{ color: var(--ocean-dark) !important; background: var(--mint) !important; }}
     .payments-card {{ border-top: 4px solid var(--sun) !important; }}
+    .payment-group-title {{ margin: 0 0 8px; color: var(--ink); font-size: 13px; font-weight: 850; text-transform: uppercase; }}
+    .payment-group-today .payment-group-title {{ color: #a04435; }}
+    .payment-group-tomorrow {{ padding-top: 14px; border-top: 1px solid var(--line); }}
     .transfers-card {{ border-top: 4px solid #4b7ca6 !important; }}
     .team-message-card {{ border-top: 4px solid var(--coral) !important; }}
     .arrivals-card {{ border-top: 4px solid #4aaa83 !important; }}
@@ -2637,6 +2653,11 @@ def main() -> None:
             retry_wait=args.retry_wait,
             fetch_meta=fetch_meta,
         )
+        if fetch_meta.get("max_pages_hit"):
+            raise SystemExit(
+                "Historical cache reconciliation reached --max-pages before HotelRunner was exhausted. "
+                "The existing cache was not replaced; increase --max-pages and retry."
+            )
         active_reservations = [reservation for reservation in reservations if is_active_state(first_value(reservation, ["state"]))]
         save_reservation_cache(cache_path, active_reservations)
         cache_stats = {"loaded": 0, "updates": len(reservations), "added": len(active_reservations), "updated": 0, "removed": 0, "skipped": 0}

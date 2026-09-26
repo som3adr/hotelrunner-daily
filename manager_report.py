@@ -512,7 +512,7 @@ def main() -> None:
         if result.get("ok"):
             print(f"[manager_report] Sent for {target_date}")
         else:
-            print(f"[manager_report] Telegram error: {result}")
+            sys.exit(f"[manager_report] Telegram rejected the report: {result}")
 
 
 if __name__ == "__main__":

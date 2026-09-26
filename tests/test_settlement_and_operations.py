@@ -39,6 +39,19 @@ def test_partial_payment_is_reminded_one_day_before_checkout():
     assert reminders[0].payment_status == "partial"
 
 
+def test_today_payments_are_ordered_before_tomorrow_preparation():
+    tomorrow = reservation(reservation_id="tomorrow", guest_name="Tomorrow Guest")
+    today = reservation(
+        reservation_id="today",
+        guest_name="Today Guest",
+        departure_date=TODAY,
+    )
+
+    reminders = build_settlement_reminders([tomorrow, today], TODAY)
+
+    assert [item.timing for item in reminders] == ["today", "tomorrow"]
+
+
 def test_no_online_payment_record_requires_paypal_confirmation():
     item = build_settlement_reminders([
         reservation(paid_amount=0, payment_record_count=0)

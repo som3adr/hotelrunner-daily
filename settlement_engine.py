@@ -216,6 +216,7 @@ def build_settlement_reminders(
             components=components,
             currency_balances=currency_balances,
         ))
+    reminders.sort(key=lambda item: (0 if item.timing == "today" else 1, item.guest_name.casefold()))
     return reminders
 
 
