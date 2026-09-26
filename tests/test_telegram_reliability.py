@@ -172,6 +172,17 @@ def test_full_morning_report_fails_when_telegram_rejects_delivery(tmp_path, monk
         telegram_send.main()
 
 
+def test_manager_report_splits_long_telegram_messages_without_data_loss():
+    from manager_report import split_telegram_message
+
+    report = "\n".join(f"Operational line {index}: " + ("x" * 90) for index in range(100))
+    chunks = split_telegram_message(report, limit=500)
+
+    assert len(chunks) > 1
+    assert all(len(chunk) <= 500 for chunk in chunks)
+    assert "".join(chunks).replace("\n", "") == report.replace("\n", "")
+
+
 def test_codecraft_lists_models_and_generates_answer(monkeypatch):
     import codecraft_client
 

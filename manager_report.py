@@ -34,6 +34,28 @@ from data_model import (
     NormalizedReservation, load_config, stayline_to_normalized,
     meals_for_reservation, merge_cross_source_duplicates,
 )
+
+
+def split_telegram_message(text: str, limit: int = 3900) -> list[str]:
+    """Split long reports at line boundaries while staying below Telegram's limit."""
+    if len(text) <= limit:
+        return [text]
+    chunks: list[str] = []
+    current = ""
+    for line in text.splitlines(keepends=True):
+        while len(line) > limit:
+            if current:
+                chunks.append(current.rstrip())
+                current = ""
+            chunks.append(line[:limit].rstrip())
+            line = line[limit:]
+        if current and len(current) + len(line) > limit:
+            chunks.append(current.rstrip())
+            current = ""
+        current += line
+    if current.strip():
+        chunks.append(current.rstrip())
+    return chunks
 from extras_engine import (
     classify_extras_from_reservation, get_missing_transfer_info,
 )
@@ -498,21 +520,18 @@ def main() -> None:
 
     if args.send:
         import os
-        import json as _json
-        import urllib.request as _req
+        from telegram_send import send_with_retry
+
         token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
         chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
         if not token or not chat_id:
             sys.exit("TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID required for --send")
-        url = f"https://api.telegram.org/bot{token}/sendMessage"
-        payload = _json.dumps({"chat_id": chat_id, "text": report}).encode("utf-8")
-        req = _req.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        with _req.urlopen(req, timeout=15) as resp:
-            result = _json.loads(resp.read())
-        if result.get("ok"):
-            print(f"[manager_report] Sent for {target_date}")
-        else:
-            sys.exit(f"[manager_report] Telegram rejected the report: {result}")
+        chunks = split_telegram_message(report)
+        for index, chunk in enumerate(chunks, start=1):
+            label = f"Manager report {index}/{len(chunks)}"
+            if not send_with_retry(token, chat_id, chunk, label):
+                sys.exit(f"[manager_report] Telegram rejected {label}")
+        print(f"[manager_report] Sent {len(chunks)} part(s) for {target_date}")
 
 
 if __name__ == "__main__":
